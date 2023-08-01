@@ -2,6 +2,7 @@ import express from "express";
 
 import homcontroller from "../controllers/homcontroller";
 import userController from "../controllers/userController";
+import productController from "../controllers/productController";
 
 import multer from 'multer';
 import path from 'path';
@@ -37,8 +38,9 @@ let initWebRouter = (app)=>{
         return res.send('adafd')
     }) 
     router.get('/admin/userController',userController.handleGetUser);
-    router.post('/admin/userController',userController.handleGetUser);
-    router.put('/admin/userController',userController.handleGetUser);
+    router.get('/listSanPham',productController.listSanPham);
+    // router.post('/admin/userController',userController.handleGetUser);
+    // router.put('/admin/userController',userController.handleGetUser);
     
 
     return app.use("/",router)
