@@ -38,11 +38,10 @@ let initWebRouter = (app)=>{
         return res.send('adafd')
     }) 
     router.get('/admin/userController',userController.handleGetUser);
-    router.get('/listSanPham',productController.listSanPham);
-    // router.post('/admin/userController',userController.handleGetUser);
-    // router.put('/admin/userController',userController.handleGetUser);
-    
 
+    router.get('/listSanPham',productController.listSanPham);
+    
+    
     return app.use("/",router)
 }
 module.exports = initWebRouter
