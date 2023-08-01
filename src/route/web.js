@@ -38,6 +38,7 @@ let initWebRouter = (app)=>{
     }) 
     router.get('/admin/userController',userController.handleGetUser);
     router.post('/admin/userController',userController.handleGetUser);
+    router.put('/admin/userController',userController.handleGetUser);
     
 
     return app.use("/",router)
