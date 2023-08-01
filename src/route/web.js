@@ -38,6 +38,12 @@ let initWebRouter = (app)=>{
         return res.send('adafd')
     }) 
     router.get('/admin/userController',userController.handleGetUser);
+<<<<<<< HEAD
+=======
+    // router.post('/admin/userController',userController.handleGetUser);
+    // router.put('/admin/userController',userController.handleGetUser);
+    
+>>>>>>> 3aca2b3ead3edb215988791baddcc0929c36581b
 
     router.get('/listSanPham',productController.listSanPham);
     
