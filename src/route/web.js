@@ -40,6 +40,10 @@ let initWebRouter = (app)=>{
     router.post('/admin/userController',userController.handleGetUser);
     router.put('/admin/userController',userController.handleGetUser);
     
+    // router.post('/admin/userController',userController.handleGetUser);
+    // router.put('/admin/userController',userController.handleGetUser);
+    // router.post('/admin/userController',userController.handleGetUser);
+    // router.put('/admin/userController',userController.handleGetUser);
 
     return app.use("/",router)
 }
