@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('./head'); %>
+<body>
+    <%- include('./header'); %>
+    <div class="section_sidebar_slider">
+        <div class="container">
+            <div class="row">
+                <div class="dqdt-sidebar sidebar left-content col-lg-3 col-md-12 hidden-sm hidden-xs">
+                    <div class="wrap_background_aside asidecollection">
+                        
+    <aside class="aside-item sidebar-category collection-category margin-bottom-20">
+        <div class="aside-title">
+            <h2 class="title-head margin-top-0 cate"><i class="fas fa-bars"></i><span>Danh mục sản phẩm</span></h2>
+        </div>
+        <div class="aside-content">
+            <nav class="nav-category navbar-toggleable-md">
+                <ul class="nav navbar-pills">
+                    
+                    
+                    
+                    
+                    
+                    <li class="nav-item ">
+                        <a href="/ao-thun" class="nav-link a1">Áo Thun</a>
+                        <i class="fa fas fa-chevron-right"></i>
+                        <ul class="dropdown-menu">
+                            
+                            
+                            <li class="nav-item">
+                                <a class="nav-link" href="/san-pham-moi">Hàng mới về</a>
+                            </li>
+                            
+                            
+                            
+                            <li class="nav-item">
+                                <a class="nav-link" href="/san-pham-khuyen-mai">Hàng giảm giá</a>
+                            </li>
+                            
+                            
+                        </ul>
+                    </li>
+                    
+                    
+                    
+                    
+                    <li class="nav-item ">
+                        <a href="/ao-phong" class="nav-link a1">Áo phông</a>
+                        <i class="fa fas fa-chevron-right"></i>
+                        <ul class="dropdown-menu">
+                            
+                            
+                            <li class="nav-item">
+                                <a class="nav-link" href="/san-pham-moi">Hàng mới về</a>
+                            </li>
+                            
+                            
+                            
+                            <li class="nav-item">
+                                <a class="nav-link" href="/san-pham-ban-chay">Hàng bán chạy</a>
+                            </li>
+                            
+                            
+                            
+                            <li class="nav-item">
+                                <a class="nav-link" href="/san-pham-khuyen-mai">Hàng khuyến mãi</a>
+                            </li>
+                            
+                            
+                        </ul>
+                    </li>
+                    
+                    
+                    
+                    
+                    <li class="nav-item ">
+                        <a href="/ao-so-mi" class="nav-link a1">Áo sơ mi</a>
+                        <i class="fa fas fa-chevron-right"></i>
+                        <ul class="dropdown-menu">
+                            
+                            
+                            <li class="nav-item">
+                                <a class="nav-link" href="/san-pham-ban-chay">Hàng mới về</a>
+                            </li>
+                            
+                            
+                            
+                            <li class="nav-item">
+                                <a class="nav-link" href="/san-pham-khuyen-mai">Hàng giảm giá</a>
+                            </li>
+                            
+                            
+                        </ul>
+                    </li>
+                    
+                    
+                    
+                    
+                    <li class="nav-item ">
+                        <a href="/ao-coc-tay" class="nav-link a1">Áo cộc tay</a>
+                        <i class="fa fas fa-chevron-right"></i>
+                        <ul class="dropdown-menu">
+                            
+                            
+                            <li class="nav-item">
+                                <a class="nav-link" href="/san-pham-noi-bat">Hàng mới về</a>
+                            </li>
+                            
+                            
+                            
+                            <li class="nav-item">
+                                <a class="nav-link" href="/san-pham-khuyen-mai">Hàng giảm giá</a>
+                            </li>
+                            
+                            
+                        </ul>
+                    </li>
+                    
+                    
+                    
+                    
+                    <li class="nav-item ">
+                        <a href="/san-pham-moi" class="nav-link a1">Sản phẩm mới</a>
+                        <i class="fa fas fa-chevron-right"></i>
+                        <ul class="dropdown-menu">
+                            
+                            
+                            <li class="nav-item">
+                                <a class="nav-link" href="/san-pham-moi">Hàng mới</a>
+                            </li>
+                            
+                            
+                            
+                            <li class="nav-item">
+                                <a class="nav-link" href="/san-pham-khuyen-mai">Hàng giảm giá</a>
+                            </li>
+                            
+                            
+                        </ul>
+                    </li>
+                    
+                    
+                    
+                    
+                    <li class="nav-item "><a class="nav-link" href="/san-pham-noi-bat">Sản phẩm nổi bật</a></li>
+                    
+                    
+                    
+                    <li class="nav-item "><a class="nav-link" href="/san-pham-ban-chay">Sản phẩm bán chạy</a></li>
+                    
+                    
+                    
+                    <li class="fix-show nav-item"><a class="nav-link" href="/san-pham-khuyen-mai">Sản phẩm khuyến mãi</a></li>
+                    
+                    
+                    <li class="nav-item xemthem" style="display: list-item;"><a class="nav-link" href="javascript:;">Xem thêm</a></li>
+                    <li class="nav-item thugon" style="display: none;"><a class="nav-link" href="javascript:;">Thu gọn</a></li>
+    
+                    
+    
+    
+                    <script>
+                        $('.xemthem').click(function(e){		
+                            $(this).parent().parent().find('.fix-show').addClass('show');
+                            $(this).hide();
+                            $('.thugon').show();
+                        })
+                        $('.thugon').click(function(e){		
+                            $(this).parent().parent().find('.fix-show').removeClass('show');
+                            $(this).hide();
+                            $('.xemthem').show();
+                        })
+                    </script>
+                </ul>
+            </nav>
+        </div>
+    </aside>
+    
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+                    <div class="sectionslider">
+                        <div class="section home-slider slick-initialized slick-slider">
+                            <div aria-live="polite" class="slick-list draggable"><div class="slick-track" role="listbox" style="opacity: 1; width: 825px;"><div class="items ons  slick-slide slick-current slick-active" data-slick-index="0" aria-hidden="false" tabindex="-1" role="option" aria-describedby="slick-slide10" style="width: 825px; position: relative; left: 0px; top: 0px; z-index: 999; opacity: 1;">
+                                <a href="#" tabindex="0">
+                                    <picture>
+                                        <source media="(min-width: 1200px)" srcset="//bizweb.dktcdn.net/100/091/100/themes/880371/assets/slider_1.jpg?1676015176971">
+                                        <source media="(min-width: 992px)" srcset="//bizweb.dktcdn.net/100/091/100/themes/880371/assets/slider_1.jpg?1676015176971">
+                                        <source media="(min-width: 569px)" srcset="//bizweb.dktcdn.net/100/091/100/themes/880371/assets/slider_1.jpg?1676015176971">
+                                        <source media="(min-width: 480px)" srcset="//bizweb.dktcdn.net/thumb/large/100/091/100/themes/880371/assets/slider_1.jpg?1676015176971">
+                                        <img class="lazyload loaded" src="//bizweb.dktcdn.net/thumb/large/100/091/100/themes/880371/assets/slider_1.jpg?1676015176971" alt="Slider 1" data-was-processed="true">
+                                    </picture>
+                                </a>
+                            </div></div></div>
+    
+                        </div>
+    
+    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

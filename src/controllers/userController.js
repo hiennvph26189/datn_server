@@ -4,9 +4,18 @@ let handleGetUser = async (req, res) => {
     
   
     try {
-        let data = await userService.handleGetUser();
-        console.log(data);
-        return res.status(200).json(data) 
+
+        
+        
+      
+       let test =await userService.handleGetUser();
+       return res.status(200).json(test) 
+    //    if(test.errCode == 0){
+    //     return res.redirect('/add-category')
+    //    }else{
+    //     return "Lỗi"
+    //    }
+        
      } catch (error) {
          console.log("Lỗi phân quyền",error)
         return res.status(200).json({
@@ -16,11 +25,11 @@ let handleGetUser = async (req, res) => {
      }
    
 };
-let abc = async (req, res) => {
+let addCategory = async (req, res) => {
 
     try {
-        let data = await userService.handleGetUser();
-        return res.status(200).json(data) 
+        
+        return res.render('ahc.ejs') 
      } catch (error) {
          console.log("Lỗi phân quyền",error)
         return res.status(200).json({
@@ -32,6 +41,6 @@ let abc = async (req, res) => {
 };
 module.exports = {
     handleGetUser:handleGetUser,
-    abc:abc
+    addCategory:addCategory
 
 }

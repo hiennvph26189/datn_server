@@ -1,0 +1,166 @@
+<div class="header_nav_main section visible-xs visible-sm">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12 col-md-12 col-sm-12">
+				<div class="heade_menunav">
+					<div class="wrap_main d-none d-lg-block d-xl-block">
+	<div class="bg-header-nav">
+		<div class="row">
+			<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+				<nav class="header-nav">
+					<ul class="item_big">
+						<li class="nav-item  active ">				
+							<a class="a-img" href="/" title="Trang chủ">
+								<span>Trang chủ</span>							</a>
+						</li>
+						<li class="nav-item ">				
+							<a class="a-img" href="/gioi-thieu" title="Giới thiệu">
+								<span>Giới thiệu</span>							</a>
+						</li>
+						<li class="nav-item ">
+							<a class="a-img" href="/collections/all" title="Sản phẩm">
+								<span>Sản phẩm</span><i class="fa fa-angle-down"></i></a>
+							<ul class="item_small">
+								<% data.forEach(function(item, i){ %>
+									<li>
+										
+										<a href="/getCategory-products?id=<%= item.id %>" title="Áo Thun"><%= item.name %></a>
+										
+									</li>
+									<% }); %>
+								
+								<li>
+									<a href="/san-pham-moi" title="Sản phẩm mới">Sản phẩm mới</i></a>
+									
+								</li>
+								<li>
+									<a href="/san-pham-noi-bat" title="Sản phẩm nổi bật">Sản phẩm nổi bật</a>
+								</li>
+								<li>
+									<a href="/san-pham-ban-chay" title="Sản phẩm bán chạy">Sản phẩm bán chạy</a>
+								</li>
+								<li>
+									<a href="/san-pham-khuyen-mai" title="Sản phẩm khuyến mãi">Sản phẩm khuyến mãi</a>
+								</li>
+							</ul>
+						</li>
+						<li class="nav-item ">				
+							<a class="a-img" href="/tin-tuc" title="Tin tức">
+								<span>Tin tức</span>							</a>
+						</li>
+						<li class="nav-item ">				
+							<a class="a-img" href="/lien-he" title="Liên hệ">
+								<span>Liên hệ</span>							</a>
+						</li>
+					</ul>
+				</nav>
+			</div>
+			<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+				<div class="serachpc hidden-xs hidden-sm hidden-md">
+					<div class="searchform">
+						<form action="/search" method="get" class="input-group search-bar" role="search">
+							<input type="text" name="query" value="" autocomplete="off" placeholder="Tìm kiếm..." class="input-group-field auto-search visible_index">
+							<button type="submit" class="visible_index btn icon-fallback-text btn_search">
+								<i class="fa fa-search"></i>      
+							</button>
+						</form>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+</div>
+					<div class="wapnav d-lg-none d-xl-none" id="showMenu">
+						<span class="cloed hidden-lg hidden-md">
+							<i class="fa fa-bars"></i>
+						</span>
+						
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="wrapmenu d-xl-none d-lg-none">
+		<div class="wrapmenu_full menumain_full" id="showMenuMobile" style="display: none;">
+			<div class="containers">
+				<!-- Menu mobile -->
+				<div class="menu_mobile">
+					<ul class="ul_collections">
+						
+						<li class="level0 level-top parent">
+							<a href="/">Trang chủ</a>
+							
+						</li>
+						
+						<li class="level0 level-top parent">
+							<a href="/gioi-thieu">Giới thiệu</a>
+							
+						</li>
+						
+						<li class="level0 level-top parent" id="showCategory">
+							<a >Sản phẩm</a>
+							
+							<i class="fa fa-plus"></i>
+							<ul class="level0" id="category-child" style="display: block;">
+								
+								<% data.forEach(function(item, i){ %>
+									<li class="level1 ">
+										
+										<a href="/getCategory-products?id=<%= item.id %>" title="Áo Thun"><span><%= item.name %></span></a>
+										
+									</li>
+									<% }); %>
+								
+								<li class="level1 "> 
+									<a href="/san-pham-moi"> <span>Sản phẩm mới</span> </a>
+									
+								</li>
+								
+								<li class="level1 "> 
+									<a href="/san-pham-noi-bat"> <span>Sản phẩm nổi bật</span> </a>
+									
+								</li>
+								
+								<li class="level1 "> 
+									<a href="/san-pham-ban-chay"> <span>Sản phẩm bán chạy</span> </a>
+									
+								</li>
+								
+								<li class="level1 "> 
+									<a href="/san-pham-khuyen-mai"> <span>Sản phẩm khuyến mãi</span> </a>
+									
+								</li>
+								
+							</ul>
+							
+						</li>
+						
+						<li class="level0 level-top parent">
+							<a href="/tin-tuc">Tin tức</a>
+							
+						</li>
+						
+						<li class="level0 level-top parent">
+							<a href="/lien-he">Liên hệ</a>
+							
+						</li>
+						
+					</ul>
+				</div>
+
+
+			</div>
+		</div>
+
+	</div>
+</div>
+<script>
+	$( "#showMenu" ).on( "click", function() {
+		$('#showMenuMobile').slideToggle(600);
+});
+$( "#showCategory" ).on( "click", function() {
+		$('#category-child').slideToggle(600);
+});
+</script>

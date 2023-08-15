@@ -2,6 +2,7 @@ import express from "express";
 
 import homcontroller from "../controllers/homcontroller";
 import userController from "../controllers/userController";
+import danhSachController from "../controllers/danhSachController";
 import productController from "../controllers/productController";
 
 import multer from 'multer';
@@ -34,19 +35,14 @@ let upload = multer({ storage: storage, fileFilter: imageFilter,limits:{fileSize
 let router = express.Router();
 
 let initWebRouter = (app)=>{
-    router.get('/',(req, res)=>{
+    router.get('/admin',(req, res)=>{
         return res.send('adafd')
     }) 
-    router.get('/admin/userController',userController.handleGetUser);
-<<<<<<< HEAD
-=======
-    // router.post('/admin/userController',userController.handleGetUser);
-    // router.put('/admin/userController',userController.handleGetUser);
-    
->>>>>>> 3aca2b3ead3edb215988791baddcc0929c36581b
+     router.get('/listDanhSach',danhSachController.listDanhSach);
+     router.post('/AddDanhSach',danhSachController.addDanhSach);
+    // router.get('/admin/userController',userController.handleGetUser);
+    // router.get('/add-category',userController.addCategory);
 
-    router.get('/listSanPham',productController.listSanPham);
-    
     
     return app.use("/",router)
 }

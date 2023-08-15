@@ -1,0 +1,149 @@
+
+<div class="tophead section">
+	<div class="container">
+		<div class="contenttop">
+			<div class="topbar_left f-left account_xs">
+
+				<ul class="ul_account">
+											
+					<li>
+						<a href="/account/register" title="Đăng ký" class="account_a a_db">
+							<span>Đăng ký</span>
+						</a>
+					</li>
+					<li>
+						<a href="/account/login" title="Đăng nhập" class="account_a a_db">
+							<span>Đăng nhập</span>
+						</a>
+					</li>
+					
+				</ul>
+			</div> 
+			<div class="topbar_right f-right hidden-xs">
+				<ul class="ul_account">
+					<li><a href="">Hướng dẫn</a></li>
+					<li><a href="/cart">Đơn hàng</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+<header class="header header_menu">
+	<div class="mid-header wid_100">
+		<div class="container">
+			<div class="content_header">
+				<div class="header-main">
+					<div class="row">
+						<div class="col-xl-3 col-lg-2 col-md-12 col-sm-12 col-xs-12">
+							<div class="logo_center">
+								<div class="logo">
+									
+									<a href="/" class="logo-wrapper ">	
+										<img src="//bizweb.dktcdn.net/100/091/100/themes/880371/assets/logo.png?1676015176971" alt="logo Vemouse">
+									</a>
+									
+								</div>
+							</div>
+						</div>
+						<div class="col-xl-7 col-lg-8 col-md-12 a-center right_header_mid hidden-sm">
+							<div class="section hidden-xs hidden-sm">
+								<div class="heade_menu">
+									<div class="header_service">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="wrp">
+                                                    <div class="font_wave">
+                                                        <i class="fas fa-truck"></i>
+                                                    </div>
+                                                    <div class="text-policy">
+                                                        <p>Miễn phí vận chuyển</p>
+                                                        <span>Với đơn hàng trị giá trên <strong>1.000.000đ</strong></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="wrp">
+                                                    <div class="font_wave">
+                                                        <i class="fas fa-phone"></i>
+                                                    </div>
+                                                    <div class="text-policy">
+                                                        <p>Đặt hàng nhanh</p>
+                                                        <span>Gọi ngay</span> <a href="tel:19006750">19006750</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+								</div>
+							</div>
+						</div>
+						<div class="col-xl-2 col-lg-2 hidden-md hidden-sm hidden-xs">
+							<div class="cartgroup ">
+								<div class="header-right inline-block">
+									<div class="top-cart-contain f-right">
+										<div class="mini-cart text-xs-center block-cart">
+											<div class="heading-cart cart_header visible-xl visible-lg hidden-md hidden-sm hidden-xs">
+												<a class="iconcarts" href="/cart" title="Giỏ hàng">
+													<img src="//bizweb.dktcdn.net/100/091/100/themes/880371/assets/icon-cart.png?1676015176971" alt="icon-cart">
+												</a>
+												<div class="heading-cart text-xs-left">
+													<a href="/cart">Giỏ hàng</a>
+													<p><span>(<span class="count_item count_item_pr cartCount hidden-count">0</span>)</span> Sản phẩm</p>
+												</div>
+											</div>
+											
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</header>
+<div class="container">
+	<div class="row">
+		<div class="hidden-md hidden-lg hidden-xl col-xs-12 col-sm-12">
+			<div class="cartgroup ">
+				<div class="header-right inline-block">
+					<div class="top-cart-contain">
+						<div class="mini-cart text-xs-center">
+							<div class="heading-cart cart_header visible-xs visible-sm hidden-md hidden-lg hidden-xl">
+								<div class="serachpc">
+									<div class="searchform">
+										<form action="/search" method="get" class="input-group search-bar" role="search">
+											<input type="text" name="query" value="" autocomplete="off" placeholder="Tìm kiếm..." class="input-group-field auto-search visible_index">
+											<button type="submit" class="visible_index btn icon-fallback-text">
+												<i class="fa fa-search"></i>      
+											</button>
+										</form>
+									</div>
+								</div>
+								<a class="iconcarts" href="/cart" title="Giỏ hàng">
+									<img src="//bizweb.dktcdn.net/100/091/100/themes/880371/assets/icon-cart.png?1676015176971" alt="icon-cart">
+								</a>
+								<div class="heading-cart text-xs-left">
+									<span class="count_item count_item_pr hidden-count">0</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="w-100 review-section">
+
+</div>
+
+<script>
+    $(document).ready(function(){
+        $.get('/getCategory-menu', function (data) {
+            $('.review-section').empty().append(data)
+        });
+    })
+</script>
