@@ -1,22 +1,21 @@
 const { QueryTypes } = require('sequelize');
 // import sequelize from "../../src/config/queryDatabase"
 import sequelize from "../../config/queryDatabse"
-let getCategoriesService = ()=>{
+let getNewsService = (data)=>{
     return new Promise(async(resolve, reject)=>{
        
         try {
-
-            let  data1 = await sequelize.query(`
-            SELECT * FROM  categories 
+            const listNews = await sequelize.query(`
+                SELECT *
+                FROM news
+                ORDER BY id DESC limit 6
                 `, { type: QueryTypes.SELECT });
-               
-               
+          
                 resolve({ 
                     errCode:0,
                     errMessage: 'thành công',
-                    data:data1
-                 })
-                      
+                    listNews:listNews
+                 })     
   
         } catch (error) {
              reject(error);
@@ -25,7 +24,7 @@ let getCategoriesService = ()=>{
          
      }) 
 }
-
 module.exports  = {
-    getCategoriesService:getCategoriesService,   
+    getNewsService:getNewsService
+
 }

@@ -1,0 +1,131 @@
+
+    <div class="section_best_sale aside-filter clearfix">
+      <div class="aside-item aside-mini-list-product">
+        <div class="left-content">
+          <div class="section_title_base">
+            <h2 class="title_modules" title="Sản phẩm bán chạy">
+              <a href="/san-pham-noi-bat">Sản phẩm bán chạy</a>
+
+              <div class="btn-next-prev">
+                <span id="prev-product"><i class="fas fa-chevron-left"></i></span>
+                <span id="next-product"><i class="fas fa-chevron-right"></i></span>
+              </div>
+                
+            </h2>
+            
+          </div>
+        </div>
+       
+        <div class="related-products">
+            
+                
+          <div class="product-mini-lists slick3category slick_margin slick-initialized ">
+            <% data.forEach(function(item, i){ %>
+              <% if(item.id &&i <= 2){ %>
+                    <div class="products itemss" style="width: 100%; display: inline-block">
+                      <div class="item_small">
+                        <div class="product-box-3 product-loop-3 product-loop-4 product-box-5">
+                          <div class="product-thumbnail">
+                            <a class="image_link display_flex" href="/ao-phong-vitage-trang" title="<%= item.tenSp %>" tabindex="0">
+                              <img class="lazyload loaded" src="<%= item.image %>" data-src="<%= item.image %>" alt="<%= item.tenSp %>" data-was-processed="true">
+                            </a>
+                          </div>
+
+                          <div class="product-info a-left">
+                            <h3 class="product-name">
+                              <a href="/ao-phong-vitage-trang" title="<%= item.tenSp %>" tabindex="0"><%= item.tenSp %></a>
+                            </h3>
+                            <div class="product-hideoff">
+                              <div class="product-hide">
+                                <div class="price-box clearfix">
+
+                                  <div class="special-price">
+                                    <span class="price product-price"><%= item.giaBan %> </span>
+                                  </div>
+                                  <% if(item.sale >0){ %>
+                                  <div class="old-price">
+                                    <span class="price product-price-old">
+                                        <%= item.giaSanPham %>
+                                    </span>
+                                  </div>
+                                  <% } %>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          
+                        </div>
+                      </div>
+                    
+                    </div> 
+                    <% } %> 
+                    <% }); %>               
+          </div>
+          
+         
+            <div class="product-mini-lists slick3category slick_margin slick-initialized ">
+              <% data.forEach(function(item, i){ %>
+                <% if(i >2){ %>
+                <div class="products itemss" style="width: 100%; display: inline-block">
+                    
+                  <div class="item_small">
+                    <div class="product-box-3 product-loop-3 product-loop-4 product-box-5">
+                      <div class="product-thumbnail">
+                        <a class="image_link display_flex" href="/ao-phong-vitage-trang" title="<%= item.tenSp %>" tabindex="0">
+                          <img class="lazyload loaded" src="<%= item.image %>" data-src="<%= item.image %>" alt="<%= item.tenSp %>" data-was-processed="true">
+                        </a>
+                      </div>
+
+                      <div class="product-info a-left">
+                        <h3 class="product-name">
+                          <a href="/ao-phong-vitage-trang" title="<%= item.tenSp %>" tabindex="0"><%= item.tenSp %></a>
+                        </h3>
+                        <div class="product-hideoff">
+                          <div class="product-hide">
+                            <div class="price-box clearfix">
+
+                              <div class="special-price">
+                                <span class="price product-price"><%= item.giaBan %> </span>
+                              </div>
+                              <% if(item.sale >0){ %>
+                              <div class="old-price">
+                                <span class="price product-price-old">
+                                    <%= item.giaSanPham %>
+                                </span>
+                              </div>
+                              <% } %>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                </div> 
+                <% } %>
+                <% }); %>   
+      </div>
+       
+       
+        </div>
+       
+       
+      </div>
+    </div>
+    <script
+    type="text/javascript"
+    src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"
+  ></script>
+  <script>
+    $(document).ready(function () {
+      $(".related-products").slick({
+        dots: false,
+
+        infinite: false,
+        arrows: true,
+        prevArrow:$('#prev-product'),
+        nextArrow:$('#next-product'),
+        speed: 600,
+      });
+    });
+  </script>
