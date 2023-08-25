@@ -83,10 +83,10 @@
 		</div>
 	</div>
 	<div class="wrapmenu d-xl-none d-lg-none">
-		<div class="wrapmenu_full menumain_full" id="showMenuMobile" style="display: none;">
+		<div class="wrapmenu_full menumain_full" >
 			<div class="containers">
 				<!-- Menu mobile -->
-				<div class="menu_mobile">
+				<div class="menu_mobile" id="showMenuMobile"  style="display: none;">
 					<ul class="ul_collections">
 						
 						<li class="level0 level-top parent">
@@ -103,7 +103,7 @@
 							<a >Sản phẩm</a>
 							
 							<i class="fa fa-plus"></i>
-							<ul class="level0" id="category-child" style="display: block;">
+							<ul class="level0" id="category-child" style="display: none;">
 								
 								<% data.forEach(function(item, i){ %>
 									<li class="level1 ">
@@ -158,7 +158,7 @@
 </div>
 <script>
 	$( "#showMenu" ).on( "click", function() {
-		$('#showMenuMobile').slideToggle(600);
+		$('#showMenuMobile').slideToggle(500);
 });
 $( "#showCategory" ).on( "click", function() {
 		$('#category-child').slideToggle(600);

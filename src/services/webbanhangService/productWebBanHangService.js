@@ -31,13 +31,38 @@ let getNewProductsService = ()=>{
         try {
 
             let  newProducts = await sequelize.query(`
-            SELECT id,tenSp,giaSanPham,sale,image FROM  products order by luotMua desc limit 10
+            SELECT id,tenSp,giaSanPham,sale,image FROM  products  order by id desc limit 12
                 `, { type: QueryTypes.SELECT });
                
                 resolve({ 
                     errCode:0,
                     errMessage: 'thành công',
-                    newProducts:newProducts
+                    newProducts:newProducts,
+                    
+                 })
+                      
+  
+        } catch (error) {
+             reject(error);
+        }
+         
+         
+     }) 
+}
+let getProductsSaleService = ()=>{
+    return new Promise(async(resolve, reject)=>{
+       
+        try {
+
+            let  productsSales = await sequelize.query(`
+            SELECT id,tenSp,giaSanPham,sale,image FROM  products where sale > 15 or sale = 15 order by sale desc limit 12
+                `, { type: QueryTypes.SELECT });
+               
+                resolve({ 
+                    errCode:0,
+                    errMessage: 'thành công',
+                    productsSales:productsSales,
+                    
                  })
                       
   
@@ -51,5 +76,6 @@ let getNewProductsService = ()=>{
 
 module.exports  = {
     getSanPhamBanChayProductsService:getSanPhamBanChayProductsService,   
-    getNewProductsService:getNewProductsService
+    getNewProductsService:getNewProductsService,
+    getProductsSaleService:getProductsSaleService
 }
