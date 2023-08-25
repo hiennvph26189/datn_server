@@ -18,7 +18,7 @@ initWebRouter(app);
 
 
 
-let port = process.env.PORT;
+let port = process.env.PORT || 8000;
 app.listen(port,()=>{
     console.log("đang chạy PORT: " + port);
 });

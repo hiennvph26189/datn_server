@@ -2,6 +2,7 @@ import express from "express";
 
 import homcontroller from "../controllers/homcontroller";
 import userController from "../controllers/userController";
+import productController from "../controllers/productController";
 
 import multer from 'multer';
 import path from 'path';
@@ -34,15 +35,12 @@ let router = express.Router();
 
 let initWebRouter = (app)=>{
     router.get('/',(req, res)=>{
-        return res.send('adafd')
+        return res.send('Đây là trang chủ')
     }) 
-    router.get('/admin/userController',userController.handleGetUser);
-    router.post('/admin/userController',userController.handleGetUser);
-    router.put('/admin/userController',userController.handleGetUser);
-
-    router.get('/admin/userController',userController.handleGetUser);
-    router.post('/admin/userController',userController.handleGetUser);
-    router.put('/admin/userController',userController.handleGetUser);
+    router.get('/user',userController.handleGetUser);
+    router.get('/product',productController.handleGetProduct);
+    router.post('/users/create-user',userController.handlerCreateUser)
+ 
     
     return app.use("/",router)
 }
