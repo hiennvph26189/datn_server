@@ -20,11 +20,41 @@ let handleGetUser = (data)=>{
         } catch (error) {
              reject(error);
         }
+             
+     }) 
+}
+let handleCreateUser = (data)=>{
+    return new Promise(async(resolve, reject)=>{
+        try {
+            let firstName = data.firstname;
+            let lastName = data.lastname;
+            let email = data.email;
+            let password = data.password;
+            let phoneNumber = data.phonenumber;
+            let address = data.address;
+            let roleID = data.gioitinh;
+            var today = new Date();
+            const result = await sequelize.query(`
+            INSERT INTO users (firstName, lastName, email, password, phoneNumber, address, roleID, createdAT, updatedAT)
+            VALUES ('${firstName}', '${lastName}', '${email}', '${password}', '${phoneNumber}', '${address}', '${roleID}', '${today}', '${today}');
+                `, { type: QueryTypes.INSERT });
+          
+                resolve({ 
+                    errCode:0,
+                    errMessage: 'thành công',
+                    result:result
+                 })     
+  
+        } catch (error) {
+             reject(error);
+        }
          
          
      }) 
 }
-module.exports  = {
-    handleGetUser:handleGetUser
 
+
+module.exports  = {
+    handleGetUser:handleGetUser,
+    handleCreateUser:handleCreateUser,
 }
