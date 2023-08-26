@@ -39,8 +39,9 @@ let initWebRouter = (app)=>{
     }) 
     router.get('/user',userController.handleGetUser);
     router.get('/product',productController.handleGetProduct);
-    router.post('/users/create-user',userController.handlerCreateUser)
- 
+    router.post('/users/create-user',userController.handlerCreateUser);
+    
+    router.post('/delete-user/:id',userController.deleteUser);
     
     return app.use("/",router)
 }
