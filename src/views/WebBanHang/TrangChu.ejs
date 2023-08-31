@@ -133,9 +133,10 @@
                                     <button class="btn btn-cart btn btn-circle left-to btn_tuychon" title="Chọn sản phẩm" type="button" onclick="window.location.href='/ao-so-mi-asos-asm08'" tabindex="-1">
                                       Chọn sản phẩm
                                     </button>
-                                    <a title="Xem nhanh" href="/ao-so-mi-asos-asm08" data-handle="ao-so-mi-asos-asm08" class="xem_nhanh btn-circle btn_view btn right-to quick-view hidden-xs hidden-sm hidden-md" tabindex="-1">
+                                    <button title="Xem nhanh" type="button"  data-url="/products-detal-item?id=<%= item.id %>" data-bs-toggle="modal" data-bs-target="#myModal"  data-handle="ao-so-mi-asos-asm08" class="xem_nhanh btn-circle btn_view btn right-to quick-view hidden-xs hidden-sm hidden-md" >
                                       Xem nhanh
-                                    </a>
+                                    </button>
+                                    
                                   </div>
                                 </form>
                               </div>
@@ -271,13 +272,119 @@
             </div>
             
           </div>
+          <div class="section_product_news">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="section_title_base">
+                  <h2 class="title_modules">
+                    <a href="/san-pham-noi-bat" title="Sản phẩm mới">Sản phẩm được mua nhiều nhất</a>
+                    <div class="btn-next-prev">
+                      <span id="prev-product-hot-order"><i class="fas fa-chevron-left"></i></span>
+                      <span id="next-product-hot-order"><i class="fas fa-chevron-right"></i></span>
+                    </div>
+                  </h2>
+                  
+                </div>
+               
+                <div class="section owl_nav_custome2 section_content">
+                 
+                  <div class="owl_product_hot_order">
+                    <% listProductOrder.forEach(function(item, i){ %>
+                        <div class="item_product_main ">
+                          <div class="product-loop-base">
+                            <span class="number-sale">
+                              <i class="fas fa-certificate"> <span class="number-child-sale"><%= item.sale %>%</span> </i>
+                            </span>
+                            <div class="product-thumbnail">
+                              <a class="image_link display_flex_small display_flex" href="/ao-so-mi-asos-asm08" title="<%= item.tenSp %>" tabindex="-1">
+                                <img class="lazyload loaded" src="<%= item.image %>" data-src="<%= item.image %>" alt="<%= item.tenSp %>" data-was-processed="true">
+                              </a>
+                              <div class="product-action clearfix hidden-xs">
+                                <form action="/cart/add" method="post" data-cart-form="" class="variants form-nut-grid" data-id="product-actions-2842754" enctype="multipart/form-data">
+                                  <div class="group_action">
+                                    <input class="hidden" type="hidden" name="variantId" value="4534384" tabindex="-1">
+                                    <button class="btn btn-cart btn btn-circle left-to btn_tuychon" title="Chọn sản phẩm" type="button" onclick="window.location.href='/ao-so-mi-asos-asm08'" tabindex="-1">
+                                      Chọn sản phẩm
+                                    </button>
+                                    <a title="Xem nhanh" href="/ao-so-mi-asos-asm08" data-handle="ao-so-mi-asos-asm08" class="xem_nhanh btn-circle btn_view btn right-to quick-view hidden-xs hidden-sm hidden-md" tabindex="-1">
+                                      Xem nhanh
+                                    </a>
+                                  </div>
+                                </form>
+                              </div>
+                            </div>
+                            <div class="product-info a-left">
+                              <h3 class="product-name">
+                                <a href="/ao-so-mi-asos-asm08" title="Áo sơ mi Asos ASM08" tabindex="-1"><%= item.tenSp %></a>
+                              </h3>
+                              <div class="product-hideoff">
+                                <div class="product-hide">
+                                  <div class="price-box clearfix">
+                                    <div class="special-price">
+                                      <span class="price product-price"> <%= item.giaBanSale %>		</span>
+                                    </div>
+                                    <% if(item.sale >0){ %>
+                                    <div class="old-price">															 
+                                      <span class="price product-price-old">
+                                        <%= item.giaSanPham %>
+                                      </span>
+                                    </div>
+                                    <% } %>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <% }); %>  
+                  </div>
+                 
+                </div>
+                
+              </div>
+            </div>
+            
+          </div>
+          <div class="section_1banner">
+            <div class="padding">
+              <div class="row"> 
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <div class="adv_bottom_inner">
+                    <figure class="img_effect">
+                      <a href="#" title="Banner">
+                        <img style="width: 100%; object-fit: cover;" class="lazyload loaded" src="//bizweb.dktcdn.net/100/091/100/themes/880371/assets/banner.jpg?1676015176971" data-src="//bizweb.dktcdn.net/100/091/100/themes/880371/assets/banner.jpg?1676015176971" alt="Banner" data-was-processed="true">
+                      </a>
+                    </figure>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         
         </div>
         
       </div>
     </div>
+    
+    <div class="modal fade " id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          
+        </div>
+      </div>
+    </div>
+    <%- include('./footer'); %>
     <script>
+      $('.xem_nhanh').on('click', function(e){
+        e.preventDefault()
+        let url = $(this).data('url')
+       
+          $.get(url, function (data) {
+          $(".modal-content").empty().append(data);
+          
+        });       
+      })
       $(document).ready(function () {
         $.get("/danhMucSanPham-menu", function (data) {
                 $(".asidecollection").empty().append(data);
@@ -288,9 +395,8 @@
         $.get("/getTinTuc-News", function (data) {
           $(".tintuc").empty().append(data);
         });
+       
       });
-    </script>
-     <script>
       $(document).ready(function () {
         $(".owl_product_news").slick({
           dots: false,
@@ -334,7 +440,29 @@
             },
           ],
         });
+        $(".owl_product_hot_order").slick({
+          dots: false,
+          infinite: false,
+          arrows: true,
+          slidesToShow: 4,
+          slidesToScroll: 4,
+          autoplay: false,
+          prevArrow:$('#prev-product-hot-order'),
+          nextArrow:$('#next-product-hot-order'),
+          speed: 1000,
+          responsive: [
+            {
+              breakpoint: 480,
+              settings: {
+                arrows: false,
+                slidesToShow: 2,
+                slidesToScroll: 2,
+              },
+            },
+          ],
+        });
       });
+
       
     </script>
   </body>

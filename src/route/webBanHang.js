@@ -11,6 +11,7 @@ let router = express.Router();
 let webBanHang = (app)=>{
     router.get('/',trangChuController.getTrangChu) 
     router.get('/TrangChu',trangChuController.getTrangChu);
+    router.get('/products-detal-item',trangChuController.getProductsDetailItem);
     router.get('/getCategory-menu',menuController.getCategoryMenu);
     router.get('/getCategory-products',menuController.getCategoryProducts);
     router.get('/danhMucSanPham-menu',menuController.getDanhMucSanPham);

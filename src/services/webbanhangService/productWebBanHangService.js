@@ -73,9 +73,68 @@ let getProductsSaleService = ()=>{
          
      }) 
 }
+let getProductsOrderService = ()=>{
+    return new Promise(async(resolve, reject)=>{
+       
+        try {
+
+            let  productsOrders = await sequelize.query(`
+            SELECT id,tenSp,giaSanPham,sale,image FROM  products  order by luotMua desc limit 12
+                `, { type: QueryTypes.SELECT });
+               
+                resolve({ 
+                    errCode:0,
+                    errMessage: 'thành công',
+                    productsOrders:productsOrders,
+                    
+                 })
+                      
+  
+        } catch (error) {
+             reject(error);
+        }
+         
+         
+     }) 
+}
+let getOneProductService = (id)=>{
+    return new Promise(async(resolve, reject)=>{
+       
+        try {
+
+            let  getOneProduct = await sequelize.query(`
+            SELECT * FROM  products  where id = '${id}'
+                `, { type: QueryTypes.SELECT });
+            if(getOneProduct){
+                resolve({ 
+                    errCode:0,
+                    errMessage: 'thành công',
+                    getOneProduct:getOneProduct,
+                    
+                 })
+            }else{
+                resolve({ 
+                    errCode:1,
+                    errMessage: 'Sản phẩm không tồn tại',
+                    getOneProduct:{},
+                    
+                 })  
+            }
+               
+                      
+  
+        } catch (error) {
+             reject(error);
+        }
+         
+         
+     }) 
+}
 
 module.exports  = {
     getSanPhamBanChayProductsService:getSanPhamBanChayProductsService,   
     getNewProductsService:getNewProductsService,
-    getProductsSaleService:getProductsSaleService
+    getProductsSaleService:getProductsSaleService,
+    getProductsOrderService:getProductsOrderService,
+    getOneProductService:getOneProductService
 }
