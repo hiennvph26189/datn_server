@@ -42,7 +42,8 @@ let initWebRouter = (app)=>{
     router.post('/users/create-user',userController.handlerCreateUser);
     
     router.post('/delete-user/:id',userController.deleteUser);
-    
+    router.get('/update-user/:id',userController.updateUser);
+    router.post('/users/update-user',userController.handleUpdateUser);
     return app.use("/",router)
 }
 module.exports = initWebRouter
