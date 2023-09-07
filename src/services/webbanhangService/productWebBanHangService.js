@@ -1,5 +1,6 @@
 const { QueryTypes } = require('sequelize');
 // import sequelize from "../../src/config/queryDatabase"
+
 import sequelize from "../../config/queryDatabse"
 let getSanPhamBanChayProductsService = ()=>{
     return new Promise(async(resolve, reject)=>{
@@ -97,6 +98,91 @@ let getProductsOrderService = ()=>{
          
      }) 
 }
+let getCategoriesService = ()=>{
+    return new Promise(async(resolve, reject)=>{
+       
+        try {
+
+            let  results = await sequelize.query(`
+            SELECT categories.id AS category_id, categories.name, products.id AS product_id, products.tenSp, products.idDanhSach, products.giaSanPham,products.sale,products.image
+            FROM categories
+             JOIN products ON categories.id = products.idDanhSach 
+                `, { type: QueryTypes.SELECT });
+            // let arrData = []
+            const combinedArray = [];
+            let currentCategory = null;
+          
+            for (const row of results) {
+              if (row.category_id !== currentCategory) {
+                currentCategory = row.category_id;
+                combinedArray.push({
+                  id: row.category_id,
+                  name: row.name,
+                  products: []
+                });
+                // combinedArray.push( row);
+              }
+          
+              if (row.product_id) {
+                combinedArray[combinedArray.length - 1].products.push({
+                  id: row.product_id,
+                  tenSp: row.tenSp,
+                  sale: row.sale,
+                  idDanhSach: row.idDanhSach,
+                  giaSanPham: row.giaSanPham.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }),
+                  giaBanSale: (row.giaSanPham-(row.giaSanPham*(row.sale/100))).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }),
+                  image: JSON.parse(row.image)[0] 
+                });
+              }
+            }
+          
+            console.log(combinedArray);
+
+            // let categoriesProducts = []
+            // let  products = await sequelize.query(`
+            //     SELECT * FROM  products  order by id desc limit 12
+            // `, { type: QueryTypes.SELECT });
+
+            // categories.map(async(item,index)=>{
+                
+            //         let  products = await sequelize.query(`
+            //         SELECT * FROM  products  where idDanhSach = ${item.id} order by id desc limit 12
+            //     `, { type: QueryTypes.SELECT });
+                    // item.child = products
+                    // products.map((item2,index2)=>{
+                    //     if(item2.idDanhSach == item.id  ){
+                    //         item2.giaSanPham= item2.giaSanPham.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }),
+                    //         item2.giaBanSale= (item2.giaSanPham-(item2.giaSanPham*(item2.sale/100))).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }),
+                    //         item2.image = JSON.parse(item2.image)[0]
+                    //         categoriesProducts.push(item2)
+                    //     }
+                    // })
+                    // item.childProducts = categoriesProducts
+                    // arrData.push(item); 
+                //     item.chid = products
+                   
+                  
+                     
+                // })
+               
+                resolve (
+                    { 
+                        errCode:0,
+                        errMessage: 'thành công',
+                        data:combinedArray,
+                    }
+                    )
+           
+                      
+  
+        } catch (error) {
+             reject(error);
+        }
+         
+         
+     }) 
+}
+
 let getOneProductService = (id)=>{
     return new Promise(async(resolve, reject)=>{
        
@@ -136,5 +222,7 @@ module.exports  = {
     getNewProductsService:getNewProductsService,
     getProductsSaleService:getProductsSaleService,
     getProductsOrderService:getProductsOrderService,
-    getOneProductService:getOneProductService
+    getOneProductService:getOneProductService,
+    getCategoriesService:getCategoriesService,
+    
 }

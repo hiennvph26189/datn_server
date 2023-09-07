@@ -1,4 +1,5 @@
 import productWebBanHangService from "../../services/webbanhangService/productWebBanHangService";
+
 let getConvertArrProduct = (arrData)=>{
   const newArray = arrData.map(item => {
     return {
@@ -11,7 +12,9 @@ let getConvertArrProduct = (arrData)=>{
   return newArray
 }
 let getConvertArrDetailProduct = (arrData)=>{
+  
   const newArray = arrData.map(item => {
+
     return {
       ...item,
       giaSanPham: item.giaSanPham.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }),
@@ -33,11 +36,17 @@ let getTrangChu = async (req, res) => {
 
         let listProductsOrder = await productWebBanHangService.getProductsOrderService()
         let arrProductOrder = getConvertArrProduct(listProductsOrder.productsOrders)
+
+       let listCatrgories = await productWebBanHangService.getCategoriesService()
+
+      
+      //  return res.status(200).json(listCatrgories) 
       return res.render("webBanHang/TrangChu",
       {
         newProducts:arrNewProducts,
         listProductsSale:arrProductSale,
-        listProductOrder:arrProductOrder
+        listProductOrder:arrProductOrder,
+        listCatrgories: listCatrgories.data
       })
      } catch (error) {
          console.log("Lỗi phân quyền",error)
