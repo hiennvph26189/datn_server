@@ -33,19 +33,12 @@ const imageFilter = function (req, file, cb) {
 let upload = multer({ storage: storage, fileFilter: imageFilter,limits:{fileSize:1*1024*1024}});
 let router = express.Router();
 
-let initWebRouter = (app)=>{
-    router.get('/',(req, res)=>{
-        return res.send('Đây là trang chủ')
-    }) 
-    router.get('/user',userController.handleGetUser);
-    router.get('/product',productController.handleGetProduct);
-    router.post('/users/create-user',userController.handlerCreateUser);
+// get , post , delete, push
+let initApiRouter = (app)=>{
+    router.get('/test-api',apiController.testApi)
     
-    router.post('/delete-user/:id',userController.deleteUser);
-    router.get('/update-user/:id',userController.updateUser);
-    router.post('/users/update-user',userController.handleUpdateUser);
+    router.post('/register',apiController.handleRegister)
 
-    router.get('/api/test-api',apiController.testApi)
-    return app.use("/",router)
+    return app.use("/api/v1/",router)
 }
-module.exports = initWebRouter
+module.exports = initApiRouter

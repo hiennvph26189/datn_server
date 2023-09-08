@@ -2,7 +2,7 @@ import  express  from "express";
 import bodyParser from "body-parser";
 import viewEngine from "./config/viewEngine";
 import initWebRouter from "./route/web";
-
+import initApiRouter from "./route/api";
 
 import cors from "cors";
 require('dotenv').config();
@@ -14,6 +14,7 @@ app.use(bodyParser.urlencoded({limit:'50mb', extended: true }));
 
 viewEngine(app);
 initWebRouter(app);
+initApiRouter(app);
 
 
 
