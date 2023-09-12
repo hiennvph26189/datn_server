@@ -901,8 +901,7 @@ img {
     min-height: 233.48px;
 }
 .product-loop-base .product-thumbnail>a.display_flex img {
-    height: 280px;
-   
+    height: 300px;
     width: 100% !important;
     max-width: 100%;
     display: block;
@@ -1397,6 +1396,183 @@ img {
         justify-content: center;
         align-items: center;
     }
+    .bread-crumb {
+    padding: 10px 0;
+    margin-bottom: 10px;
+}
+.no-padding {
+    padding: 0 !important;
+}
+.breadcrumb {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    margin: 0;
+    font-size: 14px;
+    border-radius: 0;
+    font-weight: 400;
+    line-height: 24px;
+    background-color: transparent;
+    font-size: 14px;
+    padding: 0px 0px 15px 0px;
+    border-radius: 0px;
+    border-bottom: 1px solid #e1e1e1;
+    width: 100%;
+    text-align: left;
+}
+
+.breadcrumb {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+    list-style: none;
+   
+    border-radius: 0.25rem;
+}
+.breadcrumb li {
+    display: inline;
+}
+.breadcrumb li a:hover, .breadcrumb li.active, .breadcrumb li strong {
+    color: #66a182;
+    font-weight: 400;
+    text-decoration: none;
+}
+.breadcrumb li a:hover span, .breadcrumb li.active span, .breadcrumb li strong span {
+    color: #66a182;
+}
+
+.breadcrumb li span {
+    display: inline;
+    color: #252525;
+}
+.collectiontitle {
+    float: left;
+    width: 100%;
+    padding: 12px 0 0 0;
+}
+.collectiontitle h1 {
+    font-size: 18px;
+    font-family: "Roboto",sans-serif;
+    padding: 0;
+    margin: 0;
+    color: #252525;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+.category-products {
+    width: 100%;
+    float: left;
+}
+.collection .category-products .sortPagiBar {
+    display: inline-block;
+    margin-top: 5px;
+    background: #fff;
+    float: left;
+    width: 100%;
+    padding: 12px 20px 12px 20px;
+    margin-bottom: 30px;
+    border: 1px solid #e1e1e1;
+}
+.inline-block {
+    display: inline-block !important;
+}
+.sort-cate {
+    display: inline-block;
+    float: left;
+}
+#sort-by {
+    float: right;
+    font-size: 12px;
+    text-align: left;
+}
+#sort-by ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: inline;
+    float: right;
+}
+#sort-by>ul>li {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    cursor: pointer;
+    line-height: 30px;
+    border-radius: 0px;
+    background-color: #66a182;
+    color: #fff;
+    position: relative;
+}
+#sort-by li {
+    background: none repeat scroll 0 0 #fff;
+    cursor: pointer;
+    margin: 0 auto;
+    outline: medium none;
+    padding: 0 15px;
+    position: relative;
+    width: 130px;
+    float: left;
+    color: #fff;
+    font-size: 16px;
+}
+#sort-by>ul>li:before {
+    content: "\f0d7";
+    font-family: "Font Awesome\ 5 Free";
+    width: 25px;
+    font-weight: 900;
+    height: 25px;
+    line-height: 20px;
+    text-align: center;
+    top: 4px;
+    right: 3px;
+    color: #fff;
+    position: absolute;
+}
+#sort-by ul ul {
+    position: absolute;
+    visibility: hidden;
+    width: 130px;
+    left: -1px;
+    top: 30px;
+    background: none repeat scroll 0 0 #F8F8F8;
+    z-index: 10000;
+    border: 1px solid #ebebeb;
+    border-radius: 0px;
+    overflow: hidden;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+    overflow: hidden;
+    background: #fff;
+    padding-left: 0px !important;
+}
+#sort-by li li {
+    width: 100%;
+    margin-top: 0px;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+}
+#sort-by a:link, #sort-by a:visited {
+    color: #333;
+    text-decoration: none;
+    
+}
+
+#sort-by li>a {
+    display: inline-block;
+    width: 100%;
+    line-height: 30px;
+    transition: all 0s ease-in-out;
+}
+#sort-by li:hover>ul {
+    visibility: visible;
+}
+#sort-by li li a:hover {
+    color: #66a182;
+    margin-left: 10px;
+    transition: .5s;
+}
 @media (max-width: 767px){
     .order-xs-last {
         order: 13 !important;

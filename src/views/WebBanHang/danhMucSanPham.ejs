@@ -1,5 +1,5 @@
 <aside class="aside-item sidebar-category collection-category margin-bottom-20">
-        <div class="aside-title">
+        <div class="aside-title" >
             <h2 class="title-head margin-top-0 cate"><i class="fas fa-bars"></i><span>Danh mục sản phẩm</span></h2>
         </div>
         <div class="aside-content">
@@ -8,7 +8,7 @@
                     <% data.forEach(function(item, i){ %>
                         <li class="nav-item ">
                             
-                            <a  href="/getCategory-products?id=<%= item.id %>" class="nav-link a1" title="<%= item.name %>"><span><%= item.name %></span></a>
+                            <a  href="/getCategory-products?id=<%= item.id %>&&page=1" class="nav-link a1" title="<%= item.name %>"><span><%= item.name %></span></a>
                             
                         </li>
                         <% }); %>
