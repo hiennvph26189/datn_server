@@ -13,6 +13,8 @@ let webBanHang = (app)=>{
     router.get('/TrangChu',trangChuController.getTrangChu);
     router.get('/products-detal-item',trangChuController.getProductsDetailItem);
     router.get('/getCategory-menu',menuController.getCategoryMenu);
+    router.get('/sapXep-products',menuController.sapXepProduct);
+    
     router.get('/getCategory-products',menuController.getCategoryProducts);
     router.get('/danhMucSanPham-menu',menuController.getDanhMucSanPham);
     router.get('/sanPhamBanChay-products',productController.getSanPhamBanChayProducts);

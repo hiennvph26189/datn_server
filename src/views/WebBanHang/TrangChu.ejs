@@ -119,9 +119,11 @@
                     <% newProducts.forEach(function(item, i){ %>
                         <div class="item_product_main ">
                           <div class="product-loop-base">
+                            <% if(item.sale >0){ %>
                             <span class="number-sale">
                               <i class="fas fa-certificate"> <span class="number-child-sale"><%= item.sale %>%</span> </i>
                             </span>
+                            <% } %>
                             <div class="product-thumbnail">
                               <a class="image_link display_flex_small display_flex" href="/ao-so-mi-asos-asm08" title="<%= item.tenSp %>" tabindex="-1">
                                 <img class="lazyload loaded" src="<%= item.image %>" data-src="<%= item.image %>" alt="<%= item.tenSp %>" data-was-processed="true">
@@ -217,9 +219,11 @@
                     <% listProductsSale.forEach(function(item, i){ %>
                         <div class="item_product_main ">
                           <div class="product-loop-base">
+                            <% if(item.sale >0){ %>
                             <span class="number-sale">
                               <i class="fas fa-certificate"> <span class="number-child-sale"><%= item.sale %>%</span> </i>
                             </span>
+                            <% } %>
                             <div class="product-thumbnail">
                               <a class="image_link display_flex_small display_flex" href="/ao-so-mi-asos-asm08" title="<%= item.tenSp %>" tabindex="-1">
                                 
@@ -292,9 +296,11 @@
                     <% listProductOrder.forEach(function(item, i){ %>
                         <div class="item_product_main ">
                           <div class="product-loop-base">
+                            <% if(item.sale >0){ %>
                             <span class="number-sale">
                               <i class="fas fa-certificate"> <span class="number-child-sale"><%= item.sale %>%</span> </i>
                             </span>
+                            <% } %>
                             <div class="product-thumbnail">
                               <a class="image_link display_flex_small display_flex" href="/ao-so-mi-asos-asm08" title="<%= item.tenSp %>" tabindex="-1">
                                 <img class="lazyload loaded" src="<%= item.image %>" data-src="<%= item.image %>" alt="<%= item.tenSp %>" data-was-processed="true">
@@ -378,9 +384,11 @@
                     <% item.products.forEach(function(item2, i2){ %>
                         <div class="item_product_main ">
                           <div class="product-loop-base">
+                            <% if(item2.sale >0){ %>
                             <span class="number-sale">
                               <i class="fas fa-certificate"> <span class="number-child-sale"><%= item2.sale %>%</span> </i>
                             </span>
+                            <% } %>
                             <div class="product-thumbnail">
                               <a class="image_link display_flex_small display_flex" href="/ao-so-mi-asos-asm08" title="<%= item2.tenSp %>" tabindex="-1">
                                 <img class="lazyload loaded" src="<%= item2.image %>" data-src="<%= item2.image %>" alt="<%= item2.tenSp %>" data-was-processed="true">

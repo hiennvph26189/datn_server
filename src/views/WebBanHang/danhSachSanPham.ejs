@@ -46,19 +46,18 @@
                        
                         <div class="sort-cate clearfix">
                             <div id="sort-by">
-                                <ul class="ul_col">
-                                    <li><span>Mặc định</span>
-                                        <ul class="content_ul">                    
-                                            <li><a href="javascript:;" onclick="sortby('default')">Mặc định</a></li>								
-                                            <li><a href="javascript:;" onclick="sortby('alpha-asc')">A → Z</a></li>
-                                            <li><a href="javascript:;" onclick="sortby('alpha-desc')">Z → A</a></li>
-                                            <li><a href="javascript:;" onclick="sortby('price-asc')">Giá tăng dần</a></li>
-                                            <li><a href="javascript:;" onclick="sortby('price-desc')">Giá giảm dần</a></li>
-                                            <li><a href="javascript:;" onclick="sortby('created-desc')">Cũ đến mới</a></li>
-                                            <li><a href="javascript:;" onclick="sortby('created-asc')">Mới đến cũ</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
+                              <select class="select-sapxep form-select"  style="color: #FFF;" name="sapXep" id="sapxep"  data-id="<%= id %>">
+                                <option value="null">
+                                  Mặc định
+                                </option>
+                                <option value="alpha-asc" >A → Z</option>
+                                <option value="alpha-desc" >Z → A</option>
+                                <option value="price-asc" >Giá tăng dần</option>
+                                <option value="price-desc" >Giá giảm dần</option>
+                                <option value="created-desc" >Cũ đến mới</option>
+                                <option value="created-asc" >Mới đến cũ</option>
+                              </select>
+                                
                             </div>
                         </div>
                     </div>
@@ -67,7 +66,8 @@
             </div>
                 </div>
             </div>
-            <div class="products-view products-view-grid collection_reponsive list_hover_pro">
+            <div class="listProduct-category">
+              <div class="products-view products-view-grid collection_reponsive list_hover_pro">
                 <div class="row">
                     <% getCategoryProducts.forEach(function(item, i){ %>
                     <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
@@ -160,6 +160,8 @@
                   </nav> 
                   
             </div>
+            </div>
+           
            
           </div>
 
@@ -184,7 +186,7 @@
       $('.xem_nhanh').on('click', function(e){
         e.preventDefault()
         let url = $(this).data('url')
-       
+        console.log(url)
           $.get(url, function (data) {
           $(".modal-content").empty().append(data);
           
@@ -200,9 +202,30 @@
       
        
       });
+     
+      $('#sapxep').on('change', function(e){
+    
+        let id_category = $(this).attr("data-id")
+        let value = $(this).val()
+        if(value && value != "") {
+          
+          $.get(`/sapXep-products?id=${id_category}&page=1&value=${value}`, function (data) {
+                $(".listProduct-category").empty().append(data);
+              });
+        }    
+      })
+      $('.pagination-sapxep').on('click', function(e){
+    
+        // let id_category = $(this).attr("data-id")
+        console.log("asdlas")
+    // let value = $(this).val()
+    // if(value && value != "") {
       
-
-      
+    //   $.get(`/sapXep-products?id=${id_category}&page=1&value=${value}`, function (data) {
+    //         $(".listProduct-category").empty().append(data);
+    //       });
+    // }    
+  })
     </script>
   </body>
 

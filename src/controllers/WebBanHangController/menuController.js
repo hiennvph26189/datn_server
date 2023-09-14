@@ -61,9 +61,31 @@ let getDanhMucSanPham = async (req, res) => {
      }
    
 };
+let sapXepProduct = async (req, res) => {
+  
+  try {
+    let id = req.query.id
+    let page = req.query.page
+    let value = req.query.value
+    let getCategoryProducts = await menuService.getSapXepDanhSachSanPhamIdService(id,page,value)
+    let nameCategories = getCategoryProducts.nameCategories
+    let totalCountProducts = getCategoryProducts.totalCount
+    let arrProducts = getConvertArrProduct(getCategoryProducts.products)
+   
+    return res.render("webBanHang/xapXepDanhSachSanPham.ejs",{getCategoryProducts:arrProducts,nameCategories:nameCategories,totalCountProducts:totalCountProducts,id:id,page:parseInt(page),value:value})
+ } catch (error) {
+     console.log("Lỗi phân quyền",error)
+    return res.status(200).json({
+         errCode: -1,
+         errMessage: 'Không kết nối được với sever'
+    })
+ }
+   
+};
 module.exports = {
     getCategoryMenu:getCategoryMenu,
     getCategoryProducts:getCategoryProducts,
-    getDanhMucSanPham:getDanhMucSanPham
+    getDanhMucSanPham:getDanhMucSanPham,
+    sapXepProduct:sapXepProduct
    
 }
