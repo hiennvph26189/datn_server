@@ -64,7 +64,7 @@ let getProductsDetailItem = async (req, res) => {
      let id = req.query.id
      let product =  await productWebBanHangService.getOneProductService(id)
      let arrData = getConvertArrDetailProduct(product.getOneProduct)
-     console.log(arrData[0])
+     
     return res.render("webBanHang/modalXemNhanh",{product:arrData[0]})
    
    } catch (error) {

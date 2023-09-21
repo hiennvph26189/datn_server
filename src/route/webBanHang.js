@@ -3,6 +3,7 @@ var appRoot = require('app-root-path');
 import trangChuController from "../controllers/WebBanHangController/trangChuController";
 import menuController from "../controllers/WebBanHangController/menuController";
 import newsController from "../controllers/WebBanHangController/newsController";
+import sanPhamChiTiet from "../controllers/WebBanHangController/sanPhamChiTiet";
 
 import productController from "../controllers/WebBanHangController/productController";
 let router = express.Router();
@@ -14,6 +15,9 @@ let webBanHang = (app)=>{
     router.get('/products-detal-item',trangChuController.getProductsDetailItem);
     router.get('/getCategory-menu',menuController.getCategoryMenu);
     router.get('/sapXep-products',menuController.sapXepProduct);
+
+    // Sản phẩm chi tiết
+    router.get('/san-pham-chi-tiet',sanPhamChiTiet.getSanPhamChiTiet);
     
     router.get('/getCategory-products',menuController.getCategoryProducts);
     router.get('/danhMucSanPham-menu',menuController.getDanhMucSanPham);
