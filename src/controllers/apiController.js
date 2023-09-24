@@ -6,7 +6,7 @@ const testApi = (req, res) => {
         data: 'test api'
     })
 }
-let handleRegister = async(req, res) => {
+let handleRegister = async (req, res) => {
     try {
         if (!req.body.email || !req.body.phone || !req.body.password) {
             return res.status(200).json({
@@ -16,7 +16,7 @@ let handleRegister = async(req, res) => {
             })
         }
 
-        if(req.body.password && req.body.password.length<4){
+        if (req.body.password && req.body.password.length < 4) {
             return res.status(200).json({
                 EM: 'Your Password must have more than 3 letter', //error message
                 EC: '1', // Error code
@@ -41,7 +41,30 @@ let handleRegister = async(req, res) => {
     }
 
 }
+let handlLogin = async (req, res) => {
+
+    try {
+        
+       let data = await loginRegisterService.handlUserLogin(req.body);
+       return res.status(200).json({
+        EM: data.EM, //error message
+        EC:data.EC, // Error code
+        DT: data.DT,
+    })
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({
+            EM: 'Error From Server', //error message
+            EC: '-1', // Error code
+            DT: '',
+        })
+    }
+
+
+
+}
 module.exports = {
     testApi: testApi,
     handleRegister: handleRegister,
+    handlLogin: handlLogin,
 }
