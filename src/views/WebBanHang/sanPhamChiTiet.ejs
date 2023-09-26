@@ -18,11 +18,11 @@
 					
 					
 					<li>
-						<a class="changeurl" href="/ao-coc-tay"><span>Áo cộc tay</span></a>						
+						<a class="changeurl" href="/getCategory-products?id=<%= idDanhSach %>&&page=1"><span><%= tenDanhSach %></span></a>						
 						<span class="mr_lr">&nbsp;<i class="fas fa-chervon-right"></i>&nbsp;</span>
 					</li>
 					
-					<li><strong><span>Áo phông vitage trắng</span></strong></li>
+					<li><strong><span><%= tenSanPham %></span></strong></li>
 					
 				</ul>
 			</div>
@@ -33,7 +33,7 @@
       <div class="block-quickview primary_block details-product">
         <div class="row">
           <div class="product-left-column product-images col-xs-12 col-sm-4 col-md-4 col-lg-6 col-xl-6">
-            <div style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff" class="swiper mySwiper2">
+            <div style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff" class="swiper mySwiper-22">
               <div class="swiper-wrapper">
                 <% product.image.forEach(function(item, i){ %>
                 <div class="swiper-slide">
@@ -44,7 +44,7 @@
               <div class="swiper-button-next"></div>
               <div class="swiper-button-prev"></div>
             </div>
-            <div thumbsSlider="" class="swiper mySwiper">
+            <div thumbsSlider="" class="swiper mySwiper-2">
               <div class="swiper-wrapper">
                 <% product.image.forEach(function(item, i){ %>
                 <div class="swiper-slide">
@@ -59,14 +59,14 @@
           
             <!-- Initialize Swiper -->
             <script>
-              var swiper = new Swiper(".mySwiper", {
+              var swiper = new Swiper(".mySwiper-2", {
                 loop: true,
                 spaceBetween: 10,
                 slidesPerView: 4,
                 freeMode: true,
                 watchSlidesProgress: true,
               });
-              var swiper2 = new Swiper(".mySwiper2", {
+              var swiper2 = new Swiper(".mySwiper-22", {
                 loop: true,
                 spaceBetween: 10,
                 navigation: {
@@ -175,12 +175,12 @@
     <div class="product-tab e-tabs not-dqtab">
         <ul class="tabs tabs-title clearfix">	
             
-            <li class="tab-link current" data-tab="tab-1">
+            <li class="tab-link current" data-tab="tab-1" id="tab-link-1">
                 <h3><span>Thông tin sản phẩm</span></h3>
             </li>																	
             
             
-            <li class="tab-link" data-tab="tab-2">
+            <li class="tab-link" data-tab="tab-2" id="tab-link-2">
                 <h3><span>Hướng dẫn mua hàng</span></h3>
             </li>																	
             
@@ -191,294 +191,110 @@
             <div id="tab-1" class="tab-content content_extab current">
                 <div class="rte product_getcontent">
                     
-                    <p style="text-align: justify;">Phong cách thời trang nam giới nói riêng luôn có sự thay đổi theo thời gian. Tuy nhiên, những trang phục thuộc diện thì vẫn có được chỗ đứng cho mình trong lòng công chúng. Món đồ mà chúng tôi đang muốn nói đến ở đây là áo sơmi trắng. Cho dù phong cách ăn mặc của các chàng trai là đơn giản hay phức tạp, lịch lãm hay bụi bặm thì áo phông&nbsp;trắng luôn là món đồ mà bạn không thể bỏ qua.</p>
-                    <p style="text-align: justify;">&nbsp;</p>
-                    <p style="text-align: justify;">Nam giới từ xưa đến nay vẫn được hưởng ưu ái "mặc thế nào cũng được". Chính vì điều này mà đôi khi phái mạnh trở nên cẩu thả với chính mình. Nhưng ngày nay, mọi thứ đã thay đổi. Việc cẩu thả trong ăn mặc sẽ khiến bạn trở thành một anh chàng lôi thôi, luộm thuộm trong mắt mọi người. Mặc sơmi trắng khiến các chàng trai trở lên thanh lịch và nam tính hơn bao giờ hết. Có nhiều cách "hay ho" để chúng ta biến tầu trang phục này.</p>
-                    <p style="text-align: justify;">&nbsp;</p>
-                    <p style="text-align: justify;">Asos là thương hiệu thời trang bình dân nổi tiếng của Anh được thành lập năm 2000 bởi Nick Robertson dưới hình thức ban đầu là trang web bán hàng thời trang trực tuyến Asos.com dành cho độ tuổi từ 18-34 tuổi. Tuy nhiên, khi càng phát triển, Asos đã thay đổi đối tượng khách hàng khi nhắm đến đa dạng các đối tượng từ phụ nữ, đàn ông, trẻ em cho tới thanh thiếu niên và cung cấp các mặt hàng chủ yếu như giầy dép, phụ kiện, trang sức, quần áo và mỹ phẩm. Phong cách thời trang của Asos chủ yếu được lấy cảm hứng từ những người nổi tiếng để tạo ra những bộ sản phẩm mang tính xu hướng, thời thượng với giá tiêu dùng bình dân nhất.</p>
+                  <%- product.mota %>
                     
                 </div>
             </div>
 
-            <div id="tab-2" class="tab-content content_extab">
-                <div class="rte">
-                    Nội dung tùy chỉnh viết ở đây	 
+            <div id="tab-2" class="tab-content content_extab ">
+                <div class="rte product_getcontent">
+                  <p style="text-align: justify;">Asos là thương hiệu thời trang bình dân nổi tiếng của Anh được thành lập năm 2000 bởi Nick Robertson dưới hình thức ban đầu là trang web bán hàng thời trang trực tuyến Asos.com dành cho độ tuổi từ 18-34 tuổi. Tuy nhiên, khi càng phát triển, Asos đã thay đổi đối tượng khách hàng khi nhắm đến đa dạng các đối tượng từ phụ nữ, đàn ông, trẻ em cho tới thanh thiếu niên và cung cấp các mặt hàng chủ yếu như giầy dép, phụ kiện, trang sức, quần áo và mỹ phẩm. Phong cách thời trang của Asos chủ yếu được lấy cảm hứng từ những người nổi tiếng để tạo ra những bộ sản phẩm mang tính xu hướng, thời thượng với giá tiêu dùng bình dân nhất.</p>
                 </div>
             </div>	
 
         </div>	
     </div>
 </div>
-<div class="container">
-    <div class="row">
-        <div class="col-lg-12">
-            
-            
-            
-                
-            <div class="section_wishlist section_prd_feature section margin-bottom-40">
-                <div class="a-left">
-                    <h2 class="title_modules">
-                        <a href="/ao-so-mi" title="Sản phẩm liên quan">Sản phẩm liên quan</a>
-                    </h2>
+<div class="section_product_news container">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="section_title_base">
+                  <h2 class="title_modules">
+                    <a href="/getCategory-products?id=<%= idDanhSach %>&&page=1" title="Sản phẩm mới">Sản phẩm liên quan  </a>
+                    <div class="btn-next-prev">
+                      <span id="prev-product-new"><i class="fas fa-chevron-left"></i></span>
+                      <span id="next-product-new"><i class="fas fa-chevron-right"></i></span>
+                    </div>
+                  </h2>
+                  
+                </div>
+               
+                <div class="section owl_nav_custome2 section_content">
+                 
+                  <div class="owl_product_news">
+                    <% spLienQuan.forEach(function(item, i){ %>
+                        <div class="item_product_main ">
+                          <div class="product-loop-base">
+                            <% if(item.sale >0){ %>
+                            <span class="number-sale">
+                              <i class="fas fa-certificate"> <span class="number-child-sale"><%= item.sale %>%</span> </i>
+                            </span>
+                            <% } %>
+                            <div class="product-thumbnail">
+                              <a class="image_link display_flex_small display_flex" href="/san-pham-chi-tiet?id=<%= item.id %>" title="<%= item.tenSp %>" tabindex="-1">
+                                <img class="lazyload loaded" src="<%= item.image %>" data-src="<%= item.image %>" alt="<%= item.tenSp %>" data-was-processed="true">
+                              </a>
+                              <div class="product-action clearfix hidden-xs">
+                                <form action="/cart/add" method="post" data-cart-form="" class="variants form-nut-grid" data-id="product-actions-2842754" enctype="multipart/form-data">
+                                  <div class="group_action">
+                                    <input class="hidden" type="hidden" name="variantId" value="4534384" tabindex="-1">
+                                    <button class="btn btn-cart btn btn-circle left-to btn_tuychon" title="Chọn sản phẩm" type="button" onclick="window.location.href='/san-pham-chi-tiet?id=<%= item.id %>'" tabindex="-1">
+                                      Chọn sản phẩm
+                                    </button>
+                                    <button title="Xem nhanh" type="button"  data-url="/products-detal-item?id=<%= item.id %>" data-bs-toggle="modal" data-bs-target="#myModal"  data-handle="ao-so-mi-asos-asm08" class="xem_nhanh btn-circle btn_view btn right-to quick-view hidden-xs hidden-sm hidden-md" >
+                                      Xem nhanh
+                                    </button>
+                                    
+                                  </div>
+                                </form>
+                              </div>
+                            </div>
+                            <div class="product-info a-left">
+                              <h3 class="product-name">
+                                <a href="/san-pham-chi-tiet?id=<%= item.id %>" title="Áo sơ mi Asos ASM08" tabindex="-1"><%= item.tenSp %></a>
+                              </h3>
+                              <div class="product-hideoff">
+                                <div class="product-hide">
+                                  <div class="price-box clearfix">
+                                    <div class="special-price">
+                                      <span class="price product-price"> <%= item.giaBanSale %>		</span>
+                                    </div>
+                                    <% if(item.sale >0){ %>
+                                    <div class="old-price">															 
+                                      <span class="price product-price-old">
+                                        <%= item.giaSanPham %>
+                                      </span>
+                                    </div>
+                                    <% } %>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <% }); %>  
+                  </div>
+                 
                 </div>
                 
-                <div class="owl_product_news slick_wishlist slick_margin slick-initialized slick-slider"><button type="button" data-role="none" class="slick-prev slick-arrow slick-disabled" aria-label="Previous" role="button" aria-disabled="true" style="display: block;">Previous</button>
-                    
-                    
-                    
-                    
-                    <div aria-live="polite" class="slick-list draggable"><div class="slick-track" role="listbox" style="opacity: 1; width: 1425px; transform: translate3d(0px, 0px, 0px);"><div class="item slick-slide slick-current slick-active" data-slick-index="0" aria-hidden="false" tabindex="-1" role="option" aria-describedby="slick-slide00" style="width: 255px;">
-                        <div class="item_product_main">
-                            
-
-
-
-
-<div class="product-loop-base">
-<div class="product-thumbnail">
-    <a class="image_link display_flex" href="/ao-so-mi-ke-asos" title="Áo sơ mi kẻ Asos" tabindex="0">
-        <img class="lazyload loaded" src="//bizweb.dktcdn.net/thumb/large/100/091/100/products/4-72afced4-539b-491c-aa95-b492363a7efb.jpg?v=1467428644677" data-src="//bizweb.dktcdn.net/thumb/large/100/091/100/products/4-72afced4-539b-491c-aa95-b492363a7efb.jpg?v=1467428644677" alt="Áo sơ mi kẻ Asos" data-was-processed="true">
-    </a>
-    <div class="product-action clearfix hidden-xs">
-        <form action="/cart/add" method="post" data-cart-form="" class="variants form-nut-grid" data-id="product-actions-2842760" enctype="multipart/form-data">
-            <div class="group_action">
-                <input class="hidden" type="hidden" name="variantId" value="4532167" tabindex="0">
-                <button class="btn btn-cart btn btn-circle left-to btn_tuychon" title="Chọn sản phẩm" type="button" onclick="window.location.href='/ao-so-mi-ke-asos'" tabindex="0">
-                    Chọn sản phẩm
-                </button>
-                <a title="Xem nhanh" href="/ao-so-mi-ke-asos" data-handle="ao-so-mi-ke-asos" class="xem_nhanh btn-circle btn_view btn right-to quick-view hidden-xs hidden-sm hidden-md" tabindex="0">
-                    Xem nhanh
-                </a>
+              </div>
             </div>
-        </form>
-    </div>
-</div>
-<div class="product-info a-left">
-    <h3 class="product-name"><a href="/ao-so-mi-ke-asos" title="Áo sơ mi kẻ Asos" tabindex="0">Áo sơ mi kẻ Asos</a></h3>
-
-    <div class="product-hideoff">
-        <div class="product-hide">
-            <div class="price-box clearfix">			
-                <div class="special-price">
-                    <span class="price product-price">550.000₫</span>
-                </div>
-                <div class="old-price">															 
-                    <span class="price product-price-old">
-                        650.000₫			
-                    </span>
-                </div>
-
-            </div>		
-        </div>
-    </div>
-</div>
-</div>
-                        </div>
-                    </div><div class="item slick-slide slick-active" data-slick-index="1" aria-hidden="false" tabindex="-1" role="option" aria-describedby="slick-slide01" style="width: 255px;">
-                        <div class="item_product_main">
-                            
-
-
-
-
-<div class="product-loop-base">
-<div class="product-thumbnail">
-    <a class="image_link display_flex" href="/ao-so-mi-dai-tay-asos" title="Áo sơ mi dài tay Asos" tabindex="0">
-        <img class="lazyload loaded" src="//bizweb.dktcdn.net/thumb/large/100/091/100/products/5-0c16207b-4243-4b04-aaab-279cc656adf1.jpg?v=1467428687813" data-src="//bizweb.dktcdn.net/thumb/large/100/091/100/products/5-0c16207b-4243-4b04-aaab-279cc656adf1.jpg?v=1467428687813" alt="Áo sơ mi dài tay Asos" data-was-processed="true">
-    </a>
-    <div class="product-action clearfix hidden-xs">
-        <form action="/cart/add" method="post" data-cart-form="" class="variants form-nut-grid" data-id="product-actions-2842759" enctype="multipart/form-data">
-            <div class="group_action">
-                <input class="hidden" type="hidden" name="variantId" value="4263109" tabindex="0">
-                <button class="btn btn-cart btn btn-circle left-to btn_tuychon" title="Chọn sản phẩm" type="button" onclick="window.location.href='/ao-so-mi-dai-tay-asos'" tabindex="0">
-                    Chọn sản phẩm
-                </button>
-                <a title="Xem nhanh" href="/ao-so-mi-dai-tay-asos" data-handle="ao-so-mi-dai-tay-asos" class="xem_nhanh btn-circle btn_view btn right-to quick-view hidden-xs hidden-sm hidden-md" tabindex="0">
-                    Xem nhanh
-                </a>
-            </div>
-        </form>
-    </div>
-</div>
-<div class="product-info a-left">
-    <h3 class="product-name"><a href="/ao-so-mi-dai-tay-asos" title="Áo sơ mi dài tay Asos" tabindex="0">Áo sơ mi dài tay Asos</a></h3>
-
-    <div class="product-hideoff">
-        <div class="product-hide">
-            <div class="price-box clearfix">
-                <div class="special-price">
-                    <span class="price product-price">929.000₫</span>
-                </div>											
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-                        </div>
-                    </div><div class="item slick-slide slick-active" data-slick-index="2" aria-hidden="false" tabindex="-1" role="option" aria-describedby="slick-slide02" style="width: 255px;">
-                        <div class="item_product_main">
-                            
-
-
-
-
-<div class="product-loop-base">
-<div class="product-thumbnail">
-    <a class="image_link display_flex" href="/ao-so-mi-ke-asos-1" title="Áo sơ mi kẻ Asos" tabindex="0">
-        <img class="lazyload loaded" src="//bizweb.dktcdn.net/thumb/large/100/091/100/products/6-ff980fd3-8e1e-447c-8b42-40e3899593c7.jpg?v=1467428740090" data-src="//bizweb.dktcdn.net/thumb/large/100/091/100/products/6-ff980fd3-8e1e-447c-8b42-40e3899593c7.jpg?v=1467428740090" alt="Áo sơ mi kẻ Asos" data-was-processed="true">
-    </a>
-    <div class="product-action clearfix hidden-xs">
-        <form action="/cart/add" method="post" data-cart-form="" class="variants form-nut-grid" data-id="product-actions-2842758" enctype="multipart/form-data">
-            <div class="group_action">
-                <input type="hidden" name="variantId" value="4263107" tabindex="0">
-                <button class="btn-buy btn-cart btn btn-circle left-to add_to_cart" title="Mua hàng" tabindex="0">
-                    Mua hàng
-                </button>
-                <a title="Xem nhanh" href="/ao-so-mi-ke-asos-1" data-handle="ao-so-mi-ke-asos-1" class="xem_nhanh btn-circle btn_view btn right-to quick-view hidden-xs hidden-sm hidden-md" tabindex="0">
-                    Xem nhanh
-                </a>
-            </div>
-        </form>
-    </div>
-</div>
-<div class="product-info a-left">
-    <h3 class="product-name"><a href="/ao-so-mi-ke-asos-1" title="Áo sơ mi kẻ Asos" tabindex="0">Áo sơ mi kẻ Asos</a></h3>
-
-    <div class="product-hideoff">
-        <div class="product-hide">
-            <div class="price-box clearfix">
-                <div class="special-price">
-                    <span class="price product-price">200.000₫</span>
-                </div>											
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-                        </div>
-                    </div><div class="item slick-slide slick-active" data-slick-index="3" aria-hidden="false" tabindex="-1" role="option" aria-describedby="slick-slide03" style="width: 255px;">
-                        <div class="item_product_main">
-                            
-
-
-
-
-<div class="product-loop-base">
-<div class="product-thumbnail">
-    <a class="image_link display_flex" href="/ao-so-mi-ams01" title="Áo sơ mi AMS01" tabindex="0">
-        <img class="lazyload loaded" src="//bizweb.dktcdn.net/thumb/large/100/091/100/products/7.jpg?v=1467428885147" data-src="//bizweb.dktcdn.net/thumb/large/100/091/100/products/7.jpg?v=1467428885147" alt="Áo sơ mi AMS01" data-was-processed="true">
-    </a>
-    <div class="product-action clearfix hidden-xs">
-        <form action="/cart/add" method="post" data-cart-form="" class="variants form-nut-grid" data-id="product-actions-2842757" enctype="multipart/form-data">
-            <div class="group_action">
-                <input class="hidden" type="hidden" name="variantId" value="4533205" tabindex="0">
-                <button class="btn btn-cart btn btn-circle left-to btn_tuychon" title="Chọn sản phẩm" type="button" onclick="window.location.href='/ao-so-mi-ams01'" tabindex="0">
-                    Chọn sản phẩm
-                </button>
-                <a title="Xem nhanh" href="/ao-so-mi-ams01" data-handle="ao-so-mi-ams01" class="xem_nhanh btn-circle btn_view btn right-to quick-view hidden-xs hidden-sm hidden-md" tabindex="0">
-                    Xem nhanh
-                </a>
-            </div>
-        </form>
-    </div>
-</div>
-<div class="product-info a-left">
-    <h3 class="product-name"><a href="/ao-so-mi-ams01" title="Áo sơ mi AMS01" tabindex="0">Áo sơ mi AMS01</a></h3>
-
-    <div class="product-hideoff">
-        <div class="product-hide">
-            <div class="price-box clearfix">			
-                <div class="special-price">
-                    <span class="price product-price">196.000₫</span>
-                </div>
-                <div class="old-price">															 
-                    <span class="price product-price-old">
-                        250.000₫			
-                    </span>
-                </div>
-
-            </div>		
-        </div>
-    </div>
-</div>
-</div>
-                        </div>
-                    </div><div class="item slick-slide" data-slick-index="4" aria-hidden="true" tabindex="-1" role="option" aria-describedby="slick-slide04" style="width: 255px;">
-                        <div class="item_product_main">
-                            
-
-
-
-
-<div class="product-loop-base">
-<div class="product-thumbnail">
-    <a class="image_link display_flex" href="/ao-so-mi-asos-asm08" title="Áo sơ mi Asos ASM08" tabindex="-1">
-        <img class="lazyload" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" data-src="//bizweb.dktcdn.net/thumb/large/100/091/100/products/10-7d1ddb13-5ce9-4c18-b8f0-6ad8a1bb47d1.jpg?v=1467428984973" alt="Áo sơ mi Asos ASM08">
-    </a>
-    <div class="product-action clearfix hidden-xs">
-        <form action="/cart/add" method="post" data-cart-form="" class="variants form-nut-grid" data-id="product-actions-2842754" enctype="multipart/form-data">
-            <div class="group_action">
-                <input class="hidden" type="hidden" name="variantId" value="4534384" tabindex="-1">
-                <button class="btn btn-cart btn btn-circle left-to btn_tuychon" title="Chọn sản phẩm" type="button" onclick="window.location.href='/ao-so-mi-asos-asm08'" tabindex="-1">
-                    Chọn sản phẩm
-                </button>
-                <a title="Xem nhanh" href="/ao-so-mi-asos-asm08" data-handle="ao-so-mi-asos-asm08" class="xem_nhanh btn-circle btn_view btn right-to quick-view hidden-xs hidden-sm hidden-md" tabindex="-1">
-                    Xem nhanh
-                </a>
-            </div>
-        </form>
-    </div>
-</div>
-<div class="product-info a-left">
-    <h3 class="product-name"><a href="/ao-so-mi-asos-asm08" title="Áo sơ mi Asos ASM08" tabindex="-1">Áo sơ mi Asos ASM08</a></h3>
-
-    <div class="product-hideoff">
-        <div class="product-hide">
-            <div class="price-box clearfix">
-                <div class="special-price">
-                    <span class="price product-price">339.000₫</span>
-                </div>											
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-                        </div>
-                    </div></div></div>
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                <button type="button" data-role="none" class="slick-next slick-arrow" aria-label="Next" role="button" style="display: block;" aria-disabled="false">Next</button></div>
-
+            
+          </div>
+          <div class="modal fade " id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+              <div class="modal-content">
                 
+              </div>
             </div>
-        </div>
-    </div>
-
-</div>
+          </div>
     <%- include('./footer'); %>
     <style>
-        .mySwiper2 {
+        .mySwiper-22 {
           
             max-width: 90%;
         }
-        .mySwiper {
+        .mySwiper-2 {
             height: 25%;
           
         }
@@ -487,7 +303,73 @@
         type="text/javascript"
         src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"
         ></script>
-   
+   <script>
+    $('.xem_nhanh').on('click', function(e){
+        e.preventDefault()
+        let url = $(this).data('url')
+       
+          $.get(url, function (data) {
+          $(".modal-content").empty().append(data);
+          
+        });       
+      })
+     $(document).ready(function () {
+        $(".owl_product_news").slick({
+          dots: false,
+          infinite: false,
+          arrows: true,
+          slidesToShow: 4,
+          slidesToScroll: 4,
+          autoplay: false,
+          prevArrow:$('#prev-product-new'),
+          nextArrow:$('#next-product-new'),
+          speed: 1000,
+          responsive: [
+            {
+              breakpoint: 480,
+              settings: {
+                arrows: false,
+                slidesToShow: 2,
+                slidesToScroll: 2,
+              },
+            },
+          ],
+        });});
+    $('.tab-link').on('click', function(){
+        
+        let id = $(this).data('tab')
+       
+         if(id == "tab-1"){
+          $('#tab-link-1').css('background', '#66a182')
+          $('#tab-link-2').css('background', '#fff')
+
+          $('#tab-2').css('display', 'none')
+          $('#tab-2').css('opacity', '0')
+          $('#tab-2').css('visibility', 'hidden')
+          $('#tab-2').css('opacity', '0')
+          $('#tab-2').css('overflow', 'hidden')
+
+          $('#tab-1').css('display', 'block')
+          $('#tab-1').css('opacity', '1')
+          $('#tab-1').css('visibility', 'visible')
+          $('#tab-1').css('height', 'auto')
+         } else if(id == "tab-2"){
+          $('#tab-link-2').css('background', '#66a182')
+          $('#tab-link-1').css('background', '#fff')
+
+          $('#tab-1').css('display', 'none')
+          $('#tab-1').css('opacity', '0')
+          $('#tab-1').css('visibility', 'hidden')
+          $('#tab-1').css('opacity', '0')
+          $('#tab-1').css('overflow', 'hidden')
+
+          $('#tab-2').css('display', 'block')
+          $('#tab-2').css('opacity', '1')
+          $('#tab-2').css('visibility', 'visible')
+          $('#tab-2').css('height', 'auto')
+         }   
+      })
+   </script>
   </body>
 
 </html>

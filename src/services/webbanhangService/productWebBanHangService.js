@@ -136,7 +136,7 @@ let getCategoriesService = ()=>{
               }
             }
           
-            console.log(combinedArray);
+            
 
             // let categoriesProducts = []
             // let  products = await sequelize.query(`
@@ -191,7 +191,8 @@ let getOneProductService = (id)=>{
             let  getOneProduct = await sequelize.query(`
             SELECT * FROM  products  where id = '${id}'
                 `, { type: QueryTypes.SELECT });
-            if(getOneProduct){
+               
+            if(getOneProduct.length > 0) {
                 resolve({ 
                     errCode:0,
                     errMessage: 'thành công',
