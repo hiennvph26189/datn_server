@@ -4,6 +4,8 @@ import homcontroller from "../controllers/homcontroller";
 import userController from "../controllers/userController";
 import productController from "../controllers/productController";
 import apiController from "../controllers/apiController";
+import userApiController from "../controllers/userApiController";
+
 import multer from 'multer';
 import path from 'path';
 var appRoot = require('app-root-path');
@@ -40,6 +42,11 @@ let initApiRouter = (app)=>{
     router.post('/register',apiController.handleRegister);
     
     router.post('/login',apiController.handlLogin);
+
+    router.get('/user/list',userApiController.listUs);
+    router.post('/user/add',userApiController.addUs);
+    router.put('/user/edit',userApiController.editUs);
+    router.delete('/user/delete',userApiController.deleteUs);
 
     return app.use("/api/v1/",router)
 }
