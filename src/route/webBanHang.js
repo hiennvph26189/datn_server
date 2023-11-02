@@ -4,6 +4,9 @@ import trangChuController from "../controllers/WebBanHangController/trangChuCont
 import menuController from "../controllers/WebBanHangController/menuController";
 import newsController from "../controllers/WebBanHangController/newsController";
 import sanPhamChiTiet from "../controllers/WebBanHangController/sanPhamChiTiet";
+import lienHeController from "../controllers/WebBanHangController/lienHecontroller";
+import gioiThieuController from "../controllers/WebBanHangController/gioiThieuController";
+
 
 import productController from "../controllers/WebBanHangController/productController";
 let router = express.Router();
@@ -25,8 +28,18 @@ let webBanHang = (app)=>{
     router.get('/getTinTuc-News',newsController.getTinTucNew);
     
     // router.get('/add-category',userController.addCategory);
+    // Trang Liên hệ
+    router.get('/lien-he',lienHeController.getLienHe);
+    router.post('/post-lien-he',lienHeController.postLienHe);
+    router.get('/form-lien-he',lienHeController.formLienHe);
 
-    
+    // Trang giới thiệu
+    router.get('/gioi-thieu',gioiThieuController.getGioiThieu);
+
+    // Trang tin tức
+    router.get('/tin-tuc',newsController.getAllTinTuc);
+    router.get('/news-detail',newsController.getTinTucDetail);
+
     return app.use("/",router)
 }
 module.exports = webBanHang

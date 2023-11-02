@@ -6,6 +6,14 @@
     <title><%= nameCategories %></title>
   </head>
   <body>
+    <style>
+      .bg-header-nav .header-nav>ul.item_big>li.active{
+          background: #252525;
+      }
+  ul.item_big li.nav-item:nth-last-child(3){
+    background: #66a182;
+  }
+  </style>
     <%- include('./header'); %>
     <div class="section_sidebar_slider">
       <div class="container">
@@ -81,7 +89,7 @@
                                   <% } %>
                                 <% } %>		
                                 <div class="product-thumbnail">
-                                    <a class="image_link display_flex" href="/ao-thun-asos" title="<%= item.tenSp %>">
+                                    <a class="image_link display_flex" href="/san-pham-chi-tiet?id=<%= item.id %>" title="<%= item.tenSp %>">
                                         <img class="lazyload loaded" src="<%= item.image %>" data-src="<%= item.image %>" alt="<%= item.tenSp %>" data-was-processed="true">
                                     </a>
                                     <div class="product-action clearfix hidden-xs">
@@ -99,7 +107,7 @@
                                     </div>
                                 </div>
                                 <div class="product-info a-left">
-                                    <h3 class="product-name"><a href="/ao-thun-asos" title="Áo thun Asos"><%= item.tenSp %></a></h3>
+                                    <h3 class="product-name"><a href="/san-pham-chi-tiet?id=<%= item.id %>" title="Áo thun Asos"><%= item.tenSp %></a></h3>
                             
                                     <div class="product-hideoff">
                                         <div class="product-hide">
