@@ -4,6 +4,8 @@ import homcontroller from "../controllers/homcontroller";
 import userController from "../controllers/userController";
 import productController from "../controllers/productController";
 import apiController from "../controllers/apiController";
+import userApiController from "../controllers/userApiController";
+
 import multer from 'multer';
 import path from 'path';
 var appRoot = require('app-root-path');
@@ -33,23 +35,19 @@ const imageFilter = function (req, file, cb) {
 let upload = multer({ storage: storage, fileFilter: imageFilter,limits:{fileSize:1*1024*1024}});
 let router = express.Router();
 
-let initWebRouter = (app)=>{
-    router.get('/',(req, res)=>{
-        return res.send('Đây là trang chủ')
-    }) 
-    router.get('/user',userController.handleGetUser);
-    router.get('/product',productController.handleGetProduct);
-    router.post('/users/create-user',userController.handlerCreateUser);
+// get , post , delete, push
+let initApiRouter = (app)=>{
+    router.get('/test-api',apiController.testApi)
+    
+    router.post('/register',apiController.handleRegister);
+    
+    router.post('/login',apiController.handlLogin);
 
-    router.get('/admin/userController',userController.handleGetUser);
-    router.post('/admin/userController',userController.handleGetUser);
-    router.put('/admin/userController',userController.handleGetUser);
-    router.post('/delete-user/:id',userController.deleteUser);
-    router.get('/update-user/:id',userController.updateUser);
-    router.post('/users/update-user',userController.handleUpdateUser);
+    router.get('/user/list',userApiController.listUs);
+    router.post('/user/add',userApiController.addUs);
+    router.put('/user/edit',userApiController.editUs);
+    router.delete('/user/delete',userApiController.deleteUs);
 
-
-    router.get('/api/test-api',apiController.testApi)
-    return app.use("/",router)
+    return app.use("/api/v1/",router)
 }
-module.exports = initWebRouter
+module.exports = initApiRouter
