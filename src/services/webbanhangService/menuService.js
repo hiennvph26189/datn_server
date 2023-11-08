@@ -466,9 +466,41 @@ let getSapXepDanhSachSanPhamIdService = (id,page,value)=>{
          
      }) 
 }
-
+let searchService = (key_search)=>{
+    return new Promise(async(resolve, reject)=>{
+       
+        try {
+            
+            let  data = await sequelize.query(`
+            SELECT id,tenSp,giaSanPham,sale,image,luotMua name FROM  products where  tenSp LIKE '${key_search}%' order by id DESC 
+                `, { type: QueryTypes.SELECT });
+               
+            if(data.length > 0 && key_search !==""){
+                resolve({ 
+                    errCode:0,
+                    errMessage: 'thành công',
+                    data:data
+                 })
+            }else{
+                resolve({ 
+                    errCode:1,
+                    errMessage: 'Không có sản phẩm nào tồn tại',
+                    data:[]
+                 })
+            }
+               
+                      
+  
+        } catch (error) {
+             reject(error);
+        }
+         
+         
+     }) 
+}
 module.exports  = {
     getCategoriesService:getCategoriesService,   
     getDanhSachSanPhamIdService:getDanhSachSanPhamIdService,
-    getSapXepDanhSachSanPhamIdService:getSapXepDanhSachSanPhamIdService
+    getSapXepDanhSachSanPhamIdService:getSapXepDanhSachSanPhamIdService,
+    searchService:searchService
 }

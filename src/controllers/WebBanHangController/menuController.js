@@ -82,10 +82,28 @@ let sapXepProduct = async (req, res) => {
  }
    
 };
+let searchItems = async (req, res) => {
+  
+  try {
+    let key_search = req.query.key_search
+    let dataSearch = await menuService.searchService(key_search)
+    let arrData = getConvertArrProduct(dataSearch.data)
+  
+    return res.render("webBanHang/search_form.ejs",{dataSearch:arrData})
+ } catch (error) {
+     console.log("Lỗi phân quyền",error)
+    return res.status(200).json({
+         errCode: -1,
+         errMessage: 'Không kết nối được với sever'
+    })
+ }
+   
+};
 module.exports = {
     getCategoryMenu:getCategoryMenu,
     getCategoryProducts:getCategoryProducts,
     getDanhMucSanPham:getDanhMucSanPham,
-    sapXepProduct:sapXepProduct
+    sapXepProduct:sapXepProduct,
+    searchItems:searchItems
    
 }
