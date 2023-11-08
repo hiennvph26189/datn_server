@@ -29,6 +29,7 @@ const checkPhoneExit = async (userPhone) => {
     if (user) {
         return true;
     }
+    console.log("hehehehehe")
 
     return false;
 }
