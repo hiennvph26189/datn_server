@@ -41,6 +41,7 @@ let webBanHang = (app)=>{
     router.get('/news-detail',newsController.getTinTucDetail);
     // search sản phẩm
     router.get('/search-products',menuController.searchItems);
+    router.get('/tim-kiem',menuController.searchSubmit);
     return app.use("/",router)
 }
 module.exports = webBanHang

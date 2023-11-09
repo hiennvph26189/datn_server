@@ -1,6 +1,10 @@
  
 <% if(dataSearch){ %>
+  <div class="list-search">
     <% dataSearch.forEach(function(item, i){ %>
+      
+						
+      
         <div class="item-search">
             <div class="img">
                 <a href="/san-pham-chi-tiet?id=<%= item.id %>">
@@ -27,5 +31,7 @@
                 </div>
             </div>
         </div>
+    
         <% }); %> 
+      </div>
 <% } %>
