@@ -1,6 +1,6 @@
 const { QueryTypes } = require('sequelize');
 import sequelize from "../../config/queryDatabse"
-
+import datetime from "./getdateService"
 let postDataLienHeService = (data)=>{
     return new Promise(async(resolve, reject)=>{
        
@@ -8,8 +8,8 @@ let postDataLienHeService = (data)=>{
             let name = data.name;
             let email = data.email;
             let contact = data.contact;
-            let date = new Date();
-           
+            let date = datetime.getdate()
+            console.log(date)
             if(name&&email&&contact){
                 
                 
