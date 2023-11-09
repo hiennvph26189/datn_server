@@ -124,7 +124,26 @@
           
           </div>
     </div>
+ 
+     <div class="modal fade " id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            
+          </div>
+        </div>
+      </div>
     <%- include('./footer'); %>
+    <script>
+        $('.xem_nhanh').on('click', function(e){
+       e.preventDefault()
+       let url = $(this).data('url')
+       console.log(url)
+         $.get(url, function (data) {
+         $(".modal-content").empty().append(data);
+         
+       });       
+     })
+   </script>
   </body>
 
 </html>
