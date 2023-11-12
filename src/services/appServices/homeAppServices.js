@@ -1,6 +1,17 @@
 const { QueryTypes } = require('sequelize');
 // import sequelize from "../../src/config/queryDatabase"
 import sequelize from "../../config/queryDatabse"
+let getConvertArrProduct = (arrData)=>{
+    const newArray = arrData.map(item => {
+      return {
+        ...item,
+        giaSanPham: item.giaSanPham.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }),
+        giaBanSale: (item.giaSanPham-(item.giaSanPham*(item.sale/100))).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }),
+        image: JSON.parse(item.image)[0] // Chỉ lấy phần tử đầu tiên của mảng img
+      };
+    }); 
+    return newArray
+  }
 let handleGetProductServices = ()=>{
     return new Promise(async(resolve, reject)=>{
        
@@ -131,10 +142,41 @@ let handleGetCategoryServices = ()=>{
         }
      }) 
 }
+let handleGetHotProductServices = ()=>{
+    return new Promise(async(resolve, reject)=>{
+        try {
+            const data = await sequelize.query(`
+                SELECT *
+                FROM products
+                WHERE luotMua > 1 ORDER BY id DESC limit 10
+                `, { type: QueryTypes.SELECT });
+          if (data.length>0) {
+            let newData = await getConvertArrProduct(data);
+            resolve({ 
+                errCode:0,
+                errMessage: 'thành công',
+                hotProduct:newData
+             })   
+          }else{
+            resolve({ 
+                errCode:1,
+                errMessage: 'thất bại',
+                hotProduct:[]
+             })   
+          }
+
+                 
+  
+        } catch (error) {
+             reject(error);
+        }
+     }) 
+}
 module.exports  = {
     handleGetProductServices:handleGetProductServices,
     handleAddCategoryServices:handleAddCategoryServices,
     handlePutCategoryServices:handlePutCategoryServices,
     handleDeleteCategoryServices:handleDeleteCategoryServices,
-    handleGetCategoryServices:handleGetCategoryServices
+    handleGetCategoryServices:handleGetCategoryServices,
+    handleGetHotProductServices:handleGetHotProductServices
 }
