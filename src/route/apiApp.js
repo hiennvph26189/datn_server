@@ -42,6 +42,7 @@ let apiApp = (app)=>{
     router.delete('/delete-category',homeAppController.handleDeleteCategory)
     // list category
     router.get('/app-list-category',homeAppController.handleGetCategories)
+    router.get('/app-list-hot-order-product',homeAppController.handleGetHotProduct)
     return app.use("/",router)
 }
 module.exports = apiApp
