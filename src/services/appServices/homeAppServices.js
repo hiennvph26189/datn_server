@@ -110,9 +110,31 @@ let handleDeleteCategoryServices = (data)=>{
         }
      }) 
 }
+let handleGetCategoryServices = ()=>{
+    return new Promise(async(resolve, reject)=>{
+       
+        try {
+            const data = await sequelize.query(`
+                SELECT *
+                FROM categories
+                ORDER BY id DESC
+                `, { type: QueryTypes.SELECT });
+          
+                resolve({ 
+                    errCode:0,
+                    errMessage: 'thành công',
+                    data:data
+                 })     
+  
+        } catch (error) {
+             reject(error);
+        }
+     }) 
+}
 module.exports  = {
     handleGetProductServices:handleGetProductServices,
     handleAddCategoryServices:handleAddCategoryServices,
     handlePutCategoryServices:handlePutCategoryServices,
-    handleDeleteCategoryServices:handleDeleteCategoryServices
+    handleDeleteCategoryServices:handleDeleteCategoryServices,
+    handleGetCategoryServices:handleGetCategoryServices
 }
