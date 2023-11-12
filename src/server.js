@@ -2,8 +2,8 @@ import  express  from "express";
 import bodyParser from "body-parser";
 import viewEngine from "./config/viewEngine";
 import initWebRouter from "./route/web";
-
-
+import initApiRouter from "./route/api";
+import apiApp from "./route/apiApp";
 import cors from "cors";
 require('dotenv').config();
 
@@ -14,11 +14,12 @@ app.use(bodyParser.urlencoded({limit:'50mb', extended: true }));
 
 viewEngine(app);
 initWebRouter(app);
+initApiRouter(app);
+apiApp(app);
 
 
 
-
-let port = process.env.PORT;
+let port = process.env.PORT || 8000;
 app.listen(port,()=>{
     console.log("đang chạy PORT: " + port);
 });

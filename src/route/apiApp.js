@@ -1,9 +1,7 @@
 import express from "express";
 
-import homcontroller from "../controllers/homcontroller";
-import userController from "../controllers/userController";
+import homeAppController from "../controllers/appController/homeAppController";
 import productController from "../controllers/productController";
-import apiController from "../controllers/apiController";
 import multer from 'multer';
 import path from 'path';
 var appRoot = require('app-root-path');
@@ -33,25 +31,17 @@ const imageFilter = function (req, file, cb) {
 let upload = multer({ storage: storage, fileFilter: imageFilter,limits:{fileSize:1*1024*1024}});
 let router = express.Router();
 
-let initWebRouter = (app)=>{
-    router.get('/',(req, res)=>{
-        return res.send('Đây là trang chủ')
-    }) 
-    router.get('/user',userController.handleGetUser);
-    router.get('/product',productController.handleGetProduct);
-    router.post('/users/create-user',userController.handlerCreateUser);
-
-    router.get('/admin/userController',userController.handleGetUser);
-    router.post('/admin/userController',userController.handleGetUser);
-    router.put('/admin/userController',userController.handleGetUser);
-
-    router.post('/delete-user/:id',userController.deleteUser);
-    router.get('/update-user/:id',userController.updateUser);
-    router.post('/users/update-user',userController.handleUpdateUser);
-
-
-
-    router.get('/api/test-api',apiController.testApi)
+// get , post , delete, push
+let apiApp = (app)=>{
+    router.get('/list-product',productController.handleGetProduct)
+    router.get('/post-product',productController.handleGetProduct)
+    router.get('/put-product',productController.handleGetProduct)
+    router.get('/delete-product',productController.handleGetProduct)
+    router.post('/post-category',homeAppController.handlePostCategory)
+    router.put('/put-category',homeAppController.handlePutCategory)
+    router.delete('/delete-category',homeAppController.handleDeleteCategory)
+    // list category
+    router.get('/app-list-category',homeAppController.handleGetCategories)
     return app.use("/",router)
 }
-module.exports = initWebRouter
+module.exports = apiApp
