@@ -1,6 +1,7 @@
 const { QueryTypes } = require('sequelize');
 // import sequelize from "../../src/config/queryDatabase"
 import sequelize from "../../config/queryDatabse"
+import dateTime from "../getDate";
 let getConvertArrProduct = (arrData)=>{
     const newArray = arrData.map(item => {
       return {
@@ -38,7 +39,7 @@ let handleAddCategoryServices = (data)=>{
        
         try {
             let name = data.name;
-            let date = new Date();
+            let date = dateTime.getDate();
              await sequelize.query(`
              INSERT INTO categories (name, createdAt, updatedAt)
              VALUES ('${name}', '${date}', '${date}');
