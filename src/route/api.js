@@ -5,6 +5,7 @@ import userController from "../controllers/userController";
 import productController from "../controllers/productController";
 import apiController from "../controllers/apiController";
 import userApiController from "../controllers/userApiController";
+import homeAppController from "../controllers/appController/homeAppController";
 
 import multer from 'multer';
 import path from 'path';
@@ -47,6 +48,12 @@ let initApiRouter = (app)=>{
     router.post('/user/add',userApiController.addUs);
     router.put('/user/edit',userApiController.editUs);
     router.delete('/user/delete',userApiController.deleteUs);
+    // category
+    router.post('/post-category',homeAppController.handlePostCategory)
+    router.put('/put-category',homeAppController.handlePutCategory)
+    router.delete('/delete-category',homeAppController.handleDeleteCategory)
+    router.get('/app-list-category',homeAppController.handleGetCategories)
+    
 
     return app.use("/api/v1/",router)
 }
