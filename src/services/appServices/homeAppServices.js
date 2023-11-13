@@ -172,11 +172,73 @@ let handleGetHotProductServices = ()=>{
         }
      }) 
 }
+let handleGetSaleProductServices = ()=>{
+    return new Promise(async(resolve, reject)=>{
+        try {
+            const data = await sequelize.query(`
+                SELECT *
+                FROM products
+                WHERE sale > 10 ORDER BY id DESC limit 10
+                `, { type: QueryTypes.SELECT });
+          if (data.length>0) {
+            let newData = await getConvertArrProduct(data);
+            resolve({ 
+                errCode:0,
+                errMessage: 'thành công',
+                saleProduct:newData
+             })   
+          }else{
+            resolve({ 
+                errCode:1,
+                errMessage: 'thất bại',
+                saleProduct:[]
+             })   
+          }
+
+                 
+  
+        } catch (error) {
+             reject(error);
+        }
+     }) 
+}
+let handleGetNewProductServices = ()=>{
+    return new Promise(async(resolve, reject)=>{
+        try {
+            const data = await sequelize.query(`
+                SELECT *
+                FROM products
+                WHERE id > 0 ORDER BY id DESC limit 10
+                `, { type: QueryTypes.SELECT });
+          if (data.length>0) {
+            let newData = await getConvertArrProduct(data);
+            resolve({ 
+                errCode:0,
+                errMessage: 'thành công',
+                newProduct:newData
+             })   
+          }else{
+            resolve({ 
+                errCode:1,
+                errMessage: 'thất bại',
+                newProduct:[]
+             })   
+          }
+
+                 
+  
+        } catch (error) {
+             reject(error);
+        }
+     }) 
+}
 module.exports  = {
     handleGetProductServices:handleGetProductServices,
     handleAddCategoryServices:handleAddCategoryServices,
     handlePutCategoryServices:handlePutCategoryServices,
     handleDeleteCategoryServices:handleDeleteCategoryServices,
     handleGetCategoryServices:handleGetCategoryServices,
-    handleGetHotProductServices:handleGetHotProductServices
+    handleGetHotProductServices:handleGetHotProductServices,
+    handleGetSaleProductServices:handleGetSaleProductServices,
+    handleGetNewProductServices:handleGetNewProductServices
 }
