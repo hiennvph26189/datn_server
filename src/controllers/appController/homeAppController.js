@@ -133,6 +133,21 @@ let handleGetNewProduct = async (req, res) => {
     }
 
 };
+let handleGetProductByCategory = async (req, res) => {
+    try {
+        let newProductList = await homeAppService.getCategoriesService();
+        console.log(newProductList.errCode)
+        return res.status(200).json(newProductList)
+    } catch (error) {
+        console.log("Lỗi phân quyền", error)
+        return res.status(200).json({
+            errCode: -1,
+            errMessage: 'Không kết nối được với sever'
+        })
+
+    }
+
+};
 module.exports = {
     handleGetProduct: handleGetProduct,
     handlePostCategory:handlePostCategory,
@@ -141,5 +156,6 @@ module.exports = {
     handleGetCategories:handleGetCategories,
     handleGetHotProduct:handleGetHotProduct,
     handleGetSaleProduct:handleGetSaleProduct,
-    handleGetNewProduct:handleGetNewProduct
+    handleGetNewProduct:handleGetNewProduct,
+    handleGetProductByCategory:handleGetProductByCategory
 }

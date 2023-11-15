@@ -46,6 +46,8 @@ let apiApp = (app)=>{
     router.get('/app-list-hot-order-product',homeAppController.handleGetHotProduct)
     router.get('/app-list-sale-order-product',homeAppController.handleGetSaleProduct)
     router.get('/app-list-new-order-product',homeAppController.handleGetNewProduct)
+    // list product by category
+    router.get('/app-list-product-by-category',homeAppController.handleGetProductByCategory)
     return app.use("/",router)
 }
 module.exports = apiApp
