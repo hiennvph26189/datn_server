@@ -39,7 +39,7 @@ let handleAddCategoryServices = (data)=>{
        
         try {
             let name = data.name;
-            let date = dateTime.getDate();
+            let date = dateTime.getdate();
              await sequelize.query(`
              INSERT INTO categories (name, createdAt, updatedAt)
              VALUES ('${name}', '${date}', '${date}');
@@ -68,7 +68,7 @@ let handlePutCategoryServices = (data)=>{
             if (selectIdCategory.length>0) {
                 let id = data.id;
                 let name = data.name;
-                let date = new Date();
+                let date = dateTime.getdate();
                  await sequelize.query(`
                  UPDATE categories
                  SET name = '${name}', updatedAt = '${date}'

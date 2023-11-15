@@ -48,6 +48,7 @@ let initApiRouter = (app)=>{
     router.post('/user/add',userApiController.addUs);
     router.put('/user/edit',userApiController.editUs);
     router.delete('/user/delete',userApiController.deleteUs);
+
     // category
     router.post('/post-category',homeAppController.handlePostCategory)
     router.put('/put-category',homeAppController.handlePutCategory)
