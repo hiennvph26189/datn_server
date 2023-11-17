@@ -2,6 +2,7 @@ const { QueryTypes } = require('sequelize');
 // import sequelize from "../../src/config/queryDatabase"
 import sequelize from "../../config/queryDatabse"
 import dateTime from "../getDate";
+import setToken from "./getToken";
 let getConvertArrProduct = (arrData) => {
     const newArray = arrData.map(item => {
         return {
@@ -187,7 +188,7 @@ let handleGetSaleProductServices = () => {
                 resolve({
                     errCode: 0,
                     errMessage: 'thành công',
-                    saleProduct: newData
+                    saleProduct: data
                 })
             } else {
                 resolve({
@@ -275,7 +276,7 @@ let getCategoriesService = ()=>{
                     { 
                         errCode:0,
                         errMessage: 'thành công',
-                        data:combinedArray,
+                        data: combinedArray
                     }
                     )
            
@@ -297,5 +298,5 @@ module.exports = {
     handleGetHotProductServices: handleGetHotProductServices,
     handleGetSaleProductServices: handleGetSaleProductServices,
     handleGetNewProductServices: handleGetNewProductServices,
-    getCategoriesService:getCategoriesService
+    getCategoriesService:getCategoriesService,
 }
