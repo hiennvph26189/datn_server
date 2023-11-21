@@ -6,7 +6,7 @@ import productController from "../controllers/productController";
 import apiController from "../controllers/apiController";
 import userApiController from "../controllers/userApiController";
 import homeAppController from "../controllers/appController/homeAppController";
-
+import accountController from "../controllers/appController/accountController";
 import multer from 'multer';
 import path from 'path';
 var appRoot = require('app-root-path');
@@ -48,13 +48,15 @@ let initApiRouter = (app)=>{
     router.post('/user/add',userApiController.addUs);
     router.put('/user/edit',userApiController.editUs);
     router.delete('/user/delete',userApiController.deleteUs);
+
     // category
     router.post('/post-category',homeAppController.handlePostCategory)
     router.put('/put-category',homeAppController.handlePutCategory)
     router.delete('/delete-category',homeAppController.handleDeleteCategory)
     router.get('/app-list-category',homeAppController.handleGetCategories)
-    
-
+    router.get('/list-members',accountController.handleGetMembers)
+    router.put('/put-members',accountController.handlePutMembers)
+    router.post('/add-members',accountController.handlePostMembers)
     return app.use("/api/v1/",router)
 }
 module.exports = initApiRouter
