@@ -1,27 +1,77 @@
 
 <style>
-	
+	.infoUser{
+		display: flex;
+		position: relative;
+	}
+	.infoUser .list-click-user{
+		position: absolute;
+		top:25px;
+		left: 0;
+		z-index: 100;
+
+	}
+	.tophead > .contenttop > .infoUser:hover  .list-click-user{
+		display: block;
+	}
+	.infoUser .list-click-user{
+		display: none;
+	}
+	.infoUser .list-click-user:hover .logo{
+		display: none;
+
+	}
 </style>
 <div class="tophead section">
 	<div class="container">
 		<div class="contenttop">
-			<div class="topbar_left f-left account_xs">
-
-				<ul class="ul_account">
-											
-					<li>
-						<a href="/account/register" title="Đăng ký" class="account_a a_db">
-							<span>Đăng ký</span>
-						</a>
-					</li>
-					<li>
-						<a href="/account/login" title="Đăng nhập" class="account_a a_db">
-							<span>Đăng nhập</span>
-						</a>
-					</li>
-					
-				</ul>
+			<div class="topbar_left f-left account_xs" id="contenttop_id">
+				
+				
 			</div> 
+
+			<script>
+				$(document).ready(function () {
+					$.get("/getName", function (data) {
+							if(data.errCode == 1){
+								var infoUser = data.selectUser
+								console.log(infoUser.tenThanhVien)
+								$("#contenttop_id").empty().append(`
+								<div class="infoUser">
+										<div class="image">
+											<img class="img-member" src="${infoUser.anhDaiDien}">
+										</div>
+										<div class="name">${infoUser.tenThanhVien}</div>
+										<div class="list-click-user">
+											<ul>
+												<li><a href="">Thông tin người dùng</a></li>
+												<li><a href="">Đơn hàng</a></li>
+												<li><a href="">Đăng xuất</a></li>
+											</ul>	
+										</div>
+								</div>`
+								);
+							}else{
+								$("#contenttop_id").empty().append(`<ul class="ul_account">
+											
+											<li>
+												<a href="/get-register" title="Đăng ký" class="account_a a_db" id="dang-ki">
+													<span>Đăng ký</span>
+												</a>
+											</li>
+											<li>
+												<a href="/get-login" title="Đăng nhập" class="account_a a_db" id="dang-nhap">
+													<span>Đăng nhập</span>
+												</a>
+											</li>
+											
+										</ul>`);
+							}	
+						});
+					
+			
+			});
+			</script>
 			<div class="topbar_right f-right hidden-xs">
 				<ul class="ul_account">
 					<li><a href="">Hướng dẫn</a></li>

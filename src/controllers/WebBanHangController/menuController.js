@@ -68,6 +68,7 @@ let sapXepProduct = async (req, res) => {
     let page = req.query.page
     let value = req.query.value
     let getCategoryProducts = await menuService.getSapXepDanhSachSanPhamIdService(id,page,value)
+  
     let nameCategories = getCategoryProducts.nameCategories
     let totalCountProducts = getCategoryProducts.totalCount
     let arrProducts = getConvertArrProduct(getCategoryProducts.products)

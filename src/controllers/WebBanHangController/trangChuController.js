@@ -1,4 +1,5 @@
 import productWebBanHangService from "../../services/webbanhangService/productWebBanHangService";
+require('dotenv').config();
 
 let getConvertArrProduct = (arrData)=>{
   const newArray = arrData.map(item => {
@@ -38,8 +39,6 @@ let getTrangChu = async (req, res) => {
         let arrProductOrder = getConvertArrProduct(listProductsOrder.productsOrders)
 
        let listCatrgories = await productWebBanHangService.getCategoriesService()
-
-      
       //  return res.status(200).json(listCatrgories) 
       return res.render("webBanHang/TrangChu",
       {
@@ -76,9 +75,8 @@ let getProductsDetailItem = async (req, res) => {
    }
  
 };
+
 module.exports = {
     getTrangChu:getTrangChu,
-    getProductsDetailItem:getProductsDetailItem
-
-   
+    getProductsDetailItem:getProductsDetailItem,  
 }
