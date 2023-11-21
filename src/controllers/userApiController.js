@@ -1,11 +1,12 @@
 import userApiSeviece from "../services/userApiSevice";
 
+
+
 const listUs = async (req, res) => {
     try {
         if(req.query.page && req.query.limit){
             let page = req.query.page;
             let limit = req.query.limit;
-
             let data = await userApiSeviece.getUserWithPagination(+page,+limit);
             return res.status(200).json({
                 EM: data.EM, //error message
@@ -13,7 +14,7 @@ const listUs = async (req, res) => {
                 DT: data.DT,
             })
 
-            console.log(">>>checkdata: ", 'page = ', page, 'limit =',limit)
+          
         }else{
             let data = await userApiSeviece.getAllUser();
             return res.status(200).json({
@@ -35,9 +36,12 @@ const listUs = async (req, res) => {
     }
 }
 
-const addUs = (req, res) => {
+const addUs = async(req, res) => {
     try {
-
+        let data = req.body;
+        console.log("dữ liệu đã thêm: ", data.lastName);
+        let dulieu = await userApiSeviece.createNewUser(data);
+        return res.status(200).json(dulieu)
     } catch (error) {
         console.log(error)
         return res.status(500).json({
@@ -49,9 +53,15 @@ const addUs = (req, res) => {
 
 }
 
-const editUs = (req, res) => {
+const editUs = async(req, res) => {
     try {
-
+        // let id = req.params.id;
+        let data = req.body;
+    let user = await userApiSeviece.updateUser(data);
+    return res.status(200).json(user)
+    // if (user.errCode == 1) {
+    //     return res.send(user.errMessage)
+    // } 
     } catch (error) {
         console.log(error)
         return res.status(500).json({
@@ -61,10 +71,12 @@ const editUs = (req, res) => {
         })
     }
 }
-
-const deleteUs = (req, res) => {
+    
+const deleteUs = async(req, res) => {
     try {
-
+        let data = req.body;
+        let deleteCategory = await userApiSeviece.deleteUser(data);
+        return res.status(200).json(deleteCategory)
     } catch (error) {
         console.log(error)
         return res.status(500).json({
