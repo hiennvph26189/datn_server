@@ -8,6 +8,7 @@ import lienHeController from "../controllers/WebBanHangController/lienHecontroll
 import gioiThieuController from "../controllers/WebBanHangController/gioiThieuController";
 import accountController from "../controllers/WebBanHangController/accountController";
 import myMiddleware  from "../controllers/WebBanHangController/myMiddleware";
+import PayController  from "../controllers/WebBanHangController/9PayController";
 
 
 import productController from "../controllers/WebBanHangController/productController";
@@ -54,7 +55,9 @@ let webBanHang = (app)=>{
     router.post('/post-login',accountController.postLoginMenber);
     // list tên Ng dùng
     router.get('/getName',myMiddleware.checkLoginAPI,accountController.getNameUser);
-   
+    // test 9pay
+    router.get('/get-9pay',PayController.get9Pay);
+    router.post('/post-9pay',PayController.post9Pay);
     return app.use("/",router)
 }
 module.exports = webBanHang
