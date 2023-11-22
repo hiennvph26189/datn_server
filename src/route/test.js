@@ -44,6 +44,6 @@ let test = (app)=>{
     // router.get('/add-category',userController.addCategory);
 
     
-    return app.use("/",router)
+    return app.use("/admin",router)
 }
 module.exports = test
