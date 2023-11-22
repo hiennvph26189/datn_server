@@ -15,9 +15,7 @@ let router = express.Router();
 
 
 let webQuanTri = (app)=>{
-    router.get('/',(req, res)=>{
-        return res.send('adafd')
-    }) 
+   
 
     // API trên web quản trị
     router.get('/homeCOntroller',homcontroller.getHomePage)
