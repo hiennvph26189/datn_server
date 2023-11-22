@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+  <head>
+    <%- include('./head'); %>
+    <title>Tìm kiếm</title>
+  </head>
+  <body>
+    <style>
+        .breadcrumb {
+            padding: 0;
+        }
+        .bg-header-nav .header-nav>ul.item_big>li.active{
+            background: #252525;
+        }
+		ul.item_big li.nav-item:nth-last-child(2){
+			background: #252525;
+		}
+        .blog_page .blog-item-summary {
+            font-size: 14px;
+            color: #636363;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            line-height: 20px;
+            clear: left;
+        }
+        .blog-item .blog-item-thumbnail img {
+            max-width: 100%;
+            object-fit: cover;
+            width: 100%;
+        }
+    </style>
+    <%- include('./header'); %>
+
+    <div class="container ">
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<ul class="breadcrumb">					
+					<li class="home">
+						<a href="/"><span>Trang chủ</span></a>						
+						<span class="mr_lr">&nbsp;<i class="fas fa-chervon-right"></i>&nbsp;</span>
+					</li>
+					
+					<li><strong><span>Tìm kiếm</span></strong></li>
+					
+				</ul>
+			</div>
+		</div>
+	</div>
+    <div class="container">
+		<div class="wrap_background_aside padding-top-15 margin-bottom-40">
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12">
+				<div class="page-title category-title">
+					<h1 class="title-head">Tìm kiếm : <span><%= key_search %></h1>
+				</div>
+				<div class="total-search">
+                    Tổng số sản phẩm: <span><%= totalCount %></span>
+                </div>
+			</div>
+		</div>
+		</div>
+	</div>
+    <div class="container">
+        <div class="listProduct-category">
+            <div class="products-view products-view-grid collection_reponsive list_hover_pro">
+              <div class="row">
+                <% if(dataSearch.length >0){ %>
+                  <% dataSearch.forEach(function(item, i){ %>
+                  <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                      <div class="item_product_main margin-bottom-15 item_product_main_relative">
+                          <div class="product-loop-base p-2">
+                            		
+                              <div class="product-thumbnail">
+                                  <a class="image_link display_flex" href="/san-pham-chi-tiet?id=<%= item.id %>" title="<%= item.tenSp %>">
+                                      <img class="lazyload loaded" src="<%= item.image %>" data-src="<%= item.image %>" alt="<%= item.tenSp %>" data-was-processed="true">
+                                  </a>
+                                  <div class="product-action clearfix hidden-xs">
+                                      <form action="/cart/add" method="post" data-cart-form="" class="variants form-nut-grid" data-id="product-actions-2842762" enctype="multipart/form-data">
+                                          <div class="group_action">
+                                              <input class="hidden" type="hidden" name="variantId" value="4263113">
+                                              <button class="btn btn-cart btn btn-circle left-to btn_tuychon" title="Chọn sản phẩm" type="button" onclick="window.location.href='/ao-so-mi-asos-asm08'" tabindex="-1">
+                                                  Chọn sản phẩm
+                                                </button>
+                                                <button title="Xem nhanh" type="button"  data-url="/products-detal-item?id=<%= item.id %>" data-bs-toggle="modal" data-bs-target="#myModal"  data-handle="ao-so-mi-asos-asm08" class="xem_nhanh btn-circle btn_view btn right-to quick-view hidden-xs hidden-sm hidden-md" >
+                                                  Xem nhanh
+                                                </button>
+                                          </div>
+                                      </form>
+                                  </div>
+                              </div>
+                              <div class="product-info a-left">
+                                  <h3 class="product-name"><a href="/san-pham-chi-tiet?id=<%= item.id %>" title="Áo thun Asos"><%= item.tenSp %></a></h3>
+                          
+                                  <div class="product-hideoff">
+                                      <div class="product-hide">
+                                          <div class="price-box clearfix">
+                                              <div class="special-price">
+                                                  <span class="price product-price"><%= item.giaBanSale %> </span>
+                                                </div>
+                                                <% if(item.sale >0){ %>
+                                                <div class="old-price">
+                                                  <span class="price product-price-old">
+                                                      <%= item.giaSanPham %>
+                                                  </span>
+                                                </div>
+                                                <% } %>										
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>	
+                      </div>
+                  </div>
+                  <% }); %>  
+                  <% } else{ %>
+                    <div class="err-search" style="height: 300px; display: flex;
+                    justify-content: center; align-items: center; font-size: 25px; font-weight: 700;">
+                      Không có kết quả nào trả về
+                    </div>
+                  <% } %>  
+              </div>
+          </div>
+          
+          </div>
+    </div>
+ 
+     <div class="modal fade " id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            
+          </div>
+        </div>
+      </div>
+    <%- include('./footer'); %>
+    <script>
+        $('.xem_nhanh').on('click', function(e){
+       e.preventDefault()
+       let url = $(this).data('url')
+       console.log(url)
+         $.get(url, function (data) {
+         $(".modal-content").empty().append(data);
+         
+       });       
+     })
+   </script>
+  </body>
+
+</html>

@@ -1,20 +1,20 @@
 const { QueryTypes } = require('sequelize');
 // import sequelize from "../../src/config/queryDatabase"
-import sequelize from "../config/queryDatabse"
-let handleGetUser = (data)=>{
+import sequelize from "../../config/queryDatabse"
+let getSanPhamService = (data)=>{
     return new Promise(async(resolve, reject)=>{
        
         try {
-            const result = await sequelize.query(`
+            const listSanPham = await sequelize.query(`
                 SELECT *
-                FROM users
+                FROM products
                 ORDER BY id DESC
                 `, { type: QueryTypes.SELECT });
-          
+          console.log(listSanPham)
                 resolve({ 
                     errCode:0,
                     errMessage: 'thành công',
-                    result:result
+                    listSanPham:listSanPham
                  })     
   
         } catch (error) {
@@ -25,6 +25,6 @@ let handleGetUser = (data)=>{
      }) 
 }
 module.exports  = {
-    handleGetUser:handleGetUser
+    getSanPhamService:getSanPhamService
 
 }
