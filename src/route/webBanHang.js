@@ -57,7 +57,10 @@ let webBanHang = (app)=>{
     router.get('/getName',myMiddleware.checkLoginAPI,accountController.getNameUser);
     // test 9pay
     router.get('/get-9pay',PayController.get9Pay);
+    router.get('/get-9pay-return',PayController.get9PayReturn);
     router.post('/post-9pay',PayController.post9Pay);
+    router.post('/api/post-9pay',PayController.postAPI9Pay);
+    router.get('/api/get-9pay',PayController.getAPI9Pay);
     return app.use("/",router)
 }
 module.exports = webBanHang
