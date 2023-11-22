@@ -1,8 +1,9 @@
 import  express  from "express";
 import bodyParser from "body-parser";
 import viewEngine from "./config/viewEngine";
-import initWebRouter from "./route/web";
+import webQuanTri from "./route/webQuanTri";
 import webBanHang from "./route/webBanHang";
+import test from "./route/test";
 var cookieParser = require('cookie-parser')
 var path = require("path");
 import cors from "cors";
@@ -15,8 +16,9 @@ app.use(bodyParser.urlencoded({limit:'50mb', extended: true }));
 app.use(express.static(path.join(__dirname, './public')))
 app.use(cookieParser())
 viewEngine(app);
-initWebRouter(app);
+webQuanTri(app);
 webBanHang(app);
+test(app);
 
 
 

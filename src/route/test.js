@@ -1,9 +1,9 @@
 import express from "express";
 
-import homcontroller from "../controllers/homcontroller";
-import userController from "../controllers/userController";
-import danhSachController from "../controllers/danhSachController";
-import productController from "../controllers/productController";
+import homcontrollerTEST from "../controllers/TestController/homcontrollerTEST";
+import userControllerTEST from "../controllers/TestController/userControllerTEST";
+import danhSachControllerTEST from "../controllers/TestController/danhSachControllerTEST";
+import productControllerTEST from "../controllers/TestController/productControllerTEST";
 
 import multer from 'multer';
 import path from 'path';
@@ -34,16 +34,16 @@ const imageFilter = function (req, file, cb) {
 let upload = multer({ storage: storage, fileFilter: imageFilter,limits:{fileSize:1*1024*1024}});
 let router = express.Router();
 
-let initWebRouter = (app)=>{
+let test = (app)=>{
     router.get('/admin',(req, res)=>{
         return res.send('adafd')
     }) 
-     router.get('/listDanhSach',danhSachController.listDanhSach);
-     router.post('/AddDanhSach',danhSachController.addDanhSach);
+     router.get('/listDanhSach',danhSachControllerTEST.listDanhSach);
+     router.post('/AddDanhSach',danhSachControllerTEST.addDanhSach);
     // router.get('/admin/userController',userController.handleGetUser);
     // router.get('/add-category',userController.addCategory);
 
     
     return app.use("/",router)
 }
-module.exports = initWebRouter
+module.exports = test

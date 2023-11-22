@@ -1,6 +1,6 @@
 const { QueryTypes } = require('sequelize');
 // import sequelize from "../../src/config/queryDatabase"
-import sequelize from "../config/queryDatabse"
+import sequelize from "../../config/queryDatabse"
 let listDanhSachService = ()=>{
     return new Promise(async(resolve, reject)=>{
        

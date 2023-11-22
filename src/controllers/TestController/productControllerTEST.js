@@ -1,7 +1,7 @@
-import productService from "../services/productService";
+import productService from "../../services/testService/productServiceTEST";
 const { QueryTypes } = require('sequelize');
 // import sequelize from "../../src/config/queryDatabase"
-import sequelize from "../config/queryDatabse"
+import sequelize from "../../config/queryDatabse"
 let listSanPham = async (req, res) => {
     
   

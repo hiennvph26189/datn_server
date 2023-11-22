@@ -1,4 +1,4 @@
-import userService from "../services/userService";
+import userService from "../../services/testService/userServiceTEST";
 
 let handleGetUser = async (req, res) => {
     
