@@ -312,7 +312,7 @@ let handleGetOneProductService = (id)=>{
 }
 let editProductsService = (data)=>{
     return new Promise(async(resolve, reject)=>{
-        console.log(data.dataImput,"adadfadf");
+        
        try {
         
         if(!data.dataImput.id){
@@ -339,8 +339,27 @@ let editProductsService = (data)=>{
                 products.mota= data.dataImput.mota,
                 products.image= data.dataImput.image,
 
+                
             await products.save()
-           
+            let listSizes = data.dataImput.listSizes
+            let date = datetime.getdate()
+            let id_sp = data.dataImput.id
+            let size_S = listSizes.S?listSizes.S:0
+            let size_M = listSizes.M?listSizes.M:0
+            let size_L = listSizes.L?listSizes.L:0
+            let size_XL = listSizes.XL?listSizes.XL:0
+            let size_XXL = listSizes.XXL?listSizes.XXL:0
+            let check_size = await sequelize.query(`
+                SELECT * FROM  sizes where id_sp = ${id_sp}
+                    `, { type: QueryTypes.SELECT });
+                
+            // if(check_size.length > 0){
+            //         await 
+            // }
+                await sequelize.query(`
+                INSERT INTO sizes (id_sp,S, M, L, XL, XXL, status, createdAt, updatedAt)
+                VALUES (${id_sp}, ${size_S}, ${size_M}, ${size_L},${size_XL},${size_XXL},1,"${date}","${date}");
+                `, { type: QueryTypes.INSERT });
                 resolve({
                     errCode: 0,
                     errMessage:"Sửa thành công"
