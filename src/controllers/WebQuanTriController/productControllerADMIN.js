@@ -42,8 +42,9 @@ let handleAddProducts = async (req, res) => {
     
   
     try {
+        // let message = req.body
         let message = await  productSercive.AddProductsService(req.body)
-        console.log(message)
+        
         return res.status(200).json(message)
      } catch (error) {
          console.log("Lỗi phân quyền",error)

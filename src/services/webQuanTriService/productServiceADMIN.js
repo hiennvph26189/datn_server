@@ -1,5 +1,5 @@
 import db from "../../models/index";
-
+import datetime from "../webbanhangService/getdateService"
 import sequelize from "../../config/queryDatabse"
 const { QueryTypes } = require('sequelize');
 
@@ -180,19 +180,33 @@ let AddProductsService = (data)=>{
         try {
             // console.log(data.sizes,"adlfalfn")
                 if(data){
-                    await db.Products.create({
+                    
+                    let listSizes = JSON.parse(data.listSizes)
+                    
+                    let product =await db.Products.create({
                         tenSp: data.tenSp,
                         hangSx: data.hangSx,
                         giaSanPham: data.giaSanPham,
                         giaNhap: data.giaNhap,
                         idDanhSach: data.idDanhSach,
                         soLuong: data.soLuong,
-                        sizes: data.sizes,
+                       
                         hot: data.hot,
                         sale: data.sale,
                         mota: data.mota,
                         image: data.image,
                     })
+                    let date = datetime.getdate()
+                    let id_sp = product.id
+                    let size_S = listSizes.S?listSizes.S:0
+                    let size_M = listSizes.M?listSizes.M:0
+                    let size_L = listSizes.L?listSizes.L:0
+                    let size_XL = listSizes.XL?listSizes.XL:0
+                    let size_XXL = listSizes.XXL?listSizes.XXL:0
+                        await sequelize.query(`
+                        INSERT INTO sizes (id_sp,S, M, L, XL, XXL, status, createdAt, updatedAt)
+                        VALUES (${id_sp}, ${size_S}, ${size_M}, ${size_L},${size_XL},${size_XXL},1,"${date}","${date}");
+                        `, { type: QueryTypes.INSERT });
                     resolve({
                         errCode: 0,
                         errMessage: "Ok",

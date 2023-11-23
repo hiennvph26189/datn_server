@@ -73,7 +73,7 @@ let get9Pay = async (req, res) => {
         var invoiceNo = getInvoiceNo(8);
         var amount = req.body.price; // This value is better than 3000 VND. We only use currency is "VND"
         var description = req.body.name;
-        var returnUrl = "http://localhost:8001/get-9pay";
+        var returnUrl = "http://localhost:8080/get-9pay";
         var parameters = {
             "merchantKey": MERCHANT_KEY,
             "time": time,
