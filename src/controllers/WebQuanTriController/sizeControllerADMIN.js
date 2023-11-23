@@ -3,7 +3,7 @@ let getSizeADMIN = async (req, res) => {
 
     try {
             let id = req.query.id_sp
-            let data = await sizesServiceADMIN.getSizeADMIN(id);
+            let data = await sizesServiceADMIN.getSizesServiceADMIN(id);
         return res.status(200).json(data)
         
          

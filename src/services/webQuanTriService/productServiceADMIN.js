@@ -341,7 +341,8 @@ let editProductsService = (data)=>{
 
                 
             await products.save()
-            let listSizes = data.dataImput.listSizes
+            let listSizes = JSON.parse(data.dataImput.listSizes)
+    
             let date = datetime.getdate()
             let id_sp = data.dataImput.id
             let size_S = listSizes.S?listSizes.S:0
@@ -353,13 +354,19 @@ let editProductsService = (data)=>{
                 SELECT * FROM  sizes where id_sp = ${id_sp}
                     `, { type: QueryTypes.SELECT });
                 
-            // if(check_size.length > 0){
-            //         await 
-            // }
-                await sequelize.query(`
-                INSERT INTO sizes (id_sp,S, M, L, XL, XXL, status, createdAt, updatedAt)
-                VALUES (${id_sp}, ${size_S}, ${size_M}, ${size_L},${size_XL},${size_XXL},1,"${date}","${date}");
-                `, { type: QueryTypes.INSERT });
+                if(check_size.length > 0){
+                         await sequelize.query(`
+                         UPDATE sizes
+                         SET S = ${size_S}, M = ${size_M}, L = ${size_L}, XL = ${size_XL}, XXL = ${size_XXL}, updatedAt='${date}'
+                         WHERE id_sp = ${id_sp}
+                        `, { type: QueryTypes.INSERT });
+                }else{
+                    await sequelize.query(`
+                    INSERT INTO sizes (id_sp,S, M, L, XL, XXL, status, createdAt, updatedAt)
+                    VALUES (${id_sp}, ${size_S}, ${size_M}, ${size_L},${size_XL},${size_XXL},1,"${date}","${date}");
+                    `, { type: QueryTypes.INSERT });
+                }
+          
                 resolve({
                     errCode: 0,
                     errMessage:"Sửa thành công"
@@ -368,7 +375,7 @@ let editProductsService = (data)=>{
          }else{
             resolve({
                 errCode: 1,
-                errMessage:"User không tồn tại"
+                errMessage:"Sản phẩm không tồn tại"
             })
          }
 
