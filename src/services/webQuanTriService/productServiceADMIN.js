@@ -112,7 +112,7 @@ let handleGetAllCategoriesProductService = (id)=>{
                 let getHotSaleAll = await sequelize.query(`
                 SELECT *
                 FROM products
-                Where sale > 25 
+                Where sale >= 10 
                 ORDER BY sale DESC
                
                 

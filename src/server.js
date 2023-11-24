@@ -1,6 +1,7 @@
 import  express  from "express";
 import bodyParser from "body-parser";
 import viewEngine from "./config/viewEngine";
+import apiAPP from "./route/apiAPP";
 
 import webQuanTri from "./route/webQuanTri";
 import webBanHang from "./route/webBanHang";
@@ -18,7 +19,7 @@ app.use(bodyParser.urlencoded({limit:'50mb', extended: true }));
 app.use(express.static(path.join(__dirname, './public')))
 app.use(cookieParser())
 viewEngine(app);
-
+apiAPP(app);
 webQuanTri(app);
 webBanHang(app);
 test(app);

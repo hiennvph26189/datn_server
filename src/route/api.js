@@ -5,7 +5,7 @@ import userController from "../controllers/userController";
 import productController from "../controllers/productController";
 import apiController from "../controllers/apiController";
 import userApiController from "../controllers/userApiController";
-import homeAppController from "../controllers/appController/homeAppController";
+import homeAppController from "../controllers/AppController/homeAppControllerAPP";
 
 import multer from 'multer';
 import path from 'path';
