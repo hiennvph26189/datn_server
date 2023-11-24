@@ -1,0 +1,126 @@
+
+<div class="products-view products-view-grid collection_reponsive list_hover_pro">
+    <div class="row">
+        <% getCategoryProducts.forEach(function(item, i){ %>
+        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+            <div class="item_product_main margin-bottom-15 item_product_main_relative">
+                <div class="product-loop-base p-2">
+                  <% if(id == "san-pham-khuyen-mai"){ %>
+                    <% if(item.sale >0){ %>
+                      <span class="number-sale">
+                        <i class="fas fa-certificate"> <span class="number-child-sale"><%= item.sale %>%</span> </i>
+                      </span>
+                      <% } %>
+                    <% } %>	
+                    <div class="product-thumbnail">
+                        <a class="image_link display_flex" href="/ao-thun-asos" title="<%= item.tenSp %>">
+                            <img class="lazyload loaded" src="<%= item.image %>" data-src="<%= item.image %>" alt="<%= item.tenSp %>" data-was-processed="true">
+                        </a>
+                        <div class="product-action clearfix hidden-xs">
+                            <form action="/cart/add" method="post" data-cart-form="" class="variants form-nut-grid" data-id="product-actions-2842762" enctype="multipart/form-data">
+                                <div class="group_action">
+                                    <input class="hidden" type="hidden" name="variantId" value="4263113">
+                                    <button class="btn btn-cart btn btn-circle left-to btn_tuychon" title="Chọn sản phẩm" type="button" onclick="window.location.href='/ao-so-mi-asos-asm08'" tabindex="-1">
+                                        Chọn sản phẩm
+                                      </button>
+                                      <button title="Xem nhanh" type="button"  data-url="/products-detal-item?id=<%= item.id %>" data-bs-toggle="modal" data-bs-target="#myModal"  data-handle="ao-so-mi-asos-asm08" class="xem_nhanh btn-circle btn_view btn right-to quick-view hidden-xs hidden-sm hidden-md" >
+                                        Xem nhanh
+                                      </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="product-info a-left">
+                        <h3 class="product-name"><a href="/ao-thun-asos" title="Áo thun Asos"><%= item.tenSp %></a></h3>
+                
+                        <div class="product-hideoff">
+                            <div class="product-hide">
+                                <div class="price-box clearfix">
+                                    <div class="special-price">
+                                        <span class="price product-price"><%= item.giaBanSale %> </span>
+                                      </div>
+                                      <% if(item.sale >0){ %>
+                                      <div class="old-price">
+                                        <span class="price product-price-old">
+                                            <%= item.giaSanPham %>
+                                        </span>
+                                      </div>
+                                      <% } %>										
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>	
+            </div>
+        </div>
+        <% }); %>    
+    </div>
+</div>
+<div class="pagination">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <% if(page > 1 && page <= totalCountProducts){ %> 
+          <li class="page-item">
+            <a class="page-link pagination-sapxep" href="javascript:;" data-id="<%= id %>" data-page="<%= page -1 %>" data-value="<%= value %>" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <% } else{ %>  
+            <li class="page-item disabled">
+                <a class="page-link " href="#" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+          <% } %>
+          <% for (let i = 1; i <= totalCountProducts; i++) { %>
+            <% if(page == i){ %>
+                <li class="page-item active" ><a class="page-link pagination-sapxep"  href="javascript:;" data-id="<%= id %>" data-page="<%= i %>" data-value="<%= value %>"><%= i %></a></li>
+              <% } else{ %>  
+                <li class="page-item" ><a class="page-link pagination-sapxep"  href="javascript:;" data-id="<%= id %>" data-page="<%= i %>" data-value="<%= value %>"><%= i %></a></li>
+             <% } %>
+           
+          <% } %>
+
+          <% if( page < totalCountProducts){ %> 
+          <li class="page-item">
+            <a class="page-link pagination-sapxep" href="javascript:;" data-id="<%= id %>" data-page="<%= page +1 %>" data-value="<%= value %>" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+          <% } else{ %>  
+            <li class="page-item disabled">
+                <a class="page-link" href="#" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
+            <% } %>
+        </ul>
+
+      </nav> 
+      
+</div>
+<script>
+    $('.xem_nhanh').on('click', function(e){
+        e.preventDefault()
+        let url = $(this).data('url')
+        console.log(url)
+          $.get(url, function (data) {
+          $(".modal-content").empty().append(data);
+          
+        });       
+      })
+      $('.pagination-sapxep').on('click', function(e){
+    
+        let id_category = $(this).attr("data-id")
+        let page = $(this).attr("data-page")
+        let value = $(this).attr("data-value")
+        console.log(page)
+    // let value = $(this).val()
+    if(value && value != "") {
+    
+      $.get(`/sapXep-products?id=${id_category}&page=${page}&value=${value}`, function (data) {
+            $(".listProduct-category").empty().append(data);
+          });
+    }    
+    })
+</script>

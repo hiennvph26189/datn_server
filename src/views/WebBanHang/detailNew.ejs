@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+  <head>
+    <%- include('./head'); %>
+    <title>Giới thiệu</title>
+  </head>
+  <body>
+    <style>
+        .breadcrumb {
+            font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+            margin: 0;
+            font-size: 14px;
+            border-radius: 0;
+            font-weight: 400;
+            line-height: 24px;
+            background-color: transparent;
+            font-size: 14px;
+            padding: 0px 0px 15px 0px;
+            border-radius: 0px;
+            border-bottom: 1px solid #e1e1e1;
+            width: 100%;
+            text-align: left;
+        }
+        .bg-header-nav .header-nav>ul.item_big>li.active{
+            background: #252525;
+        }
+		ul.item_big li.nav-item:nth-last-child(2){
+			background: #66a182;
+		}
+        .blog_page .blog-item-summary {
+            font-size: 14px;
+            color: #636363;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            line-height: 20px;
+            clear: left;
+        }
+        .blog-item .blog-item-thumbnail img {
+            max-width: 100%;
+            object-fit: cover;
+            width: 100%;
+        }
+        .btn-next-prev{
+            display: none;
+        }
+    </style>
+    <%- include('./header'); %>
+
+    <div class="container wrap_background_aside padding-top-0 margin-bottom-40 blog-main">
+        <div class="row">
+            <section class="right-content col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <article class="article-main">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12 order-xs-last order-sm-last order-md-last">
+                                <div class="sanPhamBanChay"></div>
+                            
+                        </div>
+                        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+                            <section class="bread-crumb">
+                                <span class="crumb-border"></span>
+                                <div class="container no-padding">
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <ul class="breadcrumb">					
+                                                <li class="home">
+                                                    <a href="/"><span>Trang chủ</span></a>						
+                                                    <span class="mr_lr">&nbsp;<i class="fas fa-chervon-right"></i>&nbsp;</span>
+                                                </li>
+                                                
+                                                <li>
+                                                    <a href="/tin-tuc"><span>Tin tức</span></a>	
+                                                    <span class="mr_lr">&nbsp;<i class="fas fa-chervon-right"></i>&nbsp;</span>
+                                                </li>
+                                                <li><strong><span><%= dataNew.tieuDe %></span></strong></li>
+                                                
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                            <div class="article-details">
+                                <div class="article-image">
+										
+                                    <span>
+                                        <picture>
+                                            <img class="img-fluid" src="<%= dataNew.anhTinTuc %>" title="Khi thời trang là thảm họa thì sẽ như thế nào ?" alt="Khi thời trang là thảm họa thì sẽ như thế nào ?">
+                                        </picture>
+                                    </span>
+                                    
+                                </div>
+                                <div class="content_item_blogs">
+                                    <div class="blog_home_title margin-top-20 margin-bottom-10">
+                                        <h1 class="news_home_content_short_info">
+                                            <%= dataNew.tieuDe %>
+                                        </h1>								
+                                    </div>
+                                    <div class="content_day_blog blog-item">
+                                        <div class="postby">
+                                            <div class="user"><i class="fas fa-user"></i> Nguyễn Ngọc Dũng </div>
+                                            <div class="clock"><i class="far fa-clock"></i> <%= dataNew.createdAt %></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="article-content">
+                                    <div class="rte">
+                                        <%- dataNew.moTa %>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+            </section>
+        </div>
+    </div>
+    <%- include('./footer'); %>
+    <script>
+        $(document).ready(function () {
+       
+        $.get("/sanPhamBanChay-products", function (data) {
+          $(".sanPhamBanChay").empty().append(data);
+        });
+        
+       
+      });
+
+    </script>
+  </body>
+
+</html>

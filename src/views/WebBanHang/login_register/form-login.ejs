@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+  <head>
+    <%- include('../head'); %>
+    <title>Đăng nhập</title>
+  </head>
+  <body>
+    <style>
+        .bg-header-nav .header-nav>ul.item_big>li.active{
+            background: #252525;
+        }
+		#dang-nhap{
+			color: #66a182;
+		}
+    </style>
+    <%- include('../header'); %>
+    <div class="container ">
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<ul class="breadcrumb">					
+					<li class="home">
+						<a href="/"><span>Trang chủ</span></a>						
+						<span class="mr_lr">&nbsp;<i class="fas fa-chervon-right"></i>&nbsp;</span>
+					</li>
+					
+					<li><strong><span>Đăng nhập</span></strong></li>
+					
+				</ul>
+			</div>
+		</div>
+	</div>
+    <div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12">
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-6">
+						<div id="login" class="span7 margin-bottom-30">
+							<h1><a href="#" class="title_base_cus">Thông tin đăng nhập</a></h1>
+							
+							<span class="error"> </span>
+							
+							<form method="post" action="/post-login" id="customer_login" accept-charset="UTF-8"><input name="FormType" type="hidden" value="customer_login"><input name="utf8" type="hidden" value="true">
+							<div class="form-signup text-red">
+								
+							</div>
+							<div class="form-signup clearfix">
+								<fieldset class="form-group">
+									<label>Email<span class="required">*</span></label>
+									<input type="email" class="form-control" value="" name="email" id="customer_email" required="">
+								</fieldset>
+								<fieldset class="form-group">
+									<label>Mật khẩu <span class="required">*</span></label>
+									<input type="password" class="form-control" value="" name="password" id="customer_password" required="">
+								</fieldset>
+								<div class="pull-xs-left" style="margin-top:30px;">
+									<input class="btn-style btn-style-active btn btn-primary-1" type="submit" value="Đăng nhập">
+									<a href="#" class="btn-link-a hoac_style" style="margin-left:10px;" onclick="showRecoverPasswordForm();return false;">Quên mật khẩu ?</a>
+									
+								</div>
+							</div>
+							</form>
+						</div>
+
+						<div id="recover-password" style="display:none;" class="form-signup">
+							<h2><a href="#" class="title_base_cus">Lấy lại mật khẩu</a></h2>
+							<p style="color:#F44336" class="red_style">Chúng tôi sẽ gửi thông tin lấy lại mật khẩu vào email đăng ký tài khoản của bạn</p>
+
+							<form method="post" action="/account/recover" id="recover_customer_password" accept-charset="UTF-8"><input name="FormType" type="hidden" value="recover_customer_password"><input name="utf8" type="hidden" value="true">
+							<div class="form-signup text-red">
+								
+							</div>
+							<div class="form-signup clearfix">
+								<fieldset class="form-group">
+									<label>Email<span class="required">*</span></label>
+									<input type="email" class="form-control" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,63}$" value="" name="Email" id="recover-email" required="">
+								</fieldset>
+							</div>
+							<div class="action_bottom">
+								<button class="btn-style btn-style-active btn btn-primary-1" type="submit" ></button> <span class="or-login">hoặc</span>
+								
+							</div>
+							</form>
+						</div>
+					</div>
+
+					<div class="form-signup col-xs-12 col-sm-12 col-md-6">
+						<h2><a href="#" class="title_base_cus">Bạn chưa có tài khoản ?</a></h2>
+						<p>Đăng ký tài khoản ngay để có thể mua hàng nhanh chóng và dễ dàng hơn  ! Ngoài ra còn có rất nhiều chính sách và ưu đãi cho các thành viên Vemouse</p>
+						<div class="pull-xs-left" style="margin-top:30px;">
+							<a href="/get-register" class="btn-style btn-style-active-black btn btn-primary-2" previewlistener="true">Đăng ký</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		
+		$("#customer_login").submit(function(e) {
+
+			e.preventDefault(); // avoid to execute the actual submit of the form.
+
+			var form = $(this);
+			var actionUrl = form.attr('action');
+
+			$.ajax({
+				type: "POST",
+				url: actionUrl,
+				data: form.serialize(), 
+				success: function (data) {
+					if(data.errCode == 0) {
+						$('.error').empty().append(data.errMessage);
+					}else{
+						window.location.href = '/';
+					}
+					
+
+				},
+				error: function (data) {
+					console.log('An error occurred.');
+				
+				},
+			});
+
+			});
+	</script>
+    <%- include('../footer'); %>
+  </body>
+
+</html>

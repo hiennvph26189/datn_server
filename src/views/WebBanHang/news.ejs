@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+  <head>
+    <%- include('./head'); %>
+    <title>Giới thiệu</title>
+  </head>
+  <body>
+    <style>
+        .breadcrumb {
+            padding: 0;
+        }
+        .bg-header-nav .header-nav>ul.item_big>li.active{
+            background: #252525;
+        }
+		ul.item_big li.nav-item:nth-last-child(2){
+			background: #66a182;
+		}
+        .blog_page .blog-item-summary {
+            font-size: 14px;
+            color: #636363;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            line-height: 20px;
+            clear: left;
+        }
+        .blog-item .blog-item-thumbnail img {
+            max-width: 100%;
+            object-fit: cover;
+            width: 100%;
+        }
+    </style>
+    <%- include('./header'); %>
+
+    <div class="container ">
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<ul class="breadcrumb">					
+					<li class="home">
+						<a href="/"><span>Trang chủ</span></a>						
+						<span class="mr_lr">&nbsp;<i class="fas fa-chervon-right"></i>&nbsp;</span>
+					</li>
+					
+					<li><strong><span>Giới thiệu</span></strong></li>
+					
+				</ul>
+			</div>
+		</div>
+	</div>
+    <div class="container">
+		<div class="wrap_background_aside padding-top-15 margin-bottom-40">
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12">
+				<div class="page-title category-title">
+					<h1 class="title-head"><a href="#">Tin tức</a></h1>
+				</div>
+				
+			</div>
+		</div>
+		</div>
+	</div>
+    <div class="container">
+        <div class="content_blog_new list-blogs blog-main">
+            <div class="row row_blog_responsive">
+                <% if(dataNew.length >0 ){ %>
+                    <% dataNew.forEach(function(item, i){ %>
+                    <div class="col-xl-4 col-lg-6">
+                        <div class="blog-item blog_page">
+                            <div class="blog-item-thumbnail">
+        
+                            <a class="image-blog" href="/news-detail?id=<%= item.id %>" title="Khi thời trang là thảm họa thì sẽ như thế nào ?">
+                                <img class="lazyload loaded" src="<%= item.anhTinTuc %>"  alt="<%= item.tieuDe %>" data-was-processed="true">
+                            </a>
+        
+                            </div>
+                        <h3 class="blog-item-name"><a href="/news-detail?id=<%= item.id %>" title="<%= item.tieuDe %>"><%= item.tieuDe %></a></h3>
+                        <div class="postby">
+                            <div class="user"><i class="fas fa-user"></i> Nguyễn Ngọc Dũng </div>
+                            <div class="clock"><i class="far fa-clock"></i> <%= item.createdAt %></div>
+                        </div>
+                            <p class="blog-item-summary"><%= item.tomTatTinTuc %></p>
+
+                            <a href="/news-detail?id=<%= item.id %>" class="btn btn-style btn-readmore" title="Đọc tiếp">Đọc tiếp</a>
+
+                        </div>
+                    </div>
+                    <% }); %>  
+                <% } %> 
+                
+            </div>
+            <div class="col-xs-12 text-right">
+                
+            </div>
+                
+        </div>
+    </div>
+    <%- include('./footer'); %>
+  </body>
+
+</html>

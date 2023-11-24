@@ -1,38 +1,32 @@
 const { QueryTypes } = require('sequelize');
 // import sequelize from "../../src/config/queryDatabase"
-import sequelize from "../config/queryDatabse"
-import bcrypt from 'bcryptjs';
-
-
-const salt = bcrypt.genSaltSync(10);
-const hashUserPassword = (userPassword) => {
-    let hashPassword = bcrypt.hashSync(userPassword, salt);
-    return hashPassword;
-}
-
-
-let handleGetUser = (data) => {
-    return new Promise(async (resolve, reject) => {
+import sequelize from "../../config/queryDatabse"
+let getSanPhamService = (data)=>{
+    return new Promise(async(resolve, reject)=>{
+       
 
         try {
-            const result = await sequelize.query(`
+            const listSanPham = await sequelize.query(`
                 SELECT *
-                FROM users
+                FROM products
                 ORDER BY id DESC
                 `, { type: QueryTypes.SELECT });
 
-            resolve({
-                errCode: 0,
-                errMessage: 'thành công',
-                result: result
-            })
-
+          console.log(listSanPham)
+                resolve({ 
+                    errCode:0,
+                    errMessage: 'thành công',
+                    listSanPham:listSanPham
+                 })     
+  
         } catch (error) {
-            reject(error);
+             reject(error);
         }
-
-    })
+         
+         
+     }) 
 }
+
 let handleCreateUser = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -146,9 +140,9 @@ const updateUserInfo = (data) => {
 }
 
 module.exports = {
-    handleGetUser: handleGetUser,
     handleCreateUser: handleCreateUser,
     deleteUser: deleteUser,
     getUserbyId: getUserbyId,
     updateUserInfo: updateUserInfo,
+    getSanPhamService:getSanPhamService
 }

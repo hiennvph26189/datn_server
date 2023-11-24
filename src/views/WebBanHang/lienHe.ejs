@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+  <head>
+    <%- include('./head'); %>
+    <title>Liên Hệ</title>
+  </head>
+  <body>
+    <style>
+        .bg-header-nav .header-nav>ul.item_big>li.active{
+            background: #252525;
+        }
+		ul.item_big li.nav-item:nth-last-child(1){
+			background: #66a182;
+		}
+    </style>
+    <%- include('./header'); %>
+    <div class="container ">
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<ul class="breadcrumb">					
+					<li class="home">
+						<a href="/"><span>Trang chủ</span></a>						
+						<span class="mr_lr">&nbsp;<i class="fas fa-chervon-right"></i>&nbsp;</span>
+					</li>
+					
+					<li><strong><span>Liên hệ</span></strong></li>
+					
+				</ul>
+			</div>
+		</div>
+	</div>
+    <div class="container">
+		<div class="row">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				<div class="section_maps">
+					<div class="box-maps">
+						<div class="iFrameMap">
+							<div class="google-map">
+								<div class="maps_iframe">
+									<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.8189870743563!2d105.80213977588717!3d20.999891888768254!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135aca2c4845ac5%3A0xbad154eb77b76652!2zNiBQLiBMw6ogVsSDbiBUaGnDqm0sIFRoYW5oIFh1w6JuIFRydW5nLCBUaGFuaCBYdcOibiwgSMOgIE7hu5lpLCBWaeG7h3QgTmFt!5e0!3m2!1svi!2s!4v1698895049753!5m2!1svi!2s" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 order-xs-last">
+				<div class="page-login page_cotact">
+					<h1 class="title-head-contact a-left"><span>Liên hệ</span></h1>
+					<div id="pagelogin">
+						<div class="clearfix"></div>
+						<form accept-charset="UTF-8" action="/post-lien-he" id="contacts" method="post">
+							<input name="FormType" type="hidden" value="contact">
+							<input name="utf8" type="hidden" value="true">
+							
+							
+							<div class="form-signup clearfix">
+								<div class="row group_contact">
+									<fieldset class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+										<label>Họ và tên:<span style="color:red;">*</span></label>
+										<input type="text" class="form-control  form-control-lg" required="" value="" name="name" id="names">
+									</fieldset>
+									<fieldset class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+										<label>Email:<span style="color:red;">*</span></label>
+										<input type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required="" id="emails" class="form-control form-control-lg" value="" name="email">
+									</fieldset>
+									<fieldset class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+										<label>Ý kiến:<span style="color:red;">*</span></label>
+										<textarea name="contact" id="comments" class="form-control content-area form-control-lg" rows="6" required=""></textarea>
+									</fieldset>
+									<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+										<button type="submit" class="btn btn-comment">Gửi liên hệ</button>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="select_mapss margin-top-40 col-lg-6 col-md-6 col-sm-12 col-xs-12">
+				<div class="aa mid_fot_h contact_r page_cotact">
+					<a href="/" class="logo-wrapper ">	
+						<img src="//bizweb.dktcdn.net/100/091/100/themes/880371/assets/logo.png?1676015176971" alt="logo Vemouse">
+					</a>
+					<span class="text_sum_contact">Sapo được thành lập với niềm đam mê và khát vọng thành công trong lĩnh vực Thương mại điện tử. Chúng tôi đã và đang khẳng định được vị trí hàng đầu bằng những sản phẩm</span>
+					<div class="time_works">
+						<div class="itemfooter cont">
+							<div class="r">
+								<i class="fas fa-map-marker-alt"></i>
+								<span>
+									Tầng 6 266 Đội Cấn - Ba Đình - Hà Nội, Hà Nội
+									</span>
+							</div>
+							<div class="r">
+								<i class="fas fa-phone"></i>
+								<a class="fone" href="tel:19006750">1900 6750</a>
+							</div>
+							<div class="r">
+								<i class="far fa-envelope"></i>
+								<a href="mailto:hellocafein@gmail.com">hellocafein@gmail.com</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+	<div class="modal-dialog">
+	  <div class="modal-content">
+		<div class="modal-header">
+		  <h5 class="modal-title" id="staticBackdropLabel">Thông báo</h5>
+		  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		</div>
+		<div class="modal-body">
+			Bạn đã gửi thành công, chúng tôi sẽ phản hồi lại vào Email của bạn, xin chân thàn cảm ơn
+		</div>
+		<div class="modal-footer">
+		  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">OK</button>
+		</div>
+	  </div>
+	</div>
+  </div>
+    <%- include('./footer'); %>
+	<script>
+		// this is the id of the form
+		$("#contacts").submit(function(e) {
+
+		e.preventDefault(); // avoid to execute the actual submit of the form.
+
+		var form = $(this);
+		var actionUrl = form.attr('action');
+
+		$.ajax({
+			type: "POST",
+			url: actionUrl,
+			data: form.serialize(), 
+			success: function (data) {
+                if(data.errCode == 1){
+					$("#names").val("")
+					$("#comments").val("")
+					$("#emails").val("")
+					$('#staticBackdrop').modal('show');
+
+				}
+
+            },
+            error: function (data) {
+                console.log('An error occurred.');
+                console.log(data);
+            },
+		});
+
+		});
+
+	</script>
+  </body>
+
+</html>
