@@ -1,11 +1,13 @@
 import  express  from "express";
 import bodyParser from "body-parser";
 import viewEngine from "./config/viewEngine";
+
 import webQuanTri from "./route/webQuanTri";
 import webBanHang from "./route/webBanHang";
 import test from "./route/test";
 var cookieParser = require('cookie-parser')
 var path = require("path");
+
 import cors from "cors";
 require('dotenv').config();
 
@@ -16,6 +18,7 @@ app.use(bodyParser.urlencoded({limit:'50mb', extended: true }));
 app.use(express.static(path.join(__dirname, './public')))
 app.use(cookieParser())
 viewEngine(app);
+
 webQuanTri(app);
 webBanHang(app);
 test(app);
@@ -23,7 +26,7 @@ test(app);
 
 
 
-let port = process.env.PORT;
+let port = process.env.PORT || 8000;
 app.listen(port,()=>{
     console.log("đang chạy PORT: " + port);
 });

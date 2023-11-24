@@ -17,4 +17,5 @@ let getGioiThieu = async (req, res) => {
 
 module.exports = {
     getGioiThieu:getGioiThieu,
+
 }
