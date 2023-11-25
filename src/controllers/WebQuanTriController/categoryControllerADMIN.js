@@ -16,8 +16,6 @@ let handleGetAllcategories = async (req, res) => {
    
 };
 let handleAddCategories = async (req, res) => {
-    
-  
     try {
         let message = await  categoriesService.AddCategoriesService(req.body)
         console.log(message)

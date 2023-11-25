@@ -2,7 +2,6 @@ import  express  from "express";
 import bodyParser from "body-parser";
 import viewEngine from "./config/viewEngine";
 import apiAPP from "./route/apiAPP";
-
 import webQuanTri from "./route/webQuanTri";
 import webBanHang from "./route/webBanHang";
 import test from "./route/test";
