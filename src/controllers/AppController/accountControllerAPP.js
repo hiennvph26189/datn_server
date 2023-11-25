@@ -64,8 +64,10 @@ let handleChangePassMembers = async (req, res) => {
         });
     }
 };
+
 module.exports = {
     handleLoginMember: handleLoginMember,
     handleAddMembers:handleAddMembers,
-    handleChangePassMembers:handleChangePassMembers
+    handleChangePassMembers:handleChangePassMembers,
+    handleLienHeMembers:handleLienHeMembers
 };
