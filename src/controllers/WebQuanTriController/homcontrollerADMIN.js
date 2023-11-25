@@ -20,7 +20,6 @@ let getCRUD = async(req,res)=>{
     return res.render('getCRUD.ejs')
 }
 let postCRUD = async (req, res) => {
-   
     let message =   await CRUDService.createNewUser(req.body)
     console.log(message)
     return res.send('Them mới thành công');

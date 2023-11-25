@@ -9,6 +9,7 @@ import odersController from "../controllers/WebQuanTriController/odersController
 import memberController from "../controllers/WebQuanTriController/memberControllerADMIN";
 import newsController from "../controllers/WebQuanTriController/newsControllerADMIN";
 import sizeControllerADMIN from "../controllers/WebQuanTriController/sizeControllerADMIN";
+import contactControllerADMIN from "../controllers/WebQuanTriController/contactControllerADMIN";
 
 import appRoot from "app-root-path"
 import  uploadCloud from '../config/uploadFile'
@@ -100,6 +101,13 @@ let webQuanTri = (app)=>{
     router.post('/api/profile-member',memberController.handleProfileMember);
     router.put('/api/edit-profile-member',memberController.handleEditProfileMember);
     router.get('/api/get-all-product-category',productController.handleGetAllProductsCategories);
+
+
+    //API CONTACT ADMIN
+    router.get('/api-admin/contact',contactControllerADMIN.contactADMIN);
+    // PUT phan hoi lien he
+    router.put('/api-admin/put-phanhoi-contact',contactControllerADMIN.putPhanHoiContactADMIN);
+
 
     // get Sise admin WebQuanTri
     router.get('/api-admin/getSize',sizeControllerADMIN.getSizeADMIN);

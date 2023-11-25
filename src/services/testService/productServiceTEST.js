@@ -1,6 +1,5 @@
 const { QueryTypes } = require('sequelize');
 // import sequelize from "../../src/config/queryDatabase"
-
 import sequelize from "../../config/queryDatabse"
 let getSanPhamService = (data)=>{
     return new Promise(async(resolve, reject)=>{
@@ -140,9 +139,9 @@ const updateUserInfo = (data) => {
 }
 
 module.exports = {
- 
     handleCreateUser: handleCreateUser,
     deleteUser: deleteUser,
     getUserbyId: getUserbyId,
     updateUserInfo: updateUserInfo,
+    getSanPhamService:getSanPhamService
 }

@@ -468,9 +468,7 @@ let getSapXepDanhSachSanPhamIdService = (id,page,value)=>{
 }
 let searchService = (key_search)=>{
     return new Promise(async(resolve, reject)=>{
-       
         try {
-            
             let  data = await sequelize.query(`
             SELECT id,tenSp,giaSanPham,sale,image,luotMua name FROM  products where  tenSp LIKE '${key_search}%' order by id DESC 
                 `, { type: QueryTypes.SELECT });
