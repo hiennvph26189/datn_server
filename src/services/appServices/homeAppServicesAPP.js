@@ -206,8 +206,9 @@ let handleGetSaleProductServices = () => {
         }
     })
 }
-let handleGetNewProductServices = () => {
-    return new Promise(async (resolve, reject) => {
+let handleGetNewProductServices = ()=>{
+    return new Promise(async(resolve, reject)=>{
+
         try {
             const data = await sequelize.query(`
                 SELECT *
@@ -290,14 +291,14 @@ let getCategoriesService = ()=>{
          
      }) 
 }
-module.exports = {
-    handleGetProductServices: handleGetProductServices,
-    handleAddCategoryServices: handleAddCategoryServices,
-    handlePutCategoryServices: handlePutCategoryServices,
-    handleDeleteCategoryServices: handleDeleteCategoryServices,
-    handleGetCategoryServices: handleGetCategoryServices,
-    handleGetHotProductServices: handleGetHotProductServices,
-    handleGetSaleProductServices: handleGetSaleProductServices,
-    handleGetNewProductServices: handleGetNewProductServices,
-    getCategoriesService:getCategoriesService,
+
+module.exports  = {
+    handleGetProductServices:handleGetProductServices,
+    handleAddCategoryServices:handleAddCategoryServices,
+    handlePutCategoryServices:handlePutCategoryServices,
+    handleDeleteCategoryServices:handleDeleteCategoryServices,
+    handleGetCategoryServices:handleGetCategoryServices,
+    
+
+    handleGetNewProductServices:handleGetNewProductServices
 }

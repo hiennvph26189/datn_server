@@ -1,0 +1,37 @@
+ 
+<% if(dataSearch){ %>
+  <div class="list-search">
+    <% dataSearch.forEach(function(item, i){ %>
+      
+						
+      
+        <div class="item-search">
+            <div class="img">
+                <a href="/san-pham-chi-tiet?id=<%= item.id %>">
+                    <img src="<%= item.image %>" alt="">
+                </a>
+            </div>
+            <div class="content">
+                <div class="title">
+                    <h5> <a href="/san-pham-chi-tiet?id=<%= item.id %>"><%= item.tenSp %></a></h5>
+                </div>
+                <div class="price-search">
+                    <div class="price-box clearfix">
+                        <div class="special-price">
+                          <span class="price product-price"> <%= item.giaSanPham %>	</span>
+                        </div>
+                        
+                        <div class="old-price">															 
+                          <span class="price product-price-old">
+                            <%= item.giaBanSale %>
+                          </span>
+                        </div>
+                        
+                      </div>
+                </div>
+            </div>
+        </div>
+    
+        <% }); %> 
+      </div>
+<% } %>

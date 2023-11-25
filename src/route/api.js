@@ -5,8 +5,8 @@ import userController from "../controllers/userController";
 import productController from "../controllers/productController";
 import apiController from "../controllers/apiController";
 import userApiController from "../controllers/userApiController";
-import homeAppController from "../controllers/appController/homeAppController";
-import accountController from "../controllers/appController/accountController";
+import homeAppController from "../controllers/AppController/homeAppControllerAPP";
+
 import multer from 'multer';
 import path from 'path';
 var appRoot = require('app-root-path');

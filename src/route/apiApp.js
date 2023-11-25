@@ -1,7 +1,9 @@
 import express from "express";
 
-import homeAppController from "../controllers/appController/homeAppController";
-import productController from "../controllers/productController";
+import homeAppControllerAPP from "../controllers/AppController/homeAppControllerAPP";
+import accountControllerAPP from "../controllers/appController/accountControllerAPP";
+import productsControllerAPP from "../controllers/AppController/productsControllerAPP";
+import productControllerTEST from "../controllers/productController";
 import multer from 'multer';
 import path from 'path';
 var appRoot = require('app-root-path');
@@ -33,21 +35,30 @@ let router = express.Router();
 
 // get , post , delete, push
 let apiApp = (app)=>{
-    router.get('/list-product',productController.handleGetProduct)
-    router.get('/post-product',productController.handleGetProduct)
-    router.get('/put-product',productController.handleGetProduct)
-    router.get('/delete-product',productController.handleGetProduct)
-    router.post('/post-category',homeAppController.handlePostCategory)
-    router.put('/put-category',homeAppController.handlePutCategory)
-    router.delete('/delete-category',homeAppController.handleDeleteCategory)
+    router.get('/list-product',productControllerTEST.handleGetProduct)
+    router.get('/post-product',productControllerTEST.handleGetProduct)
+    router.get('/put-product',productControllerTEST.handleGetProduct)
+    router.get('/delete-product',productControllerTEST.handleGetProduct)
+
+    router.post('/post-category',homeAppControllerAPP.handlePostCategory)
+    router.put('/put-category',homeAppControllerAPP.handlePutCategory)
+    router.delete('/delete-category',homeAppControllerAPP.handleDeleteCategory)
     // list category
-    router.get('/app-list-category',homeAppController.handleGetCategories)
-    //list homeApp
-    router.get('/app-list-hot-order-product',homeAppController.handleGetHotProduct)
-    router.get('/app-list-sale-order-product',homeAppController.handleGetSaleProduct)
-    router.get('/app-list-new-order-product',homeAppController.handleGetNewProduct)
-    // list product by category
-    router.get('/app-list-product-by-category',homeAppController.handleGetProductByCategory)
+    router.get('/app-list-category',homeAppControllerAPP.handleGetCategories)
+    //list get host order products app
+    router.get('/api-app/list-hot-order-product',productsControllerAPP.handleGetHotOrdersProduct)
+    // list hot sale products app
+    router.get('/api-app/list-hot-sale-product',productsControllerAPP.handleGetHotSaleProduct)
+    // list sản phẩm mới nhất
+    router.get('/api-app/list-new-product',homeAppControllerAPP.handleGetNewProduct)
+    // list sản phẩm theo categories
+    router.get('/api-app/list-category-in-products',productsControllerAPP.getCategoryInProducts)
+    // Login member app
+    router.post('/api/login-member',accountControllerAPP.handleLoginMember);
+    // api đăng kí tài khoản
+    router.post('/api/add-member',accountControllerAPP.handleAddMembers);
+    //api đổi mật khẩu
+    router.put('/api/changepass-member',accountControllerAPP.handleChangePassMembers);
     return app.use("/",router)
 }
 module.exports = apiApp

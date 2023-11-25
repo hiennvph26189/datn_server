@@ -1,0 +1,25 @@
+<aside class="aside-item sidebar-category collection-category margin-bottom-20">
+        <div class="aside-title" >
+            <h2 class="title-head margin-top-0 cate"><i class="fas fa-bars"></i><span>Danh mục sản phẩm</span></h2>
+        </div>
+        <div class="aside-content">
+            <nav class="nav-category navbar-toggleable-md">
+                <ul class="nav navbar-pills">
+                    <% data.forEach(function(item, i){ %>
+                        <li class="nav-item ">
+                            
+                            <a  href="/getCategory-products?id=<%= item.id %>&&page=1" class="nav-link a1" title="<%= item.name %>"><span><%= item.name %></span></a>
+                            
+                        </li>
+                        <% }); %>
+                   
+                    <li class="nav-item ">
+                        <a href="/getCategory-products?id=san-pham-moi&&page=1" class="nav-link a1">Sản phẩm mới</a>
+                    </li>
+                    <li class="nav-item "><a class="nav-link" href="/getCategory-products?id=san-pham-noi-bat&&page=1">Sản phẩm nổi bật</a></li>
+                    <li class="nav-item "><a class="nav-link" href="/getCategory-products?id=san-pham-ban-chay&&page=1">Sản phẩm bán chạy</a></li>
+                    <li class="fix-show nav-item"><a class="nav-link" href="/getCategory-products?id=san-pham-khuyen-mai&&page=1">Sản phẩm khuyến mãi</a></li>
+                </ul>
+            </nav>
+        </div>
+    </aside>
