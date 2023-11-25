@@ -3,6 +3,7 @@ import express from "express";
 import homeAppControllerAPP from "../controllers/AppController/homeAppControllerAPP";
 import accountControllerAPP from "../controllers/AppController/accountControllerAPP";
 import productsControllerAPP from "../controllers/AppController/productsControllerAPP";
+import memberControllerAPP from "../controllers/AppController/memberControllerAPP";
 import productControllerTEST from "../controllers/productController";
 import multer from 'multer';
 import path from 'path';
@@ -59,6 +60,10 @@ let apiApp = (app)=>{
     router.post('/api/login-member',accountControllerAPP.handleLoginMember);
     // api đăng kí tài khoản
     router.post('/api/add-member',accountControllerAPP.handleAddMembers);
+    // api app profile member
+    router.post('/api/profile-member',memberControllerAPP.handleProfileMember);
+    // Edit member app
+    // router.put('/api/edit-profile-member',memberControllerAPP.handleEditProfileMember);
     return app.use("/",router)
 }
 module.exports = apiApp
