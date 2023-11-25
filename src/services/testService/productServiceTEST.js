@@ -11,7 +11,6 @@ let getSanPhamService = (data)=>{
                 FROM products
                 ORDER BY id DESC
                 `, { type: QueryTypes.SELECT });
-
           console.log(listSanPham)
                 resolve({ 
                     errCode:0,

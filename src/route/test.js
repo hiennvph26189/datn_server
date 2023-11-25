@@ -44,5 +44,6 @@ let test = (app)=>{
 
     
     return app.use("/admin",router)
+
 }
 module.exports = test

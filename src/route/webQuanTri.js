@@ -95,9 +95,9 @@ let webQuanTri = (app)=>{
   
 
     // API trên app điện thoại
-    router.post('/api/add-member',memberController.handleAddMembers);
+ 
     router.get('/get/one-member',memberController.handleGetOneMembers);
-    router.post('/api/login-member',memberController.handleLoginMember);
+   
     router.post('/api/profile-member',memberController.handleProfileMember);
     router.put('/api/edit-profile-member',memberController.handleEditProfileMember);
     router.get('/api/get-all-product-category',productController.handleGetAllProductsCategories);
@@ -105,6 +105,8 @@ let webQuanTri = (app)=>{
 
     //API CONTACT ADMIN
     router.get('/api-admin/contact',contactControllerADMIN.contactADMIN);
+    // PUT phan hoi lien he
+    router.put('/api-admin/put-phanhoi-contact',contactControllerADMIN.putPhanHoiContactADMIN);
 
 
     // get Sise admin WebQuanTri
