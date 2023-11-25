@@ -47,6 +47,8 @@ let apiApp = (app)=>{
     router.get('/app-list-category',homeAppControllerAPP.handleGetCategories)
     //list get host order products app
     router.get('/api-app/list-hot-order-product',productsControllerAPP.handleGetHotOrdersProduct)
+    // list all host order 
+    // router.get('/api-app/list-all-hot-order-product',productsControllerAPP.handleGetALLHotOrdersProduct)
     // list hot sale products app
     router.get('/api-app/list-hot-sale-product',productsControllerAPP.handleGetHotSaleProduct)
     // list sản phẩm mới nhất
