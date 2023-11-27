@@ -5,6 +5,7 @@ import accountControllerAPP from "../controllers/AppController/accountController
 import productsControllerAPP from "../controllers/AppController/productsControllerAPP";
 import memberControllerAPP from "../controllers/AppController/memberControllerAPP";
 import lienHeControllerAPP from "../controllers/AppController/lienHeControllerApp";
+import orderControllerAPP from "../controllers/AppController/orderControllerAPP";
 import productControllerTEST from "../controllers/productController";
 import multer from 'multer';
 import path from 'path';
@@ -68,8 +69,10 @@ let apiApp = (app)=>{
     router.post('/api/profile-member',memberControllerAPP.handleProfileMember);
     // api app liên hẹ member
     router.post('/api-app/lienhe-member',lienHeControllerAPP.handleLienHeMembers);
-    //
+    // Sửa Profile
     router.put('/api/edit-profile-member',memberControllerAPP.handleEditProfileMember);
+    // post order Products 9pay
+    router.post('/api-app/post-order-product-9pay-card',orderControllerAPP.handleOrderCard9Pay);
     return app.use("/",router)
 }
 module.exports = apiApp

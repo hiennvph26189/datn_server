@@ -1,5 +1,4 @@
 import db from "../../models/index";
-
 let ProfileMembersService = (id) => {
 
     return new Promise(async (resolve, reject) => {
