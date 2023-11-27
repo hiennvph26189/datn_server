@@ -35,7 +35,58 @@ let handleEditProfileMember = async (req, res) => {
      }
    
 };
+let handleNapTienMenbers = async (req, res) => {
+    try {
+        let data = req.body;
+        
+        let message = await  memberServiceAPP.napTienMembersService(data)
+        console.log(message)
+        return res.status(200).json(message)
+     } catch (error) {
+         console.log("Lỗi phân quyền",error)
+        return res.status(200).json({
+             errCode: -1,
+             errMessage: 'Không kết nối được với sever'
+        })
+     }
+   
+};
+let handleLichSuNapMenbers = async (req, res) => {
+    try {
+        let id = req.query.id
+            console.log(id,"akdljdaf")
+        let message = await  memberServiceAPP.lichSuNapTienMembersService(id)
+        console.log(message)
+        return res.status(200).json(message)
+     } catch (error) {
+         console.log("Lỗi phân quyền",error)
+        return res.status(200).json({
+             errCode: -1,
+             errMessage: 'Không kết nối được với sever'
+        })
+     }
+   
+};
+let handleGetOneMembers = async (req, res) => {
+    try {
+        let id = req.query.id
+        
+        let message = await  memberService.getOneMember(id)
+        console.log(message)
+        return res.status(200).json(message)
+     } catch (error) {
+         console.log("Lỗi phân quyền",error)
+        return res.status(200).json({
+             errCode: -1,
+             errMessage: 'Không kết nối được với sever'
+        })
+     }
+   
+};
 module.exports = {
     handleProfileMember:handleProfileMember,
     handleEditProfileMember:handleEditProfileMember,
+    handleNapTienMenbers:handleNapTienMenbers,
+    handleLichSuNapMenbers:handleLichSuNapMenbers,
+    handleGetOneMembers:handleGetOneMembers
 };

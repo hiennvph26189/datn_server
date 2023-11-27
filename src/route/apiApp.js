@@ -5,6 +5,8 @@ import accountControllerAPP from "../controllers/AppController/accountController
 import productsControllerAPP from "../controllers/AppController/productsControllerAPP";
 import memberControllerAPP from "../controllers/AppController/memberControllerAPP";
 import lienHeControllerAPP from "../controllers/AppController/lienHeControllerApp";
+import newsControllerAPP from "../controllers/AppController/newsControllerAPP";
+import orderControllerAPP from "../controllers/AppController/orderControllerAPP";
 import productControllerTEST from "../controllers/productController";
 import multer from 'multer';
 import path from 'path';
@@ -68,6 +70,37 @@ let apiApp = (app)=>{
     router.post('/api/profile-member',memberControllerAPP.handleProfileMember);
     // api app liên hẹ member
     router.post('/api-app/lienhe-member',lienHeControllerAPP.handleLienHeMembers);
+    // api nạp tiền
+    router.post('/api/naptien-members',memberControllerAPP.handleNapTienMenbers);
+    // api lịch sử nạp tiền
+    router.get('/api/lich-su-naptien-members',memberControllerAPP.handleLichSuNapMenbers);
+    // api app list danh mục sản phẩm
+    router.get('/api/get-all-categories',categoryController.handleGetAllcategories);
+    // api lít tất cả các sản phẩm trong trang chủ
+    router.get('/api/get-all-total-product',productsControllerAPP.handleGetAllTotalProducts);
+    // get one product
+    router.get('/api/get-one-product',productsControllerAPP.handleGetOneProducts);
+    // lấy ra sản phẩm trong giỏ hàng
+    router.get('/api/user-carts-product',orderControllerAPP.handleGetUserCartProducts);
+    // thêm order
+    router.post('/api/oders-product',orderControllerAPP.handleOdersProducts);
+    // delete order
+    router.delete('/api/delete-cart-product',orderControllerAPP.handleDeleteCartProducts);
+    // put order
+    router.put('/api/update-cart-product',orderControllerAPP.handleUpdateCartProducts);
+    // ---
+    router.post('/api/orders-cart-product',orderControllerAPP.handleOrserCartProducts);
+    // lịch sử giỏ hàng
+    router.get('/api/lich-su-cart-product',orderControllerAPP.handleLichSuCartProducts);
+    // hủy đơn hàng
+    router.put('/api/huy-don-cart-product',orderControllerAPP.handleHuyDonCartProducts);
+    // chi tiết giỏ hàng
+    router.get('/api/chi-tiet-don-cart-product',orderControllerAPP.handleChiTietDonProducts);
+    // delete order
+    router.delete('/api/delete-orders',orderControllerAPP.handleDeleteOrder);
+    // list all news
+    router.get('/api/get-all-news',newsControllerAPP.handleGetAllNews);
+    router.get('/get/one-member',memberControllerAPP.handleGetOneMembers);
     return app.use("/",router)
 }
 module.exports = apiApp

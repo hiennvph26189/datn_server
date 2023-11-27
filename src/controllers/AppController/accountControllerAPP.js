@@ -69,5 +69,4 @@ module.exports = {
     handleLoginMember: handleLoginMember,
     handleAddMembers:handleAddMembers,
     handleChangePassMembers:handleChangePassMembers,
-    handleLienHeMembers:handleLienHeMembers
 };
