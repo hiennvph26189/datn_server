@@ -68,6 +68,8 @@ let apiApp = (app)=>{
     router.post('/api/profile-member',memberControllerAPP.handleProfileMember);
     // api app liên hẹ member
     router.post('/api-app/lienhe-member',lienHeControllerAPP.handleLienHeMembers);
+    //
+    router.put('/api/edit-profile-member',memberControllerAPP.handleEditProfileMember);
     return app.use("/",router)
 }
 module.exports = apiApp

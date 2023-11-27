@@ -1,3 +1,4 @@
+import db from "../../models/index";
 
 let ProfileMembersService = (id) => {
 
