@@ -135,8 +135,6 @@ module.exports = {
     handleLichSuCartProducts:handleLichSuCartProducts,
     handleHuyDonCartProducts:handleHuyDonCartProducts,
     handleChiTietDonProducts:handleChiTietDonProducts,
-    handleGetAllOrdersProducts:handleGetAllOrdersProducts,
-    handleHuyDonThanhCongProducts:handleHuyDonThanhCongProducts,
     handleDeleteOrder:handleDeleteOrder,
   
 }

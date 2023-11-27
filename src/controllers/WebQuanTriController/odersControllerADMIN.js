@@ -75,7 +75,6 @@ let handleThongKeOrders = async (req, res) => {
 }
 
 module.exports = {
-    handleOdersProducts: handleOdersProducts,
     handleGetAllOrdersProducts:handleGetAllOrdersProducts,
     handleHuyDonThanhCongProducts:handleHuyDonThanhCongProducts,
     handleCheckOrder:handleCheckOrder,

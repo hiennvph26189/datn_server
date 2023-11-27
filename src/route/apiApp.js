@@ -7,6 +7,7 @@ import memberControllerAPP from "../controllers/AppController/memberControllerAP
 import lienHeControllerAPP from "../controllers/AppController/lienHeControllerApp";
 import newsControllerAPP from "../controllers/AppController/newsControllerAPP";
 import orderControllerAPP from "../controllers/AppController/orderControllerAPP";
+import categoryController from "../controllers/AppController/categoriesControllerAPP";
 import productControllerTEST from "../controllers/productController";
 import multer from 'multer';
 import path from 'path';
