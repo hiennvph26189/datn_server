@@ -1,5 +1,5 @@
 const { QueryTypes } = require('sequelize');
-
+import db from "../../models/index";
 import sequelize from "../../config/queryDatabse"
 import dateTime from "../getDate";
 let getConvertArrProduct = (arrData)=>{

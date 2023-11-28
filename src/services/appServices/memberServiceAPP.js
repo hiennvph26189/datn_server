@@ -1,6 +1,24 @@
 import db from "../../models/index";
 import bcrypt from 'bcryptjs';
 let salt = bcrypt.genSaltSync(10);
+let checkUserMember = (id)=>{
+    return new Promise(async (resolve, reject)=>{
+        try {
+            
+            let user = await db.Members.findOne({
+                where: {id: id}
+            })
+            if (user) {
+                resolve(true)
+            }else{
+                
+                resolve(false)
+            }
+        } catch (error) {
+            reject(error);
+        }
+    })
+}
 let ProfileMembersService = (id) => {
 
     return new Promise(async (resolve, reject) => {

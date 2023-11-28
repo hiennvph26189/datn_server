@@ -42,7 +42,7 @@ let handleGetAllTotalProducts = async (req, res) => {
 
     try {
             
-            let data = await productSercive.handleGetAllTotalProductsService();
+            let data = await productsServicesAPP.handleGetAllTotalProductsService();
             return res.status(200).json(data)
         
          
@@ -59,7 +59,7 @@ let handleGetOneProducts = async (req, res) => {
     try {  
         let id = req.query.id;
       
-        let data = await productSercive.handleGetOneProductService(id);
+        let data = await productsServicesAPP.handleGetOneProductService(id);
      return res.status(200).json(data)
  } catch (error) {
      console.log("Lỗi phân quyền",error)

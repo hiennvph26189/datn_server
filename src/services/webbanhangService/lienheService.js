@@ -11,8 +11,6 @@ let postDataLienHeService = (data)=>{
             let date = datetime.getdate()
             console.log(date)
             if(name&&email&&contact){
-                
-                
                 await sequelize.query(`
                 INSERT INTO contact (name, email, comment, createdAt)
                 VALUES ('${name}', "${email}", "${contact}", "${date}");

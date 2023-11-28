@@ -71,7 +71,7 @@ let handleGetOneMembers = async (req, res) => {
     try {
         let id = req.query.id
         
-        let message = await  memberService.getOneMember(id)
+        let message = await  memberServiceAPP.getOneMember(id)
         console.log(message)
         return res.status(200).json(message)
      } catch (error) {

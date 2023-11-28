@@ -5,10 +5,13 @@ import accountControllerAPP from "../controllers/AppController/accountController
 import productsControllerAPP from "../controllers/AppController/productsControllerAPP";
 import memberControllerAPP from "../controllers/AppController/memberControllerAPP";
 import lienHeControllerAPP from "../controllers/AppController/lienHeControllerApp";
+
 import newsControllerAPP from "../controllers/AppController/newsControllerAPP";
 import orderControllerAPP from "../controllers/AppController/orderControllerAPP";
 import categoryController from "../controllers/AppController/categoriesControllerAPP";
+
 import likeProductControllerAPP from "../controllers/AppController/likeProductControllerAPP";
+
 import productControllerTEST from "../controllers/productController";
 import multer from 'multer';
 import path from 'path';
@@ -72,6 +75,11 @@ let apiApp = (app)=>{
     router.post('/api/profile-member',memberControllerAPP.handleProfileMember);
     // api app liên hẹ member
     router.post('/api-app/lienhe-member',lienHeControllerAPP.handleLienHeMembers);
+    // Sửa Profile
+    router.put('/api/edit-profile-member',memberControllerAPP.handleEditProfileMember);
+    // post order Products 9pay
+    router.post('/api-app/post-order-product-9pay-card',orderControllerAPP.handleOrderCard9Pay);
+
     // api nạp tiền
     router.post('/api/naptien-members',memberControllerAPP.handleNapTienMenbers);
     // api lịch sử nạp tiền
@@ -103,8 +111,10 @@ let apiApp = (app)=>{
     // list all news
     router.get('/api/get-all-news',newsControllerAPP.handleGetAllNews);
     router.get('/get/one-member',memberControllerAPP.handleGetOneMembers);
+
     router.post('/api-app/like-products',likeProductControllerAPP.handlePostLikeProduct);
     router.delete('/api-app/delete-like-products',likeProductControllerAPP.handleDeleteLikeProduct);
+
     return app.use("/",router)
 }
 module.exports = apiApp

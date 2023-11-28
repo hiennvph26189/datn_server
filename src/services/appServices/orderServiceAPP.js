@@ -1,6 +1,230 @@
+import db from "../../models/index";
+const { Sequelize } = require('sequelize');
 const { QueryTypes } = require('sequelize');
-
 import sequelize from "../../config/queryDatabse"
+
+const Op = require('sequelize').Op;
+let checkProducts = (id)=>{
+    return new Promise(async (resolve, reject)=>{
+        try {
+            
+            let Products = await db.Products.findOne({
+                where: {id: id}
+            })
+            
+            if (Products) {
+                resolve(true)
+            }else{
+                
+                resolve(false)
+            }
+        } catch (error) {
+            reject(error);
+        }
+    })
+}
+let checkUserMember = (id)=>{
+    return new Promise(async (resolve, reject)=>{
+        try {
+            
+            let user = await db.Members.findOne({
+                where: {id: id}
+            })
+            if (user) {
+                resolve(true)
+            }else{
+                
+                resolve(false)
+            }
+        } catch (error) {
+            reject(error);
+        }
+    })
+}
+let postDataOrder9PayService = (data)=>{
+
+    return new Promise(async(resolve, reject)=>{
+        try {
+
+            let idCart = [...data.idCart]
+            let idUser = data.idUser
+            
+            let user = await db.Members.findOne({
+                where : {id : idUser}
+            })
+           
+           
+
+            if(idCart.length>0){
+                if(user){
+                        await db.Orders.create({
+                            idCart: data.idCart,
+                            idUser: idUser,
+                            tongTien: data.tongTien,
+                            status: 0
+                        })
+                        await db.Carts.update(
+                            {status: 1},
+                            {
+                            where: {idUser:idUser,
+                                    status: 0
+                                }
+                            }
+                        )
+                       
+                        resolve({
+                            errCode:0,
+                            errMessage: 'Đã đặt hàng thành công vui lòng chờ bên shop giao hàng'
+                         })
+                        
+                   
+                    
+                }else{
+                    resolve({
+                        errCode:1,
+                        errMessage: 'User không tồn tại'
+                     })
+                }
+            }else{
+                resolve({
+                    errCode:3,
+                    errMessage: 'Không có sản phẩm nào trong giỏ hàng'
+                 })
+            }
+           
+           
+    
+         
+     
+       
+  
+        } catch (error) {
+             reject(error);
+        }
+         
+         
+     }) 
+}
+
+
+let handleLichSuOrderCart = (id)=>{
+    
+    return new Promise(async (resolve, reject)=>{
+        try {
+            let checkUser = await checkUserMember(id)
+            let User = await db.Members.findOne({
+                where: {id:id }
+            })
+            if(checkUser){
+                
+               let getOrders = await db.Orders.findAll({
+                    where: {idUser: id,
+                       [Op.or]: [
+                            { status: 0 },
+                            { status: 1 }
+                          ]
+                            
+                    },
+                    order: [
+                        ['id', 'DESC'],
+                       
+                    ]
+                }) 
+                let getAllOrder = await db.Orders.findAll({
+                    where: {idUser: id,
+                       [Op.or]: [
+                            { status: 0 },
+                            { status: 1 },
+                            { status: 2 },
+                            { status: 3 },
+                          ]
+                            
+                    },
+                    order: [
+                        ['id', 'DESC'],
+                       
+                    ]
+                })
+                let getDaDangGiao = await db.Orders.findAll({
+                    where: {idUser: id,
+                        status : 2
+                    },
+                    order: [
+                        ['id', 'DESC'],
+                       
+                    ]
+                })
+                let getCarts = await db.Carts.findAll({
+                    where: {idUser: id,
+                        [Op.or]: [
+                            { status: 1 },
+                            { status: 2 },
+                            { status: 3 }
+                          ]
+                            
+                    },
+                    order: [
+                        ['id', 'DESC'],
+                       
+                    ]
+                })
+                 let getDaGiaoThanhCong = await db.Orders.findAll({
+                    where: {idUser: id,
+                        status : 3
+                    },
+                    order: [
+                        ['id', 'DESC'],
+                       
+                    ]
+                })
+                let getDonHuy = await db.Orders.findAll({
+                    where: {idUser: id,
+                        [Op.or]: [
+                            { status: 4 },
+                            { status: 5 }
+                          ]
+                    },
+                    order: [
+                        ['id', 'DESC'],
+                       
+                    ]
+                })
+                let getAllProducts = await db.Products.findAll()
+                
+               if(User){
+                resolve({
+                    errCode: 0,
+                    errMessage :"List thành công",
+                    getOrders :getOrders,
+                    getCarts:getCarts,
+                    getAllProducts:getAllProducts,
+                    getDaGiaoThanhCong:getDaGiaoThanhCong,
+                    getDaDangGiao:getDaDangGiao,
+                    getDonHuy:getDonHuy,
+                    getAllOrder:getAllOrder
+
+                })
+               }else{
+                resolve({
+                    errCode: 0,
+                    errMessage :"User không tồn tại",
+                    
+                })
+               }
+ 
+            }else{
+                resolve({
+                    errCode: 1,
+                    errMessage:"User không tồn tại",
+
+                })
+            }
+          
+        } catch (error) {
+            reject(error);
+        }
+    })
+}
 
 let handleGetUserCart = (id)=>{
     return new Promise(async (resolve, reject)=>{
@@ -173,6 +397,7 @@ let handleUpdateCart = (data)=>{
      }) 
 }
 let handleCreateOrderCart = (data)=>{
+
     return new Promise(async(resolve, reject)=>{
         try {
 
@@ -182,8 +407,10 @@ let handleCreateOrderCart = (data)=>{
             let user = await db.Members.findOne({
                 where : {id : idUser}
             })
+
             let tienTk = user.tienTk
             console.log(idCart.length)
+
             if(idCart.length>0){
                 if(user){
                         await db.Orders.create({
@@ -200,6 +427,7 @@ let handleCreateOrderCart = (data)=>{
                                 }
                             }
                         )
+
                         await db.Members.update(
                             {tienTk: tienTk - data.tongTien },
                             {
@@ -240,6 +468,7 @@ let handleCreateOrderCart = (data)=>{
          
      }) 
 }
+
 let handleHuyOrderCart = (id)=>{
     return new Promise(async(resolve, reject)=>{
         console.log(id)
@@ -350,6 +579,9 @@ module.exports  = {
     handleCreateOrderCart:handleCreateOrderCart,
     handleHuyOrderCart:handleHuyOrderCart,
     handleChiTietOrderCart:handleChiTietOrderCart,
-    handleDeleteOrderService:handleDeleteOrderService
-    
+    handleDeleteOrderService:handleDeleteOrderService,
+    postDataOrder9PayService:postDataOrder9PayService,
+    handleLichSuOrderCart:handleLichSuOrderCart
+  
+
 }

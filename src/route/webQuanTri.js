@@ -96,8 +96,8 @@ let webQuanTri = (app)=>{
  
     
    
-    router.post('/api/profile-member',memberController.handleProfileMember);
-    router.put('/api/edit-profile-member',memberController.handleEditProfileMember);
+
+
     router.get('/api/get-all-product-category',productController.handleGetAllProductsCategories);
 
 

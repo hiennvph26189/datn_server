@@ -1,25 +1,43 @@
-import odersService from "../../services/appServices/orderServiceAPP";
 
+import orderServiceAPP from "../../services/appServices/orderServiceAPP";
+let handleOrderCard9Pay = async (req, res) => {
+    try {
+        let data  = req.body;
+        let post9Pay = await orderServiceAPP.postDataOrder9PayService(data);
+        if(post9Pay.errCode == 0){
+            return res.status(200).json(post9Pay)
+        }
+     } catch (error) {
+        console.log("Lỗi phân quyền",error)
+       return res.status(200).json({
+            errCode: -1,
+            errMessage: 'Không kết nối được với sever'
+       })
+
+    }
+}
 let handleGetUserCartProducts = async (req, res) => {
     try {
         
         let id = req.query.id
         
-        let message = await  odersService.handleGetUserCart(id)
+        let message = await  orderServiceAPP.handleGetUserCart(id)
         return res.status(200).json(message)
+
      } catch (error) {
          console.log("Lỗi phân quyền",error)
         return res.status(200).json({
              errCode: -1,
              errMessage: 'Không kết nối được với sever'
         })
-     } 
-}
+
+     }
+};
 let handleOdersProducts = async (req, res) => {
     try {
         let data = req.body
         console.log(data);
-        let message = await  odersService.handleAddCart(data)
+        let message = await  orderServiceAPP.handleAddCart(data)
         return res.status(200).json(message)
      } catch (error) {
          console.log("Lỗi phân quyền",error)
@@ -32,7 +50,7 @@ let handleOdersProducts = async (req, res) => {
 let handleDeleteCartProducts = async (req, res) => {
     try {
         let id = req.query.id
-        let message = await  odersService.handleDeleteCart(id)
+        let message = await  orderServiceAPP.handleDeleteCart(id)
         return res.status(200).json(message)
      } catch (error) {
          console.log("Lỗi phân quyền",error)
@@ -46,7 +64,7 @@ let handleUpdateCartProducts = async (req, res) => {
     try {
         let data = req.body
         console.log(data)
-        let message = await  odersService.handleUpdateCart(data)
+        let message = await  orderServiceAPP.handleUpdateCart(data)
         return res.status(200).json(message)
      } catch (error) {
          console.log("Lỗi phân quyền",error)
@@ -60,7 +78,7 @@ let handleOrserCartProducts = async (req, res) => {
     try {
         let data = req.body
         console.log(data)
-        let message = await  odersService.handleCreateOrderCart(data)
+        let message = await  orderServiceAPP.handleCreateOrderCart(data)
         return res.status(200).json(message)
      } catch (error) {
          console.log("Lỗi phân quyền",error)
@@ -74,7 +92,7 @@ let handleLichSuCartProducts = async (req, res) => {
     try {
         let id = req.query.id
        
-        let message = await  odersService.handleLichSuOrderCart(id)
+        let message = await  orderServiceAPP.handleLichSuOrderCart(id)
         return res.status(200).json(message)
      } catch (error) {
          console.log("Lỗi phân quyền",error)
@@ -88,7 +106,7 @@ let handleHuyDonCartProducts = async (req, res) => {
     try {
         let id = req.body.id
         console.log(id)
-        let message = await  odersService.handleHuyOrderCart(id)
+        let message = await  orderServiceAPP.handleHuyOrderCart(id)
         return res.status(200).json(message)
      } catch (error) {
          console.log("Lỗi phân quyền",error)
@@ -102,7 +120,7 @@ let handleChiTietDonProducts = async (req, res) => {
     try {
         let id = req.query.id
         console.log(id)
-        let message = await  odersService.handleChiTietOrderCart(id)
+        let message = await  orderServiceAPP.handleChiTietOrderCart(id)
         return res.status(200).json(message)
      } catch (error) {
          console.log("Lỗi phân quyền",error)
@@ -116,7 +134,7 @@ let handleDeleteOrder = async (req, res) => {
     try {
         let id = req.query.id
         
-        let message = await  odersService.handleDeleteOrderService(id)
+        let message = await  orderServiceAPP.handleDeleteOrderService(id)
         return res.status(200).json(message)
      } catch (error) {
          console.log("Lỗi phân quyền",error)
@@ -136,5 +154,7 @@ module.exports = {
     handleHuyDonCartProducts:handleHuyDonCartProducts,
     handleChiTietDonProducts:handleChiTietDonProducts,
     handleDeleteOrder:handleDeleteOrder,
+    handleOrderCard9Pay:handleOrderCard9Pay
   
 }
+
