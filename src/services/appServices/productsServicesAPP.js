@@ -1,5 +1,5 @@
 const { QueryTypes } = require('sequelize');
-
+import db from "../../models/index";
 import sequelize from "../../config/queryDatabse"
 import dateTime from "../getDate";
 let getConvertArrProduct = (arrData)=>{
@@ -126,9 +126,105 @@ let handleGetCategoriesInProductsServices = ()=>{
     }
      }) 
 }
+let handleGetAllTotalProductsService = ()=>{
+  return new Promise(async(resolve, reject)=>{
+      try {
+         
+         
+          let res = {}
+          let categories = await db.Categories.findAll({
+              order: [
+                  ['id', 'DESC'],
+                 
+              ]
+          });
+          let totalProducts = await db.Products.findAll();
+          let sanPhamMuaNhieu = await sequelize.query(`
+          SELECT *
+          FROM products
+          Where luotMua > 0 
+          ORDER BY luotMua DESC
+          LIMIT 7
+          
+          `, { type: QueryTypes.SELECT }); 
+         
+          let sale = await sequelize.query(`
+          SELECT *
+          FROM products
+          Where sale > 25 
+          ORDER BY sale DESC
+          LIMIT 7
+          
+          `, { type: QueryTypes.SELECT }); 
+          res.errCode = 0;
+          res.errMessage = "OK",
+          res.categories = categories;
+          res.totalProducts = totalProducts;
+          res.sanPhamMuaNhieu = sanPhamMuaNhieu;
+          res.sale = sale;
+          
+          resolve(res)
+          
+       resolve(res);
+
+      } catch (error) {
+           reject(error);
+      }
+       
+       
+   }) 
+}
+let handleGetOneProductService = (id)=>{
+  return new Promise(async(resolve, reject)=>{
+      try {
+       let products = await  db.Products.findOne({
+          where: {id: id},
+          
+          
+       });
+       let arProduct = await  db.Products.findAll(
+          {
+              where: {idDanhSach : products.idDanhSach,
+              },
+              limit: 5,
+              order: [
+                  ['id', 'DESC'],
+                 
+              ]
+            
+                  
+          }
+
+       );
+       if(!products){
+          resolve({
+              errCode: 2,
+              errMessage: 'sản phẩm không tồn tại',
+          })
+         
+       }else{
+           resolve({
+              errCode:0,
+              errMessage: ' thành công',
+              getDetailProduct: products,
+              arProduct:arProduct
+           })
+       }
+       
+       
+
+      } catch (error) {
+           reject(error);
+      }
+       
+       
+   }) 
+}
 module.exports  = {
     handleGetHotOrdersProductServices:handleGetHotOrdersProductServices,
     handleGetHotSaleProductServices:handleGetHotSaleProductServices,
-    handleGetCategoriesInProductsServices:handleGetCategoriesInProductsServices
+    handleGetCategoriesInProductsServices:handleGetCategoriesInProductsServices,
+    handleGetAllTotalProductsService:handleGetAllTotalProductsService,
+    handleGetOneProductService:handleGetOneProductService
 
 }
