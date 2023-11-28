@@ -16,41 +16,8 @@ let handleGetAllMenbers = async (req, res) => {
    
 };
 
-let handleProfileMember = async (req, res) => {
-    
-  
-    try {
-        let id = req.body.id;
-        console.log(id)
-        let message = await  memberService.ProfileMembersService(id)
-        console.log(message)
-        return res.status(200).json(message)
-     } catch (error) {
-         console.log("Lỗi phân quyền",error)
-        return res.status(200).json({
-             errCode: -1,
-             errMessage: 'Không kết nối được với sever'
-        })
-     }
-   
-};
-let handleEditProfileMember = async (req, res) => {
-    
-  
-    try {
-        
-        let message = await  memberService.EditProfileMembersService(req.body)
-        console.log(message)
-        return res.status(200).json(message)
-     } catch (error) {
-         console.log("Lỗi phân quyền",error)
-        return res.status(200).json({
-             errCode: -1,
-             errMessage: 'Không kết nối được với sever'
-        })
-     }
-   
-};
+
+
 let handleEditMenbers = async (req, res) => {
     
   
@@ -119,22 +86,7 @@ let handleLoginMember = async (req, res) => {
      }
    
 };
-let handleNapTienMenbers = async (req, res) => {
-    try {
-        let data = req.body;
-        
-        let message = await  memberService.napTienMembersService(data)
-        console.log(message)
-        return res.status(200).json(message)
-     } catch (error) {
-         console.log("Lỗi phân quyền",error)
-        return res.status(200).json({
-             errCode: -1,
-             errMessage: 'Không kết nối được với sever'
-        })
-     }
-   
-};
+
 let handleNapTienMenbersADmin = async (req, res) => {
     try {
         let data = req.body;
@@ -168,22 +120,7 @@ let handleHuyNapTienMenbersADmin = async (req, res) => {
      }
    
 };
-let handleLichSuNapMenbers = async (req, res) => {
-    try {
-        let id = req.query.id
-            console.log(id,"akdljdaf")
-        let message = await  memberService.lichSuNapTienMembersService(id)
-        console.log(message)
-        return res.status(200).json(message)
-     } catch (error) {
-         console.log("Lỗi phân quyền",error)
-        return res.status(200).json({
-             errCode: -1,
-             errMessage: 'Không kết nối được với sever'
-        })
-     }
-   
-};
+
 let handleLichSuNapMenbersAdmin = async (req, res) => {
     try {
         let data = req.query.id
@@ -200,22 +137,7 @@ let handleLichSuNapMenbersAdmin = async (req, res) => {
      }
    
 };
-let handleGetOneMembers = async (req, res) => {
-    try {
-        let id = req.query.id
-        
-        let message = await  memberService.getOneMember(id)
-        console.log(message)
-        return res.status(200).json(message)
-     } catch (error) {
-         console.log("Lỗi phân quyền",error)
-        return res.status(200).json({
-             errCode: -1,
-             errMessage: 'Không kết nối được với sever'
-        })
-     }
-   
-};
+
 let handleDeleteNapTienMenber = async (req, res) => {
     try {
         let id = req.query.id
@@ -240,15 +162,12 @@ module.exports = {
     
     handleDeleteMenbers:handleDeleteMenbers,
     handleLoginMember:handleLoginMember,
-    handleProfileMember:handleProfileMember,
-    handleEditProfileMember:handleEditProfileMember,
+   
+    
     handleEditMenbers:handleEditMenbers,
-    handleNapTienMenbers:handleNapTienMenbers,
-    handleLichSuNapMenbers:handleLichSuNapMenbers,
     handleLichSuNapMenbersAdmin:handleLichSuNapMenbersAdmin,
     handleNapTienMenbersADmin:handleNapTienMenbersADmin,
     handleHuyNapTienMenbersADmin:handleHuyNapTienMenbersADmin,
-    handleGetOneMembers:handleGetOneMembers,
     handleDeleteNapTienMenber:handleDeleteNapTienMenber
     
 }

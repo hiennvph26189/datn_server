@@ -135,20 +135,7 @@ let handleGetAllProductsCategories = async (req, res) => {
     })
  }
 };
-let handleGetOneProducts = async (req, res) => {
-    try {  
-        let id = req.query.id;
-      
-        let data = await productSercive.handleGetOneProductService(id);
-     return res.status(200).json(data)
- } catch (error) {
-     console.log("Lỗi phân quyền",error)
-    return res.status(200).json({
-         errCode: -1,
-         errMessage: 'Không kết nối được với sever'
-    })
- }
-};
+
 let handleGetAllCategoryProduct = async (req, res) => {
     try {  
         let id = req.query.id;
@@ -175,7 +162,6 @@ module.exports = {
     handleUploadFileProduct:handleUploadFileProduct,
     handleDeleteFileProduct:handleDeleteFileProduct,
     handleGetAllProductsCategories:handleGetAllProductsCategories,
-    handleGetOneProducts:handleGetOneProducts,
     handleGetAllTotalProducts:handleGetAllTotalProducts,
     handleGetAllCategoryProduct:handleGetAllCategoryProduct,
    

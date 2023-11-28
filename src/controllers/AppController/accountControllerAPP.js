@@ -49,7 +49,25 @@ let handleAddMembers = async (req, res) => {
    
    
 };
+let handleChangePassMembers = async (req, res) => {
+    try {
+        let data = req.body
+    
+            let userData = await accountServiceAPP.handleUserMembersChangePassService(data);
+            console.log(userData);
+            return res.status(200).json(userData);
+    } catch (error) {
+        console.log("Lỗi phân quyền", error);
+        return res.status(200).json({
+            errCode: -1,
+            errMessage: "Không kết nối được với sever",
+        });
+    }
+};
+
 module.exports = {
     handleLoginMember: handleLoginMember,
     handleAddMembers:handleAddMembers,
+    handleChangePassMembers:handleChangePassMembers,
+
 };

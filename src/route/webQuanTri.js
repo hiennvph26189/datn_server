@@ -36,13 +36,12 @@ let webQuanTri = (app)=>{
     router.delete('/api/delete-users',userController.handleDeleteUsers);
     router.get('/roles',userController.handleRoleID);
 
-    router.get('/api/get-all-categories',categoryController.handleGetAllcategories);
     router.post('/api/add-categories',categoryController.handleAddCategories);
     router.put('/api/edit-categories',categoryController.handleEditCategories);
     router.delete('/api/delete-categories',categoryController.handleDeleteCategory);
 
     // api News
-    router.get('/api/get-all-news',newsController.handleGetAllNews);
+    
     router.post('/api/add-news',newsController.handleAddNews);
     router.put('/api/edit-news',newsController.handleEditNews);
     router.delete('/api/delete-news',newsController.handleDeleteNews);
@@ -51,8 +50,8 @@ let webQuanTri = (app)=>{
 
     // api products
     router.get('/api/get-all-product',productController.handleGetAllProducts);
-    router.get('/api/get-one-product',productController.handleGetOneProducts);
-    router.get('/api/get-all-total-product',productController.handleGetAllTotalProducts);
+
+    
     router.post('/api/add-product',productController.handleAddProducts);
     router.delete('/api/delete-product',productController.handleDeleteProduct);
     router.put('/api/edit-product',productController.handleEditProduct);
@@ -63,18 +62,18 @@ let webQuanTri = (app)=>{
     
   
 
-    router.get('/api/user-carts-product',odersController.handleGetUserCartProducts);
+    
    
-    router.post('/api/oders-product',odersController.handleOdersProducts);
-    router.delete('/api/delete-cart-product',odersController.handleDeleteCartProducts);
-    router.put('/api/update-cart-product',odersController.handleUpdateCartProducts);
-    router.post('/api/orders-cart-product',odersController.handleOrserCartProducts);
-    router.get('/api/lich-su-cart-product',odersController.handleLichSuCartProducts);
-    router.put('/api/huy-don-cart-product',odersController.handleHuyDonCartProducts);
-    router.get('/api/chi-tiet-don-cart-product',odersController.handleChiTietDonProducts);
+    
+    
+    
+    
+    
+    
+    
     router.get('/api/get-all-orders-product',odersController.handleGetAllOrdersProducts);
     router.put('/api/huy-orders-success-product',odersController.handleHuyDonThanhCongProducts);
-    router.delete('/api/delete-orders',odersController.handleDeleteOrder);
+
     router.put('/api/check-orders',odersController.handleCheckOrder);
     router.put('/api/giao-don-orders',odersController.handleGiaoDonOrder);
     router.get('/api/thong-ke-orders',odersController.handleThongKeOrders);
@@ -86,8 +85,7 @@ let webQuanTri = (app)=>{
     router.get('/api/get-all-members',memberController.handleGetAllMenbers);
     router.put('/api/edit-members',memberController.handleEditMenbers);
     router.delete('/api/delete-members',memberController.handleDeleteMenbers);
-    router.post('/api/naptien-members',memberController.handleNapTienMenbers);
-    router.get('/api/lich-su-naptien-members',memberController.handleLichSuNapMenbers);
+
     router.get('/api/lich-su-naptien-members-admin',memberController.handleLichSuNapMenbersAdmin);
     router.put('/api/naptien-members-admin',memberController.handleNapTienMenbersADmin);
     router.put('/api/huynaptien-members-admin',memberController.handleHuyNapTienMenbersADmin);
@@ -96,10 +94,10 @@ let webQuanTri = (app)=>{
 
     // API trên app điện thoại
  
-    router.get('/get/one-member',memberController.handleGetOneMembers);
+    
    
-    router.post('/api/profile-member',memberController.handleProfileMember);
-    router.put('/api/edit-profile-member',memberController.handleEditProfileMember);
+
+
     router.get('/api/get-all-product-category',productController.handleGetAllProductsCategories);
 
 

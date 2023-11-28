@@ -1,20 +1,6 @@
 import db from "../../models/index"
 import categoriesService from "../../services/webQuanTriService/categoriesServiceADMIN";
-let handleGetAllcategories = async (req, res) => {
-    
-  
-    try {
-        let data = await categoriesService.handleGetAllCategories();
-        return res.status(200).json(data) 
-     } catch (error) {
-         console.log("Lỗi phân quyền",error)
-        return res.status(200).json({
-             errCode: -1,
-             errMessage: 'Không kết nối được với sever'
-        })
-     }
-   
-};
+
 let handleAddCategories = async (req, res) => {
     try {
         let message = await  categoriesService.AddCategoriesService(req.body)
@@ -49,7 +35,6 @@ let handleEditCategories = async (req, res) => {
     
 };
 module.exports = {
-    handleGetAllcategories: handleGetAllcategories,
     handleAddCategories:handleAddCategories,
     handleDeleteCategory:handleDeleteCategory,
     handleEditCategories:handleEditCategories

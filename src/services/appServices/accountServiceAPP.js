@@ -1,5 +1,10 @@
+const { QueryTypes } = require('sequelize');
+// import sequelize from "../../src/config/queryDatabase"
+import sequelize from "../../config/queryDatabse"
 import bcrypt from 'bcryptjs';
 import db from "../../models/index";
+import getdateService from "../webbanhangService/getdateService";
+import {getOneEmail} from "../webbanhangService/accountService"
 let salt = bcrypt.genSaltSync(10);
 let checkUserEmail = (email)=>{
     return new Promise(async (resolve, reject)=>{
@@ -118,9 +123,75 @@ let AddMembersService = (data)=>{
          
      }) 
 }
+let handleUserMembersChangePassService = (data)=>{
 
+    return new Promise(async (resolve, reject)=>{
+        try {
+            
+            let id = data.id
+            let password = data.password
+            let passwordNew = data.passwordNew
+            let re_password = data.re_password
+            const getOneMember = await sequelize.query(`
+            SELECT *
+            FROM members
+            where id=${id}
+            `, { type: QueryTypes.SELECT });
+          
+            if(getOneMember.length>0){
+                let checkPassword =  bcrypt.compareSync(password,getOneMember[0].matKhau)
+              console.log(checkPassword);
+                if(checkPassword){
+                    // resolve({
+                    //     errCode:1,
+                    //     errMessage: 'Đăng nhập thành công',
+                     
+                    // }) 
+                    if (passwordNew == re_password) {
+                        let hashPassword = await hashUserPassword(passwordNew)
+                        let date = getdateService.getdate();
+                        await sequelize.query(`
+                        UPDATE members
+                        SET matkhau = "${hashPassword}",
+                        updatedAt = "${date}"
+                        WHERE  id=${id};
+                        `, { type: QueryTypes.UPDATE });
+                        resolve({
+                        errCode:1,
+                        errMessage: 'Đổi mật khẩu thành công',
+                     
+                    }) 
+                    }else{
+                        resolve({
+                            errCode:0,
+                            errMessage: 'mật khẩu không trùng khớp',
+                         
+                        }) 
+                    }
+                }else{
+                    resolve({
+                        errCode:0,
+                        errMessage: 'Mật khẩu không chính xác',
+                        
+                    }) 
+                }
+                
+            }else{
+                resolve({
+                    errCode:0,
+                    errMessage: 'Email không tồn tại',
+                    
+                }) 
+            }
+           
+            } catch (error) {
+                reject(error);
+        }
+    })
+}
 module.exports  = {
     
     handleUserMembersLoginService:handleUserMembersLoginService,
-    AddMembersService:AddMembersService
+    AddMembersService:AddMembersService,
+    handleUserMembersChangePassService:handleUserMembersChangePassService
 }

@@ -54,8 +54,9 @@ let initApiRouter = (app)=>{
     router.put('/put-category',homeAppController.handlePutCategory)
     router.delete('/delete-category',homeAppController.handleDeleteCategory)
     router.get('/app-list-category',homeAppController.handleGetCategories)
-    
-
+    router.get('/list-members',accountController.handleGetMembers)
+    router.put('/put-members',accountController.handlePutMembers)
+    router.post('/add-members',accountController.handlePostMembers)
     return app.use("/api/v1/",router)
 }
 module.exports = initApiRouter
