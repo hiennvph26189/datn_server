@@ -11,6 +11,7 @@ import orderControllerAPP from "../controllers/AppController/orderControllerAPP"
 import categoryController from "../controllers/AppController/categoriesControllerAPP";
 
 import likeProductControllerAPP from "../controllers/AppController/likeProductControllerAPP";
+import addressControllerAPP from "../controllers/AppController/addressControllerAPP";
 
 import productControllerTEST from "../controllers/productController";
 import multer from 'multer';
@@ -115,7 +116,14 @@ let apiApp = (app)=>{
     router.post('/api-app/like-products',likeProductControllerAPP.handlePostLikeProduct);
     // api xóa sản phẩm yêu thích
     router.delete('/api-app/delete-like-products',likeProductControllerAPP.handleDeleteLikeProduct);
-
+    // api thêm địa chỉ members
+    router.post('/api-app/address-member',addressControllerAPP.handlePostAddressMembers);
+    // api xóa địa chỉ members
+    router.delete('/api-app/delete-address-member',addressControllerAPP.handleDeleteAddressMembers);
+    // api sửa địa chỉ members
+    router.put('/api-app/put-address-member',addressControllerAPP.handlePutAddressMembers);
+    // api sửa trạng thái địa chỉ members
+    router.put('/api-app/edit-status-address-member',addressControllerAPP.handleEditStatusAddressMembers);
     return app.use("/",router)
 }
 module.exports = apiApp
