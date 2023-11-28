@@ -124,6 +124,8 @@ let apiApp = (app)=>{
     router.put('/api-app/put-address-member',addressControllerAPP.handlePutAddressMembers);
     // api sửa trạng thái địa chỉ members
     router.put('/api-app/edit-status-address-member',addressControllerAPP.handleEditStatusAddressMembers);
+    // 
+    router.get('/api-app/convert-sha',orderControllerAPP.getConvertSha);
     return app.use("/",router)
 }
 module.exports = apiApp

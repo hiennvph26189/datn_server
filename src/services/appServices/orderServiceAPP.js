@@ -2,7 +2,7 @@ import db from "../../models/index";
 const { Sequelize } = require('sequelize');
 const { QueryTypes } = require('sequelize');
 import sequelize from "../../config/queryDatabse"
-
+import datetime from "../webbanhangService/getdateService"
 const Op = require('sequelize').Op;
 let checkProducts = (id)=>{
     return new Promise(async (resolve, reject)=>{
@@ -41,7 +41,7 @@ let checkUserMember = (id)=>{
         }
     })
 }
-let postDataOrder9PayService = (data)=>{
+let postDataOrder9PayService = (data,arrTenSp,data_9pay)=>{
 
     return new Promise(async(resolve, reject)=>{
         try {
@@ -52,17 +52,19 @@ let postDataOrder9PayService = (data)=>{
             let user = await db.Members.findOne({
                 where : {id : idUser}
             })
-           
-           
+          
+            let date = datetime.getdate()
+
 
             if(idCart.length>0){
                 if(user){
-                        await db.Orders.create({
+                  let oder_id =     await db.Orders.create({
                             idCart: data.idCart,
                             idUser: idUser,
                             tongTien: data.tongTien,
                             status: 0
                         })
+                        
                         await db.Carts.update(
                             {status: 1},
                             {
@@ -71,7 +73,13 @@ let postDataOrder9PayService = (data)=>{
                                 }
                             }
                         )
-                       
+                       if(oder_id.id){
+                          console.log(oder_id.id)
+                          await sequelize.query(`
+                          INSERT INTO thanhtoan (id_donhang, id_member, card_name, payment_no,invoice_no,amount,description,card_brand,card_number,method,status,created_at)
+                          VALUES (${oder_id.id}, ${idUser}, "${data_9pay.card_info.card_name}", "${data_9pay.payment_no}","${data_9pay.invoice_no}","${data_9pay.amount}","${arrTenSp}","${data_9pay.card_info.card_brand}","${data_9pay.card_info.card_number}","${data_9pay.method}",1,"${date}");
+                          `, { type: QueryTypes.INSERT });
+                       }
                         resolve({
                             errCode:0,
                             errMessage: 'Đã đặt hàng thành công vui lòng chờ bên shop giao hàng'

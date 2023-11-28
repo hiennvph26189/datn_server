@@ -2,11 +2,31 @@
 import orderServiceAPP from "../../services/appServices/orderServiceAPP";
 let handleOrderCard9Pay = async (req, res) => {
     try {
-        let data  = req.body;
-        let post9Pay = await orderServiceAPP.postDataOrder9PayService(data);
+        let data  = req.body.data2;
+        let arrTenSp  = req.body.arrTenSp;
+        let data_9pay  = req.body.data_9pay;
+       
+        let post9Pay = await orderServiceAPP.postDataOrder9PayService(data,arrTenSp,data_9pay);
         if(post9Pay.errCode == 0){
             return res.status(200).json(post9Pay)
         }
+     } catch (error) {
+        console.log("Lỗi phân quyền",error)
+       return res.status(200).json({
+            errCode: -1,
+            errMessage: 'Không kết nối được với sever'
+       })
+
+    }
+}
+let getConvertSha = async (req, res) => {
+    try {
+        let data1 = req.query.data
+        const buff = Buffer.from(data1, 'base64');
+        const str = buff.toString('utf-8');
+        let data = JSON.parse(str)
+            return res.status(200).json(data)
+        
      } catch (error) {
         console.log("Lỗi phân quyền",error)
        return res.status(200).json({
@@ -154,7 +174,8 @@ module.exports = {
     handleHuyDonCartProducts:handleHuyDonCartProducts,
     handleChiTietDonProducts:handleChiTietDonProducts,
     handleDeleteOrder:handleDeleteOrder,
-    handleOrderCard9Pay:handleOrderCard9Pay
+    handleOrderCard9Pay:handleOrderCard9Pay,
+    getConvertSha:getConvertSha
   
 }
 
