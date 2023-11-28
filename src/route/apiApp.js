@@ -10,6 +10,8 @@ import newsControllerAPP from "../controllers/AppController/newsControllerAPP";
 import orderControllerAPP from "../controllers/AppController/orderControllerAPP";
 import categoryController from "../controllers/AppController/categoriesControllerAPP";
 
+import likeProductControllerAPP from "../controllers/AppController/likeProductControllerAPP";
+
 import productControllerTEST from "../controllers/productController";
 import multer from 'multer';
 import path from 'path';
@@ -109,6 +111,10 @@ let apiApp = (app)=>{
     // list all news
     router.get('/api/get-all-news',newsControllerAPP.handleGetAllNews);
     router.get('/get/one-member',memberControllerAPP.handleGetOneMembers);
+   // api sản phẩm yêu thích
+    router.post('/api-app/like-products',likeProductControllerAPP.handlePostLikeProduct);
+    // api xóa sản phẩm yêu thích
+    router.delete('/api-app/delete-like-products',likeProductControllerAPP.handleDeleteLikeProduct);
 
     return app.use("/",router)
 }
