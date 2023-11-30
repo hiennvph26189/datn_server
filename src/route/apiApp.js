@@ -5,6 +5,7 @@ import accountControllerAPP from "../controllers/AppController/accountController
 import productsControllerAPP from "../controllers/AppController/productsControllerAPP";
 import memberControllerAPP from "../controllers/AppController/memberControllerAPP";
 import lienHeControllerAPP from "../controllers/AppController/lienHeControllerApp";
+import testSocketControllerAPP from "../controllers/AppController/testSocketControllerAPP";
 
 import newsControllerAPP from "../controllers/AppController/newsControllerAPP";
 import orderControllerAPP from "../controllers/AppController/orderControllerAPP";
@@ -124,8 +125,14 @@ let apiApp = (app)=>{
     router.put('/api-app/put-address-member',addressControllerAPP.handlePutAddressMembers);
     // api sửa trạng thái địa chỉ members
     router.put('/api-app/edit-status-address-member',addressControllerAPP.handleEditStatusAddressMembers);
-    // 
+
     router.get('/api-app/convert-sha',orderControllerAPP.getConvertSha);
+    // test socket
+    router.post('/api-app/add-cart-products-size',orderControllerAPP.handleAddCardProductSizeAPP);
+    // list size >0 thao products
+    router.get('/api-app/list-products-size',productsControllerAPP.listSizesInProduct);
+    // list cart product sizes 
+    router.get('/api-app/list-cart-products-size',productsControllerAPP.listSizesInCartNnProduct);
     return app.use("/",router)
 }
 module.exports = apiApp

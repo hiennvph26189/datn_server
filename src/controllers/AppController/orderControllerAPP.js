@@ -164,6 +164,20 @@ let handleDeleteOrder = async (req, res) => {
         })
      } 
 }
+let handleAddCardProductSizeAPP = async (req, res) => {
+    try {
+        let data = req.body
+      
+        let message = await  orderServiceAPP.addCardProductsSezesServiceAPP(data)
+        return res.status(200).json(message)
+     } catch (error) {
+         console.log("Lỗi phân quyền",error)
+        return res.status(200).json({
+             errCode: -1,
+             errMessage: 'Không kết nối được với sever'
+        })
+     } 
+}
 module.exports = {
     handleOdersProducts: handleOdersProducts,
     handleDeleteCartProducts:handleDeleteCartProducts,
@@ -175,7 +189,8 @@ module.exports = {
     handleChiTietDonProducts:handleChiTietDonProducts,
     handleDeleteOrder:handleDeleteOrder,
     handleOrderCard9Pay:handleOrderCard9Pay,
-    getConvertSha:getConvertSha
+    getConvertSha:getConvertSha,
+    handleAddCardProductSizeAPP:handleAddCardProductSizeAPP
   
 }
 

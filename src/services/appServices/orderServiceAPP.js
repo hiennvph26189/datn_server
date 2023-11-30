@@ -578,6 +578,83 @@ let handleDeleteOrderService = (id)=>{
          
      }) 
 }
+let addCardProductsSezesServiceAPP = (data)=>{
+    return new Promise(async(resolve, reject)=>{
+        
+        try {
+            let id_product = data.id_product
+            let id_member = data.id_member
+            console.log(id_product)
+            let getOneProduct = await sequelize.query(`
+            SELECT * FROM  products where  id = ${id_product}
+            `, { type: QueryTypes.SELECT });
+
+         if(getOneProduct.length >0 ){
+            let getOneSizes = await sequelize.query(`
+            SELECT 
+            CASE 
+              WHEN S > 0 THEN 'S'
+              WHEN M > 0 THEN 'M'
+              WHEN L > 0 THEN 'L'
+              WHEN XL > 0 THEN 'XL'
+              WHEN XXL > 0 THEN 'XXL'
+              ELSE NULL
+            END AS size
+          FROM sizes
+          WHERE id_sp = ${id_product}
+            `, { type: QueryTypes.SELECT });
+            
+            if(getOneSizes.length > 0){
+                let size = getOneSizes[0].size
+                if(size !=null){
+                    let date = datetime.getdate()
+                    let thanh_tien = getOneProduct[0].giaSanPham - ((getOneProduct[0].giaSanPham*getOneProduct[0].sale)/100)
+                    await sequelize.query(`
+                    INSERT INTO carts (ipSanPham, idUser, size, soLuong,thanhTien,status,createdAt)
+                    VALUES (${id_product}, ${id_member}, "${size}", 1, ${thanh_tien},0, "${date}");
+                    `, { type: QueryTypes.INSERT });
+                    resolve({
+                        errCode:0,
+                        errMessage: 'thành công',
+                       
+                       
+                     })
+                }else{
+                    resolve({
+                        errCode:1,
+                        errMessage: 'Xin lỗi sản phẩm đã hết hãng',
+                       
+                       
+                     })
+                }
+                
+                 
+            }else{
+                resolve({
+                    errCode:1,
+                    errMessage: 'Sản phẩm chưa có size',
+                    
+                   
+                 })
+            }
+            
+         }else{
+            resolve({
+                errCode:1,
+                errMessage: 'Sản phẩm không tồn tại',
+                data: {}
+               
+             })
+         }
+            
+  
+        } catch (error) {
+             reject(error);
+        }
+         
+         
+     }) 
+}
 module.exports  = {
 
     handleGetUserCart:handleGetUserCart,
@@ -589,7 +666,8 @@ module.exports  = {
     handleChiTietOrderCart:handleChiTietOrderCart,
     handleDeleteOrderService:handleDeleteOrderService,
     postDataOrder9PayService:postDataOrder9PayService,
-    handleLichSuOrderCart:handleLichSuOrderCart
+    handleLichSuOrderCart:handleLichSuOrderCart,
+    addCardProductsSezesServiceAPP:addCardProductsSezesServiceAPP
   
 
 }
