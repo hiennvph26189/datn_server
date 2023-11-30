@@ -46,7 +46,7 @@ app.post('/api/send-notification', (req, res) => {
     const registrationToken = "dz_1FlGhQ4ag_g7t1Xbef7:APA91bGVRA7cgamIDb_ruectoKhO5djE2r-N9u8B7JPLS5F1H7l0niB35q2tFoc-zG0OcfkG16lrx8-nb9QE2M-5IgcXiUBuRowPhk_gLTbH5PZouh7zguRzPjSeZ7Dm7qO1mawoAN6c";
   
  // Thay thế bằng mã token thiết bị
-
+    
     const message = {
       notification: {
         title: 'Notification Title',
