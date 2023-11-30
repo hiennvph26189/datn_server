@@ -144,10 +144,85 @@ let EditStatusAddressService = (data)=>{
          
      }) 
 }
+let GetTinhThanhService = ()=>{
+    return new Promise(async(resolve, reject)=>{
+       
+        try {
+            const listTinhThanh = await sequelize.query(`
+                SELECT *
+                FROM province
+                ORDER BY _name ASC 
+                `, { type: QueryTypes.SELECT });
+          
+                resolve({ 
+                    errCode:0,
+                    errMessage: 'thành công',
+                    listTinhThanh:listTinhThanh
+                 })     
+  
+        } catch (error) {
+             reject(error);
+        }
+         
+         
+     }) 
+}
+let GetQuanService = (tinh)=>{
+    return new Promise(async(resolve, reject)=>{
+       
+        try {
+            const listQuan = await sequelize.query(`
+                SELECT *
+                FROM district
+                WHERE _province_id = ${tinh}
+                ORDER BY _name ASC 
+                `, { type: QueryTypes.SELECT });
+          
+                resolve({ 
+                    errCode:0,
+                    errMessage: 'thành công',
+                    listQuan:listQuan
+                 })     
+  
+        } catch (error) {
+             reject(error);
+        }
+         
+         
+     }) 
+}
+let GetXaService = (tinh,quan)=>{
+    return new Promise(async(resolve, reject)=>{
+       
+        try {
+            const listXa = await sequelize.query(`
+            SELECT *
+            FROM ward
+            WHERE _province_id = ${tinh}
+            AND _district_id = ${quan}
+            ORDER BY _name ASC;
+                `, { type: QueryTypes.SELECT });
+          
+                resolve({ 
+                    errCode:0,
+                    errMessage: 'thành công',
+                    listXa:listXa
+                 })     
+  
+        } catch (error) {
+             reject(error);
+        }
+         
+         
+     }) 
+}
 module.exports={
     postDataAddressService:postDataAddressService,
     deleteAddressService:deleteAddressService,
     putAddressService:putAddressService,
-    EditStatusAddressService:EditStatusAddressService
+    EditStatusAddressService:EditStatusAddressService,
+    GetTinhThanhService:GetTinhThanhService,
+    GetQuanService:GetQuanService,
+    GetXaService:GetXaService
     
 }

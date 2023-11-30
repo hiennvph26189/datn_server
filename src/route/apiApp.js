@@ -126,13 +126,22 @@ let apiApp = (app)=>{
     // api sửa trạng thái địa chỉ members
     router.put('/api-app/edit-status-address-member',addressControllerAPP.handleEditStatusAddressMembers);
 
+
     router.get('/api-app/convert-sha',orderControllerAPP.getConvertSha);
     // test socket
     router.post('/api-app/add-cart-products-size',orderControllerAPP.handleAddCardProductSizeAPP);
-    // list size >0 thao products
+    // list size > 0 theo products
     router.get('/api-app/list-products-size',productsControllerAPP.listSizesInProduct);
     // list cart product sizes 
     router.get('/api-app/list-cart-products-size',productsControllerAPP.listSizesInCartNnProduct);
+
+    // api get tỉnh thành
+    router.get('/api-app/tinhThanh',addressControllerAPP.handleGetTinhThanh);
+    // api get Quận
+    router.get('/api-app/quan',addressControllerAPP.handleGetQuan);
+    // api get Xã
+    router.get('/api-app/xa',addressControllerAPP.handleGetXa);
+
     return app.use("/",router)
 }
 module.exports = apiApp
