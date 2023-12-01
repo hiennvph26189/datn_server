@@ -2,12 +2,13 @@ const { QueryTypes } = require('sequelize');
 // import sequelize from "../../src/config/queryDatabase"
 import sequelize from "../../config/queryDatabse"
 import datetime from "../webbanhangService/getdateService"
-let handleGetContact = (data)=>{
+
+let handleGetThanhToan9pay = (data)=>{
     return new Promise(async(resolve, reject)=>{
         try {
             const data = await sequelize.query(`
                 SELECT *
-                FROM contact
+                FROM thanhtoan
                 ORDER BY id DESC
                 `, { type: QueryTypes.SELECT });
           
@@ -22,54 +23,27 @@ let handleGetContact = (data)=>{
         }
      }) 
 }
-
-
-let handlePutPhanHoiContactSeviceADMIN = (data)=>{
-    
-    return new Promise(async(resolve, reject)=>{
-        try {
-            let id = data.id;
-            let phanhoi = data.phanhoi; 
-            let date = datetime.getdate()
-             await sequelize.query(`
-            UPDATE contact
-            SET phanhoi_admin = '${phanhoi}', updatedAt = '${date}'
-            WHERE id=${id};
-                `, { type: QueryTypes.UPDATE });
-          
-                resolve({ 
-                    errCode:0,
-                    errMessage: 'thành công',
-                 })     
-  
-        } catch (error) {
-             reject(error);
-        }
-     }) 
-}
-
-let getUserWithPagination = (page)=>{
+let getThanhToanWithPagination = (page)=>{
     return new Promise(async(resolve, reject)=>{
         try {
             let totalCount = await sequelize.query(`
-                    SELECT COUNT(*) as total FROM  contact 
+                    SELECT COUNT(*) as total FROM  thanhtoan 
                         `, { type: QueryTypes.SELECT });
                     let pageNumber = page;
-                   
                     let limit = 10; // Số lượng sản phẩm trên mỗi trang
                     let offset = (pageNumber - 1) * limit;
-                    let  lienhe = await sequelize.query(`
-                    SELECT * FROM  contact  order by id desc limit ${limit} OFFSET ${offset}
+                    let  thanhtoan = await sequelize.query(`
+                    SELECT * FROM  thanhtoan  order by id desc limit ${limit} OFFSET ${offset}
                         `, { type: QueryTypes.SELECT });
                     
                     let totalPages = Math.ceil(totalCount[0].total / limit);
                    
-                    if(lienhe.length > 0 ){
+                    if(thanhtoan.length > 0 ){
                         resolve({ 
                             errCode:0,
                             errMessage: 'thành công',
-                            lienhe:lienhe,
-                            nameCategories: "Lien He",
+                            thanhtoan:thanhtoan,
+                            nameCategories: "Thanh Toan",
                             totalCount:totalPages
                         })
                     }    
@@ -80,14 +54,8 @@ let getUserWithPagination = (page)=>{
      }) 
 }
 
-
-
-
-
-
-
 module.exports  = {
-    handleGetContact:handleGetContact,
-    handlePutPhanHoiContactSeviceADMIN:handlePutPhanHoiContactSeviceADMIN,
-    getUserWithPagination:getUserWithPagination,
+    handleGetThanhToan9pay:handleGetThanhToan9pay,
+    getThanhToanWithPagination:getThanhToanWithPagination,
+
 }
