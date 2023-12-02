@@ -130,6 +130,8 @@ let apiApp = (app)=>{
     router.get('/api-app/quan',addressControllerAPP.handleGetQuan);
     // api get Xã
     router.get('/api-app/xa',addressControllerAPP.handleGetXa);
+    // api get Xã
+    router.get('/api-app/get-address-member',addressControllerAPP.handleGetAddress);
     return app.use("/",router)
 }
 module.exports = apiApp
