@@ -58,7 +58,7 @@ let postDataOrder9PayService = (data,arrTenSp,data_9pay)=>{
 
             if(idCart.length>0){
                 if(user){
-                  let oder_id =     await db.Orders.create({
+                  let oder_id =  await db.Orders.create({
                             idCart: data.idCart,
                             idUser: idUser,
                             tongTien: data.tongTien,
@@ -613,6 +613,7 @@ let addCardProductsSezesServiceAPP = (data)=>{
                     INSERT INTO carts (ipSanPham, idUser, size, soLuong,thanhTien,status,createdAt)
                     VALUES (${id_product}, ${id_member}, "${size}", 1, ${thanh_tien},0, "${date}");
                     `, { type: QueryTypes.INSERT });
+
                     resolve({
                         errCode:0,
                         errMessage: 'thành công',
@@ -655,6 +656,123 @@ let addCardProductsSezesServiceAPP = (data)=>{
          
      }) 
 }
+let checkSoLuongSanPhamTheoSize = (data)=>{
+    return new Promise(async(resolve, reject)=>{
+        const t = await sequelize.transaction();
+        try {
+          
+            const inputArray = JSON.parse(data.cartList)
+              let tongTien = 0
+              // Tạo một đối tượng để theo dõi tổng số lượng dựa trên id_sp và size
+              const quantityMap = {};
+              
+              // Duyệt qua mảng ban đầu để tính tổng số lượng cho mỗi cặp id_sp và size
+              inputArray.forEach(item => {
+                tongTien += tongTien + item.thanhTien
+                const key = `${item.ipSanPham}_${item.size}`;
+                if (quantityMap[key] === undefined) {
+                  quantityMap[key] = item.soLuong;
+                } else {
+                  quantityMap[key] += item.soLuong;
+                }
+              });
+              
+              // Tạo mảng mới dựa trên tổng số lượng đã tính toán
+              const newArray = Object.entries(quantityMap).map(([key, totalQuantity]) => {
+                const [ipSanPham, size] = key.split('_').map(part => isNaN(Number(part)) ? part : Number(part));
+                return {
+                  ipSanPham,
+                  size,
+                  soLuong: totalQuantity
+                };
+              });
+            
+             
+    
+              for (const order of newArray) {
+                const { ipSanPham, size, soLuong } = order;
+                const [product] = await sequelize.query(`
+                SELECT 
+                products.id as id_product,
+                products.tenSp,
+                sizes.id as id_size,
+                sizes.S,
+                sizes.M,
+                sizes.L,
+                sizes.XL,
+                sizes.XXL
+                FROM products
+              
+                INNER JOIN 
+                sizes ON sizes.id_sp = products.id
+                where products.id = :ipSanPham FOR UPDATE
+                 `, {
+                    replacements: { ipSanPham },
+                    type: Sequelize.QueryTypes.SELECT,
+                    transaction: t
+                  });
+                  if (product && product[size] !== undefined) {
+                    // Kiểm tra xem có đủ số lượng còn để đặt hàng không
+                    if (soLuong <= product[size]) {
+                      // Thực hiện đặt hàng
+                      console.log(`Đặt hàng ${soLuong} sản phẩm ${product.tenSp} kích thước ${size}.`);
+          
+                      // Cập nhật số lượng trong database
+                    //   let oder_id =  await db.Orders.create({
+                    //     idCart: data.idCart,
+                    //     idUser: idUser,
+                    //     tongTien: data.tongTien,
+                    //     status: 0
+                    // })
+                    const replacements = {
+                        soLuong: soLuong,
+                        ipSanPham: ipSanPham
+                      };
+                      await sequelize.query(
+                        `UPDATE sizes SET ${size} = ${size} - ${soLuong} WHERE id_sp = :ipSanPham`,
+                        {
+                          replacements: { ipSanPham },
+                          type: Sequelize.QueryTypes.UPDATE,
+                          transaction: t
+                        }
+                      );
+                    } else {
+                        resolve({ success: false, message: `Không đủ hàng để đặt mua ${soLuong} sản phẩm ${product.tenSp} kích thước ${size}.` });
+                     
+                    }
+                  } else {
+                    console.log(`Sản phẩm không tồn tại hoặc kích thước không hợp lệ.`);
+                  }
+          
+              }
+              await t.commit();
+
+              // Trả về dữ liệu khi quá trình đặt hàng hoàn tất
+              resolve({ success: true, message: 'Đặt hàng thành công!' });
+            // let results = await sequelize.query(`
+            //     SELECT 
+            //     products.id as id_product,
+            //     products.tenSp,
+            //     sizes.id as id_size,
+            //     sizes.S,
+            //     sizes.M,
+            //     sizes.L,
+            //     sizes.XL,
+            //     sizes.XXL
+            //     FROM products
+              
+            //     INNER JOIN 
+            //     sizes ON sizes.id_sp = products.id
+            //     where products.id = :id_sp
+            //      `, {replacements:   {id_sp} , type: QueryTypes.SELECT,transaction: t });
+        } catch (error) {
+            await t.rollback();
+             reject(error);
+        }
+         
+         
+     }) 
+}
 module.exports  = {
 
     handleGetUserCart:handleGetUserCart,
@@ -667,7 +785,8 @@ module.exports  = {
     handleDeleteOrderService:handleDeleteOrderService,
     postDataOrder9PayService:postDataOrder9PayService,
     handleLichSuOrderCart:handleLichSuOrderCart,
-    addCardProductsSezesServiceAPP:addCardProductsSezesServiceAPP
+    addCardProductsSezesServiceAPP:addCardProductsSezesServiceAPP,
+    checkSoLuongSanPhamTheoSize:checkSoLuongSanPhamTheoSize
   
 
 }

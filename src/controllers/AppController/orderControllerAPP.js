@@ -178,6 +178,21 @@ let handleAddCardProductSizeAPP = async (req, res) => {
         })
      } 
 }
+let handleCheckSoLuongTheoSize = async (req, res) => {
+    try {
+        let data = req.body
+      
+        let message = await  orderServiceAPP.checkSoLuongSanPhamTheoSize(data)
+        console.log(message)
+        return res.status(200).json(message)
+     } catch (error) {
+         console.log("Lỗi phân quyền",error)
+        return res.status(200).json({
+             errCode: -1,
+             errMessage: 'Không kết nối được với sever'
+        })
+     } 
+}
 module.exports = {
     handleOdersProducts: handleOdersProducts,
     handleDeleteCartProducts:handleDeleteCartProducts,
@@ -190,7 +205,8 @@ module.exports = {
     handleDeleteOrder:handleDeleteOrder,
     handleOrderCard9Pay:handleOrderCard9Pay,
     getConvertSha:getConvertSha,
-    handleAddCardProductSizeAPP:handleAddCardProductSizeAPP
+    handleAddCardProductSizeAPP:handleAddCardProductSizeAPP,
+    handleCheckSoLuongTheoSize:handleCheckSoLuongTheoSize
   
 }
 
