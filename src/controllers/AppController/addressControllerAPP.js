@@ -105,6 +105,20 @@ let handleGetXa = async (req, res) => {
         })
      }
 };
+let handleGetAddress = async (req, res) => {
+    try {
+        let data = req.body
+        let getAddress = await addressService.GetAddressService(data);
+            return res.status(200).json(getAddress)
+        
+     } catch (error) {
+         console.log("Lỗi phân quyền",error)
+        return res.status(200).json({
+             errCode: -1,
+             errMessage: 'Không kết nối được với sever'
+        })
+     }
+};
 module.exports = {
     handlePostAddressMembers:handlePostAddressMembers,
     handleDeleteAddressMembers:handleDeleteAddressMembers,
@@ -112,5 +126,6 @@ module.exports = {
     handleEditStatusAddressMembers:handleEditStatusAddressMembers,
     handleGetTinhThanh:handleGetTinhThanh,
     handleGetQuan:handleGetQuan,
-    handleGetXa:handleGetXa
+    handleGetXa:handleGetXa,
+    handleGetAddress:handleGetAddress
 };

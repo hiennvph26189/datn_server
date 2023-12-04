@@ -141,8 +141,13 @@ let apiApp = (app)=>{
     router.get('/api-app/quan',addressControllerAPP.handleGetQuan);
     // api get Xã
     router.get('/api-app/xa',addressControllerAPP.handleGetXa);
+
     // check số lượng sản phẩm tỏng khi order
     router.post('/api-app/Check-soluong-sanpham-theo-size',orderControllerAPP.handleCheckSoLuongTheoSize);
+
+    // api get Xã
+    router.get('/api-app/get-address-member',addressControllerAPP.handleGetAddress);
+
     return app.use("/",router)
 }
 module.exports = apiApp

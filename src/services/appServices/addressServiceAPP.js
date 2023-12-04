@@ -216,6 +216,42 @@ let GetXaService = (tinh,quan)=>{
          
      }) 
 }
+let GetAddressService = (data)=>{
+    return new Promise(async(resolve, reject)=>{
+       
+        try {
+            let id_member = parseInt(data.id_member)
+            let  oneMember = await sequelize.query(`
+            SELECT * FROM  members WHERE id = '${id_member}'
+                `, { type: QueryTypes.SELECT });
+                if (oneMember.length>0) {
+                    const listAddress = await sequelize.query(`
+                    SELECT *
+                    FROM address WHERE id_members = '${id_member}'
+                    ORDER BY diaChi ASC 
+                    `, { type: QueryTypes.SELECT });
+              
+                    resolve({ 
+                        errCode:0,
+                        errMessage: 'thành công',
+                        listAddress:listAddress
+                     })   
+                }else{
+                    resolve({ 
+                        errCode:0,
+                        errMessage: 'Không có member',
+            
+                     })   
+                }
+            
+  
+        } catch (error) {
+             reject(error);
+        }
+         
+         
+     }) 
+}
 module.exports={
     postDataAddressService:postDataAddressService,
     deleteAddressService:deleteAddressService,
@@ -223,6 +259,7 @@ module.exports={
     EditStatusAddressService:EditStatusAddressService,
     GetTinhThanhService:GetTinhThanhService,
     GetQuanService:GetQuanService,
-    GetXaService:GetXaService
+    GetXaService:GetXaService,
+    GetAddressService:GetAddressService
     
 }
