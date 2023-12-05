@@ -3,6 +3,7 @@ const { Sequelize } = require('sequelize');
 const { QueryTypes } = require('sequelize');
 import sequelize from "../../config/queryDatabse"
 import datetime from "../webbanhangService/getdateService"
+
 const Op = require('sequelize').Op;
 let checkProducts = (id)=>{
     return new Promise(async (resolve, reject)=>{
@@ -74,7 +75,7 @@ let postDataOrder9PayService = (data,arrTenSp,data_9pay)=>{
                             }
                         )
                        if(oder_id.id){
-                          console.log(oder_id.id)
+                         
                           await sequelize.query(`
                           INSERT INTO thanhtoan (id_donhang, id_member, card_name, payment_no,invoice_no,amount,description,card_brand,card_number,method,status,created_at)
                           VALUES (${oder_id.id}, ${idUser}, "${data_9pay.card_info.card_name}", "${data_9pay.payment_no}","${data_9pay.invoice_no}","${data_9pay.amount}","${arrTenSp}","${data_9pay.card_info.card_brand}","${data_9pay.card_info.card_number}","${data_9pay.method}",1,"${date}");
@@ -584,69 +585,180 @@ let addCardProductsSezesServiceAPP = (data)=>{
         try {
             let id_product = data.id_product
             let id_member = data.id_member
-            console.log(id_product)
-            let getOneProduct = await sequelize.query(`
-            SELECT * FROM  products where  id = ${id_product}
-            `, { type: QueryTypes.SELECT });
-
-         if(getOneProduct.length >0 ){
-            let getOneSizes = await sequelize.query(`
-            SELECT 
-            CASE 
-              WHEN S > 0 THEN 'S'
-              WHEN M > 0 THEN 'M'
-              WHEN L > 0 THEN 'L'
-              WHEN XL > 0 THEN 'XL'
-              WHEN XXL > 0 THEN 'XXL'
-              ELSE NULL
-            END AS size
-          FROM sizes
-          WHERE id_sp = ${id_product}
-            `, { type: QueryTypes.SELECT });
+            let soLuong = data.soLuong
             
-            if(getOneSizes.length > 0){
-                let size = getOneSizes[0].size
-                if(size !=null){
-                    let date = datetime.getdate()
-                    let thanh_tien = getOneProduct[0].giaSanPham - ((getOneProduct[0].giaSanPham*getOneProduct[0].sale)/100)
-                    await sequelize.query(`
-                    INSERT INTO carts (ipSanPham, idUser, size, soLuong,thanhTien,status,createdAt)
-                    VALUES (${id_product}, ${id_member}, "${size}", 1, ${thanh_tien},0, "${date}");
-                    `, { type: QueryTypes.INSERT });
+            let size_data = data.size
+            let getOneProduct = await sequelize.query(`
+            SELECT * FROM  products where  id = ${id_product} and status = 0
+            `, { type: QueryTypes.SELECT });
+            if(size_data == ""){
+                   
+                if(getOneProduct.length >0 ){
+                    let getOneSizes = await sequelize.query(`
+                    SELECT 
+                    CASE 
+                    WHEN S > 0 THEN 'S'
+                    WHEN M > 0 THEN 'M'
+                    WHEN L > 0 THEN 'L'
+                    WHEN XL > 0 THEN 'XL'
+                    WHEN XXL > 0 THEN 'XXL'
+                    ELSE NULL
+                    END AS size
+                FROM sizes
+                WHERE id_sp = ${id_product}
+                    `, { type: QueryTypes.SELECT });
+                
+                    if(getOneSizes.length > 0){
+                    
+                        let size = getOneSizes[0].size
+                
+                        if(size !=null){
+                            let nameSize = getOneSizes[0].size
+                            let getOnecart = await sequelize.query(`
+                            SELECT 
+                        *
+                        FROM carts
+                        WHERE ipSanPham = ${id_product} and idUser = ${id_member} and size = '${getOneSizes[0].size}' and status = 0
+                            `, { type: QueryTypes.SELECT });
+                            
+                        if(getOnecart.length>0){
+                            let soluongCart = getOnecart[0].soLuong
+                            
+                                let selectSize  = await sequelize.query(`
+                                SELECT 
+                            *
+                            FROM sizes
+                            WHERE id_sp  = ${id_product} 
+                                `, { type: QueryTypes.SELECT });
+                                let soluong_size_sp = selectSize[0][nameSize]
+                            
+                                let soLuongSize = parseInt(soluongCart) + parseInt(soLuong)
+                            
+                                if(soLuongSize > soluong_size_sp){
+                                    resolve({
+                                        errCode:1,
+                                        errMessage: 'Đã quá số lượng size ',
+                                    
+                                    
+                                    })
+                                }else{
+                                    await sequelize.query(`
+                                    UPDATE carts
+                                    SET soLuong = soLuong + ${soLuong}
+                                    WHERE ipSanPham = ${id_product} and idUser = ${id_member} and size = '${getOneSizes[0].size}' and status = 0;
+                                    `, { type: QueryTypes.UPDATE });
+                                    resolve({
+                                        errCode:0,
+                                        errMessage: 'Thêm thành công',
+                                    
+                                    
+                                    })
+                                }
+                        }else{
+                                let date = datetime.getdate()
+                                let thanh_tien = getOneProduct[0].giaSanPham - ((getOneProduct[0].giaSanPham*getOneProduct[0].sale)/100)
+                                await sequelize.query(`
+                                INSERT INTO carts (ipSanPham, idUser, size, soLuong,thanhTien,status,createdAt)
+                                VALUES (${id_product}, ${id_member}, "${size}", ${soLuong}, ${thanh_tien},0, "${date}");
+                                `, { type: QueryTypes.INSERT });
 
-                    resolve({
-                        errCode:0,
-                        errMessage: 'thành công',
-                       
-                       
-                     })
+                            resolve({
+                                errCode:0,
+                                errMessage: 'thành công',
+                            
+                            
+                            })
+                        }
+                            
+                        }else{
+                            resolve({
+                                errCode:1,
+                                errMessage: 'Xin lỗi sản phẩm đã hết hãng',
+                            
+                            
+                            })
+                        }
+                        
+                        
+                    }else{
+                        resolve({
+                            errCode:1,
+                            errMessage: 'Sản phẩm chưa có size',
+                            
+                        
+                        })
+                    }
+                    
                 }else{
                     resolve({
                         errCode:1,
-                        errMessage: 'Xin lỗi sản phẩm đã hết hãng',
-                       
-                       
-                     })
-                }
-                
-                 
-            }else{
-                resolve({
-                    errCode:1,
-                    errMessage: 'Sản phẩm chưa có size',
+                        errMessage: 'Sản phẩm không tồn tại',
+                        data: {}
                     
+                    })
+                }
+            }else{
+               
+                let getOnecart = await sequelize.query(`
+                    SELECT 
+                    *
+                    FROM carts
+                    WHERE ipSanPham = ${id_product} and idUser = ${id_member} and size = '${size_data}' and status = 0
+                    `, { type: QueryTypes.SELECT });
+                 
                    
-                 })
+                    
+                    if(getOnecart.length >0){
+                        let soluongCart = getOnecart[0].soLuong
+                        let selectSize  = await sequelize.query(`
+                                SELECT 
+                            *
+                            FROM sizes
+                            WHERE id_sp  = ${id_product} 
+                                `, { type: QueryTypes.SELECT });
+                        let soluong_size_sp = selectSize[0][size_data]
+                    
+                        let soLuongSize = parseInt(soluongCart) + parseInt(soLuong)
+                        console.log(soluong_size_sp, "a;kd;fakd")
+                        if(soLuongSize > soluong_size_sp){
+                            resolve({
+                                errCode:1,
+                                errMessage: 'Đã quá số lượng size ',
+                            
+                            
+                            })
+                        }else{
+                            await sequelize.query(`
+                            UPDATE carts
+                            SET soLuong = soLuong + ${soLuong}
+                            WHERE ipSanPham = ${id_product} and idUser = ${id_member} and size = '${size_data}' and status = 0;
+                            `, { type: QueryTypes.UPDATE });
+                            resolve({
+                                errCode:0,
+                                errMessage: 'Thêm thành công',
+                            
+                            
+                            })
+                        }
+
+                    }else{
+                        let date = datetime.getdate()
+                        let thanh_tien = getOneProduct[0].giaSanPham - ((getOneProduct[0].giaSanPham*getOneProduct[0].sale)/100)
+                        await sequelize.query(`
+                        INSERT INTO carts (ipSanPham, idUser, size, soLuong,thanhTien,status,createdAt)
+                        VALUES (${id_product}, ${id_member}, "${size_data}", ${soLuong}, ${thanh_tien},0, "${date}");
+                        `, { type: QueryTypes.INSERT });
+
+                        resolve({
+                            errCode:0,
+                            errMessage: 'thành công',
+                        
+                        
+                        })
+                    }
+
             }
             
-         }else{
-            resolve({
-                errCode:1,
-                errMessage: 'Sản phẩm không tồn tại',
-                data: {}
-               
-             })
-         }
             
   
         } catch (error) {
@@ -660,7 +772,7 @@ let checkSoLuongSanPhamTheoSize = (data)=>{
     return new Promise(async(resolve, reject)=>{
         const t = await sequelize.transaction();
         try {
-          
+            
             const inputArray = JSON.parse(data.cartList)
               let tongTien = 0
               // Tạo một đối tượng để theo dõi tổng số lượng dựa trên id_sp và size
@@ -669,28 +781,29 @@ let checkSoLuongSanPhamTheoSize = (data)=>{
               // Duyệt qua mảng ban đầu để tính tổng số lượng cho mỗi cặp id_sp và size
               inputArray.forEach(item => {
                 tongTien += tongTien + item.thanhTien
-                const key = `${item.ipSanPham}_${item.size}`;
+                const key = `${item.id}_${item.ipSanPham}_${item.size}`;
                 if (quantityMap[key] === undefined) {
                   quantityMap[key] = item.soLuong;
                 } else {
                   quantityMap[key] += item.soLuong;
                 }
               });
-              
+              let checkOrder = false
               // Tạo mảng mới dựa trên tổng số lượng đã tính toán
               const newArray = Object.entries(quantityMap).map(([key, totalQuantity]) => {
-                const [ipSanPham, size] = key.split('_').map(part => isNaN(Number(part)) ? part : Number(part));
+                const [id,ipSanPham, size] = key.split('_').map(part => isNaN(Number(part)) ? part : Number(part));
                 return {
+                    id,
                   ipSanPham,
                   size,
                   soLuong: totalQuantity
                 };
               });
             
-             
+         
     
               for (const order of newArray) {
-                const { ipSanPham, size, soLuong } = order;
+                const {id, ipSanPham, size, soLuong } = order;
                 const [product] = await sequelize.query(`
                 SELECT 
                 products.id as id_product,
@@ -729,44 +842,95 @@ let checkSoLuongSanPhamTheoSize = (data)=>{
                         ipSanPham: ipSanPham
                       };
                       await sequelize.query(
-                        `UPDATE sizes SET ${size} = ${size} - ${soLuong} WHERE id_sp = :ipSanPham`,
+                        `UPDATE sizes SET ${size} = ${size} - :soLuong WHERE id_sp = :ipSanPham`,
                         {
-                          replacements: { ipSanPham },
+                          replacements: { soLuong,ipSanPham },
                           type: Sequelize.QueryTypes.UPDATE,
                           transaction: t
                         }
                       );
+                      checkOrder = true;
+                       
                     } else {
                         resolve({ success: false, message: `Không đủ hàng để đặt mua ${soLuong} sản phẩm ${product.tenSp} kích thước ${size}.` });
-                     
+                        checkOrder = false;
                     }
                   } else {
                     console.log(`Sản phẩm không tồn tại hoặc kích thước không hợp lệ.`);
+                    checkOrder = false;
                   }
           
               }
+              
               await t.commit();
 
               // Trả về dữ liệu khi quá trình đặt hàng hoàn tất
               resolve({ success: true, message: 'Đặt hàng thành công!' });
-            // let results = await sequelize.query(`
-            //     SELECT 
-            //     products.id as id_product,
-            //     products.tenSp,
-            //     sizes.id as id_size,
-            //     sizes.S,
-            //     sizes.M,
-            //     sizes.L,
-            //     sizes.XL,
-            //     sizes.XXL
-            //     FROM products
-              
-            //     INNER JOIN 
-            //     sizes ON sizes.id_sp = products.id
-            //     where products.id = :id_sp
-            //      `, {replacements:   {id_sp} , type: QueryTypes.SELECT,transaction: t });
+           
         } catch (error) {
             await t.rollback();
+             reject(error);
+        }
+         
+         
+     }) 
+}
+let resetCartServiceAPP = (data,arrTenSp,data_9pay)=>{
+
+    return new Promise(async(resolve, reject)=>{
+        try {
+
+            let idCart = JSON.parse(data.idCart)
+            let idUser = data.idUser
+           
+            let user = await db.Members.findOne({
+                where : {id : idUser}
+            })
+          
+            let date = datetime.getdate()
+            
+
+            if(idCart.length>0){
+                if(user){
+                   
+                      idCart.map(async(item)=>{
+                        console.log(item, ";alkds;fka'df")
+                        let cartItem  = await sequelize.query(`
+                            SELECT 
+                                *
+                                FROM carts
+                                WHERE id  = ${item} 
+                                    `, { type: QueryTypes.SELECT });
+                            let size =  cartItem[0].size
+                            let ipSanPham = cartItem[0].ipSanPham
+                            let soLuong = cartItem[0].soLuong
+                            await sequelize.query(
+                                `UPDATE sizes SET ${size} = ${size} + :soLuong WHERE id_sp = :ipSanPham`,
+                                {
+                                    replacements: { soLuong,ipSanPham },
+                                    type: Sequelize.QueryTypes.UPDATE,
+                                    
+                                }
+                                );
+                        })  
+                        
+                    resolve({
+                        errCode:0,
+                        errMessage: 'Đã đặt hàng thành công vui lòng chờ bên shop giao hàng'
+                        })   
+                }else{
+                    resolve({
+                        errCode:1,
+                        errMessage: 'User không tồn tại'
+                     })
+                }
+            }else{
+                resolve({
+                    errCode:3,
+                    errMessage: 'Không có sản phẩm nào trong giỏ hàng'
+                 })
+            }
+        } catch (error) {
              reject(error);
         }
          
@@ -786,7 +950,8 @@ module.exports  = {
     postDataOrder9PayService:postDataOrder9PayService,
     handleLichSuOrderCart:handleLichSuOrderCart,
     addCardProductsSezesServiceAPP:addCardProductsSezesServiceAPP,
-    checkSoLuongSanPhamTheoSize:checkSoLuongSanPhamTheoSize
+    checkSoLuongSanPhamTheoSize:checkSoLuongSanPhamTheoSize,
+    resetCartServiceAPP:resetCartServiceAPP
   
 
 }

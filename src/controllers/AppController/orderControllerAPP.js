@@ -56,7 +56,7 @@ let handleGetUserCartProducts = async (req, res) => {
 let handleOdersProducts = async (req, res) => {
     try {
         let data = req.body
-        console.log(data);
+        
         let message = await  orderServiceAPP.handleAddCart(data)
         return res.status(200).json(message)
      } catch (error) {
@@ -167,7 +167,7 @@ let handleDeleteOrder = async (req, res) => {
 let handleAddCardProductSizeAPP = async (req, res) => {
     try {
         let data = req.body
-      
+        console.log(data);
         let message = await  orderServiceAPP.addCardProductsSezesServiceAPP(data)
         return res.status(200).json(message)
      } catch (error) {
@@ -183,8 +183,26 @@ let handleCheckSoLuongTheoSize = async (req, res) => {
         let data = req.body
       
         let message = await  orderServiceAPP.checkSoLuongSanPhamTheoSize(data)
-        console.log(message)
+       
         return res.status(200).json(message)
+     } catch (error) {
+         console.log("Lỗi phân quyền",error)
+        return res.status(200).json({
+             errCode: -1,
+             errMessage: 'Không kết nối được với sever'
+        })
+     } 
+}
+let handleResetCart = async (req, res) => {
+    try {
+        let data  = req.body.data2;
+        let arrTenSp  = req.body.arrTenSp;
+        let data_9pay  = req.body.data_9pay;
+       
+        let post9Pay = await orderServiceAPP.resetCartServiceAPP(data,arrTenSp,data_9pay);
+  
+            return res.status(200).json(post9Pay)
+        
      } catch (error) {
          console.log("Lỗi phân quyền",error)
         return res.status(200).json({
@@ -206,7 +224,8 @@ module.exports = {
     handleOrderCard9Pay:handleOrderCard9Pay,
     getConvertSha:getConvertSha,
     handleAddCardProductSizeAPP:handleAddCardProductSizeAPP,
-    handleCheckSoLuongTheoSize:handleCheckSoLuongTheoSize
+    handleCheckSoLuongTheoSize:handleCheckSoLuongTheoSize,
+    handleResetCart:handleResetCart
   
 }
 

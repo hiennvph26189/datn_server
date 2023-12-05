@@ -125,8 +125,7 @@ let apiApp = (app)=>{
     router.put('/api-app/put-address-member',addressControllerAPP.handlePutAddressMembers);
     // api sửa trạng thái địa chỉ members
     router.put('/api-app/edit-status-address-member',addressControllerAPP.handleEditStatusAddressMembers);
-
-
+    //
     router.get('/api-app/convert-sha',orderControllerAPP.getConvertSha);
     // test socket
     router.post('/api-app/add-cart-products-size',orderControllerAPP.handleAddCardProductSizeAPP);
@@ -147,6 +146,9 @@ let apiApp = (app)=>{
 
     // api get Xã
     router.get('/api-app/get-address-member',addressControllerAPP.handleGetAddress);
+    // reset cart 
+    router.post('/api-app/post-reset-cart',orderControllerAPP.handleResetCart);
+
 
     return app.use("/",router)
 }

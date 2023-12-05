@@ -79,7 +79,7 @@ let handleGetCategoriesInProductsServices = ()=>{
       try {
 
               let  results = await sequelize.query(`
-              SELECT categories.id AS category_id, categories.name, products.id AS product_id, products.tenSp, products.idDanhSach, products.giaSanPham,products.sale,products.image,products.luotMua
+              SELECT categories.id AS category_id, categories.name, products.id AS product_id, products.tenSp, products.idDanhSach, products.giaSanPham,products.sale,products.image,products.luotMua,products.status
               FROM categories
               JOIN products ON categories.id = products.idDanhSach 
                   `, { type: QueryTypes.SELECT });
@@ -106,6 +106,7 @@ let handleGetCategoriesInProductsServices = ()=>{
                         luotMua: row.luotMua,
                         idDanhSach: row.idDanhSach,
                         giaSanPham: row.giaSanPham,
+                        status: row.status,
                         giaBanSale: (row.giaSanPham-(row.giaSanPham*(row.sale/100))).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }),
                         image: row.image
                         });
@@ -250,7 +251,7 @@ let listSizeInproductServiceApp = (id)=>{
                             resolve({
                                 errCode: 1,
                                 errMessage: 'sản phẩm đã hết hàng',
-                                data:filteredSizes
+                           
                             })
                         }
                        
