@@ -362,6 +362,39 @@ let listSizeInproductServiceApp = (id)=>{
          
      }) 
   }
+  let getProductCartVoteStar = (id_product,id_cart)=>{
+    return new Promise(async(resolve, reject)=>{
+        try {
+            console.log(id_cart)
+            const data = await sequelize.query(`
+            SELECT carts.*, products.id AS product_id, products.tenSp, products.idDanhSach, products.giaSanPham,products.sale,products.image,products.luotMua,products.status
+            FROM products
+            JOIN carts ON products.id = carts.ipSanPham 
+            where products.id = ${id_product} and carts.id = ${id_cart}
+                `, { type: QueryTypes.SELECT });
+           
+          if (data.length>0) {
+            
+            resolve({ 
+                errCode:0,
+                errMessage: 'thành công',
+                dataProduct:data[0]
+             })   
+          }else{
+            resolve({ 
+                errCode:1,
+                errMessage: 'thất bại',
+                hotProduct:[]
+             })   
+          }
+
+                 
+  
+        } catch (error) {
+             reject(error);
+        }
+     }) 
+}
 module.exports  = {
     handleGetHotOrdersProductServices:handleGetHotOrdersProductServices,
     handleGetHotSaleProductServices:handleGetHotSaleProductServices,
@@ -369,6 +402,7 @@ module.exports  = {
     handleGetAllTotalProductsService:handleGetAllTotalProductsService,
     handleGetOneProductService:handleGetOneProductService,
     listSizeInproductServiceApp:listSizeInproductServiceApp,
-    listSizeInCartInProductServiceApp:listSizeInCartInProductServiceApp
+    listSizeInCartInProductServiceApp:listSizeInCartInProductServiceApp,
+    getProductCartVoteStar:getProductCartVoteStar
 
 }

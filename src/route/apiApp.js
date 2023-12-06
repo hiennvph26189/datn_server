@@ -5,6 +5,7 @@ import accountControllerAPP from "../controllers/AppController/accountController
 import productsControllerAPP from "../controllers/AppController/productsControllerAPP";
 import memberControllerAPP from "../controllers/AppController/memberControllerAPP";
 import lienHeControllerAPP from "../controllers/AppController/lienHeControllerApp";
+import starControllerAPP from "../controllers/AppController/starControllerAPP";
 import testSocketControllerAPP from "../controllers/AppController/testSocketControllerAPP";
 
 import newsControllerAPP from "../controllers/AppController/newsControllerAPP";
@@ -148,8 +149,14 @@ let apiApp = (app)=>{
     router.get('/api-app/get-address-member',addressControllerAPP.handleGetAddress);
     // reset cart 
     router.post('/api-app/post-reset-cart',orderControllerAPP.handleResetCart);
-
-
+    // get prodicts cart vote star
+    router.get('/api-app/get-product-cart-vote-star',productsControllerAPP.getProductCartVoteStar);
+    // post vote start 
+    router.post('/api-app/post-vote-star-product',starControllerAPP.postVoteStarProduct);
+    // check vote star products
+    router.get('/api-app/check-vote-star',starControllerAPP.checkVoteStarProduct);
+    // total number star products
+    router.get('/api-app/get-total-star-product',starControllerAPP.getTotalStarProduct);
     return app.use("/",router)
 }
 module.exports = apiApp
