@@ -10,6 +10,7 @@ import memberController from "../controllers/WebQuanTriController/memberControll
 import newsController from "../controllers/WebQuanTriController/newsControllerADMIN";
 import sizeControllerADMIN from "../controllers/WebQuanTriController/sizeControllerADMIN";
 import contactControllerADMIN from "../controllers/WebQuanTriController/contactControllerADMIN";
+import thanhtoanControllerADMIN from "../controllers/WebQuanTriController/thanhtoanControllerADMIN";
 
 import appRoot from "app-root-path"
 import  uploadCloud from '../config/uploadFile'
@@ -105,6 +106,9 @@ let webQuanTri = (app)=>{
     router.get('/api-admin/contact',contactControllerADMIN.contactADMIN);
     // PUT phan hoi lien he
     router.put('/api-admin/put-phanhoi-contact',contactControllerADMIN.putPhanHoiContactADMIN);
+
+    //API THANH TOAN
+    router.get('/api-admin/9pay',thanhtoanControllerADMIN.handleGetThanhToan);
 
 
     // get Sise admin WebQuanTri

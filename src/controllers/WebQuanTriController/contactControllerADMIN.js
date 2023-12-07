@@ -5,7 +5,6 @@ let contactADMIN = async (req, res) => {
     try {
         let page =  req.query.page;
         let dulieu = await contactServieceADMIN.getUserWithPagination(page);
-        console.log(dulieu)
         return res.status(200).json(dulieu)
     } catch (error) {
         console.log("Lỗi phân quyền", error)
