@@ -2,7 +2,7 @@ import db from "../../models/index";
 const { Sequelize } = require('sequelize');
 const { QueryTypes } = require('sequelize');
 import sequelize from "../../config/queryDatabse"
-
+import dateTime  from "../webbanhangService/getdateService"
 const Op = require('sequelize').Op;
 let checkProducts = (id)=>{
     return new Promise(async (resolve, reject)=>{
@@ -736,7 +736,7 @@ let handleGiaoDonService = (data)=>{
             let Order = await  db.Orders.findOne({
                 where: {id: id},  
             });
-
+            console.log();
          if(!Order){
             resolve({
                 errCode: 2,
@@ -744,15 +744,102 @@ let handleGiaoDonService = (data)=>{
             })
            
          }else{
-            await db.Orders.update(
+            if(Order.status == 0){
+                let arrIdCart = JSON.parse(Order.idCart)
+                let arrCheck = []
+                let arrUpdate = []
+                let arrTenSpFalse = ""
+                for (const item of arrIdCart) {
+                    const [results] = await sequelize.query(`
+                    SELECT 
+                    products.id as id_product,
+                    products.tenSp,
+                    products.giaSanPham,
+                    products.sale,
+                    products.image,
+                    carts.id as id_cart,
+                    carts.size,
+                    carts.soLuong,
+                    carts.thanhTien,
+                    sizes.id as id_size,
+                    sizes.S,
+                    sizes.M,
+                    sizes.L,
+                    sizes.XL,
+                    sizes.XXL
+                    FROM carts
+                    INNER JOIN 
+                        products ON carts.ipSanPham = products.id
+                    INNER JOIN 
+                    sizes ON sizes.id_sp = products.id
+                    where carts.id = ${item} 
+                    `, { type: QueryTypes.SELECT });
+                        if(results.soLuong <= results[results.size]){
+                            arrCheck.push(true)
+                        }else{
+                            arrCheck.push(false)
+                            arrTenSpFalse = arrTenSpFalse + results.tenSp + " (" +"x"+ results.soLuong  + " size: " + results. size+ ") \n"
+                        }
+                        arrUpdate.push({
+                            id_size:results.id_size,
+                            id_sp: results.id_product,
+                            size:results.size,
+                            soLuong: results.soLuong
+                        })
+                  }
+                
+                  const allTrue = arrCheck.every(value => value === true)
+                 
+                  if(allTrue){
+                        if(arrUpdate.length > 0){
+                            arrUpdate.map(async value =>{
+                                await sequelize.query(`
+                                UPDATE size
+                                SET '${value.size}' = '${value.size}' - ${value.soLuong}
+                                WHERE id = ${value.id_size};
+                                `, { type: QueryTypes.UPDATE });
+
+                                    await sequelize.query(`
+                                    UPDATE products
+                                    SET soLuong = soLuong - ${value.soLuong}
+                                    WHERE id = ${value.id_sp};
+                                `, { type: QueryTypes.UPDATE });
+                                        })
+                                }
+                                await sequelize.query(`
+                                UPDATE orders
+                                SET status = 1
+                                WHERE id = ${Order.id} and status =0
+                                `, { type: QueryTypes.UPDATE});
+                                resolve({ 
+                                    errCode:0,
+                                    errMessage: 'thành công',
+                                    
+                                })
+                  }else{
+                        await sequelize.query(`
+                        UPDATE orders
+                        SET status = 10, note_order = '${arrTenSpFalse}'
+                        WHERE id = ${Order.id} and status =0
+                        `, { type: QueryTypes.UPDATE});
+                        resolve({ 
+                            errCode:2,
+                            errMessage: 'Sản phẩm đã chuyển sang đơn đang bị lỗi',
+                            
+                        })
+                  }
+            }else{
+                await db.Orders.update(
                 {status: status},
                 {where: {id: id}}
-             )
-             resolve({ 
-                errCode:0,
-                errMessage: 'thành công',
-                
-             })
+                )
+                resolve({ 
+                    errCode:0,
+                    errMessage: 'thành công',
+                    
+                })
+            }
+            
          }
          
   
@@ -837,6 +924,54 @@ let handleThongKeOrdersService = (data)=>{
          
      }) 
 }
+let updateMaVanDonOrderService = (data)=>{
+    return new Promise(async(resolve, reject)=>{
+        
+        try {
+            console.log(data,"kd;akd;ka");
+        let id_order = data.id_order; 
+        let mavandon = data.mavandon; 
+        let date = dateTime.getdate(); 
+        let Order = await  db.Orders.findOne({
+            where: {id: id_order},  
+         });
+        
+         if(!Order){
+
+            resolve({
+                errCode: 2,
+                errMessage: 'đơn hàng không tồn tại',
+            })
+           
+         }else{
+            let arrCarts = JSON.parse(Order.idCart)
+           await sequelize.query(`
+            UPDATE orders
+            SET mavandon = '${mavandon}' , updatedAt = '${date}',status = 2
+            WHERE id = ${id_order} ;
+            `, { type: QueryTypes.UPDATE });
+            arrCarts.map(async(item,index)=>{
+                await sequelize.query(`
+                UPDATE products
+                SET luotMua = luotMua + ${luotMua.soLuong}
+                WHERE id = ${item.ipSanPham } ;
+                `, { type: QueryTypes.UPDATE });
+            })
+             resolve({
+                errCode:0,
+                errMessage: 'thành công',
+               
+             })
+         }
+         
+  
+        } catch (error) {
+             reject(error);
+        }
+         
+         
+     }) 
+}
 module.exports  = {
     handleAddCart:handleAddCart,
     handleDeleteCart:handleDeleteCart,
@@ -851,6 +986,7 @@ module.exports  = {
     handleDeleteOrderService:handleDeleteOrderService,
     handleCheckOrderService:handleCheckOrderService,
     handleGiaoDonService:handleGiaoDonService,
-    handleThongKeOrdersService:handleThongKeOrdersService
+    handleThongKeOrdersService:handleThongKeOrdersService,
+    updateMaVanDonOrderService:updateMaVanDonOrderService
     
 }

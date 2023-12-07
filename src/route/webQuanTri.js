@@ -66,9 +66,10 @@ let webQuanTri = (app)=>{
     
    
     
-    
-    
-    
+
+        // update mavandon
+
+    router.put('/api-admin/update-mavandon',odersController.updateMaVanDonOrder);
     
     
     
