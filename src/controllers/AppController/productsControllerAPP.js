@@ -114,6 +114,21 @@ let getProductCartVoteStar = async (req, res) => {
     })
  }
 };
+let getProductCartUser = async (req, res) => {
+    try {  
+       
+        let id_member = req.query.id_member;
+       
+        let data = await productsServicesAPP.getProductCartUserServiceAPP(id_member);
+     return res.status(200).json(data)
+ } catch (error) {
+     console.log("Lỗi phân quyền",error)
+    return res.status(200).json({
+         errCode: -1,
+         errMessage: 'Không kết nối được với sever'
+    })
+ }
+};
 module.exports = {
     handleGetHotOrdersProduct: handleGetHotOrdersProduct,
     handleGetHotSaleProduct: handleGetHotSaleProduct,
@@ -122,5 +137,6 @@ module.exports = {
     handleGetOneProducts:handleGetOneProducts,
     listSizesInProduct:listSizesInProduct,
     listSizesInCartNnProduct:listSizesInCartNnProduct,
-    getProductCartVoteStar:getProductCartVoteStar
+    getProductCartVoteStar:getProductCartVoteStar,
+    getProductCartUser:getProductCartUser
 }

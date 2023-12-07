@@ -49,9 +49,10 @@ let deleteAddressService = (data)=>{
                         `, { type: QueryTypes.SELECT });
                      if (oneAddress.length>0) {
                         await sequelize.query(`
-                        DELETE FROM address
-                        WHERE id= '${id}'
-                        `, { type: QueryTypes.DELETE });
+                        UPDATE address
+                        SET status = "HIDDEN"
+                        WHERE id='${id}';
+                        `, { type: QueryTypes.UPDATE });
                             resolve({ 
                                 errCode:0,
                                 errMessage: 'xóa thành công',
@@ -119,7 +120,7 @@ let EditStatusAddressService = (data)=>{
                         await sequelize.query(`
                         UPDATE address
                         SET status = 'KHONG-MAC-DINH', updatedAt = '${date}'
-                        WHERE id_members = '${id_member}';
+                        WHERE id_members = '${id_member}' and status !="HIDDEN";
                     `, { type: QueryTypes.UPDATE });
                     await sequelize.query(`
                     UPDATE address
@@ -216,19 +217,19 @@ let GetXaService = (tinh,quan)=>{
          
      }) 
 }
-let GetAddressService = (data)=>{
+let GetAddressService = (id_member)=>{
     return new Promise(async(resolve, reject)=>{
        
         try {
-            let id_member = parseInt(data.id_member)
+          
             let  oneMember = await sequelize.query(`
             SELECT * FROM  members WHERE id = '${id_member}'
                 `, { type: QueryTypes.SELECT });
                 if (oneMember.length>0) {
                     const listAddress = await sequelize.query(`
                     SELECT *
-                    FROM address WHERE id_members = '${id_member}'
-                    ORDER BY diaChi ASC 
+                    FROM address WHERE id_members = '${id_member}' and status != "HIDDEN"
+                    ORDER BY status DESC 
                     `, { type: QueryTypes.SELECT });
               
                     resolve({ 
@@ -252,6 +253,85 @@ let GetAddressService = (data)=>{
          
      }) 
 }
+let getItemAddressInIdMemberService = (id_member)=>{
+    return new Promise(async(resolve, reject)=>{
+       
+        try {
+      
+            let  oneMember = await sequelize.query(`
+            SELECT * FROM  members WHERE id = '${id_member}'
+                `, { type: QueryTypes.SELECT });
+                if (oneMember.length>0) {
+                    const listAddress = await sequelize.query(`
+                    SELECT *
+                    FROM address WHERE id_members = '${id_member}'
+                   and status = "MAC-DINH"
+                    `, { type: QueryTypes.SELECT });
+                
+                    resolve({ 
+                        errCode:0,
+                        errMessage: 'thành công',
+                        itemAddress:listAddress[0]
+                     })   
+                }else{
+                    resolve({ 
+                        errCode:0,
+                        errMessage: 'Không có member',
+            
+                     })   
+                }
+            
+  
+        } catch (error) {
+             reject(error);
+        }
+         
+         
+     }) 
+}
+let getItemAddressOrderDetailService = (id_address)=>{
+    return new Promise(async(resolve, reject)=>{
+       
+        try {
+            console.log(id_address);
+                if(id_address >0){
+                    const listAddress = await sequelize.query(`
+                    SELECT *
+                    FROM address WHERE id = '${id_address}'
+               
+                    `, { type: QueryTypes.SELECT });
+                if(listAddress.length > 0){
+                    resolve({ 
+                        errCode:0,
+                        errMessage: 'thành công',
+                        itemAddress:listAddress[0]
+                     })   
+                }else{
+                    resolve({ 
+                        errCode:1,
+                        errMessage: 'Thất bại',
+                        itemAddress:[]
+                     })   
+                }
+                }else{
+                    resolve({ 
+                        errCode:1,
+                        errMessage: 'chưa có địa chỉ',
+                        itemAddress:[]
+                     })   
+                }
+                    
+                   
+                
+            
+  
+        } catch (error) {
+             reject(error);
+        }
+         
+         
+     }) 
+}
 module.exports={
     postDataAddressService:postDataAddressService,
     deleteAddressService:deleteAddressService,
@@ -260,6 +340,8 @@ module.exports={
     GetTinhThanhService:GetTinhThanhService,
     GetQuanService:GetQuanService,
     GetXaService:GetXaService,
-    GetAddressService:GetAddressService
+    GetAddressService:GetAddressService,
+    getItemAddressInIdMemberService:getItemAddressInIdMemberService,
+    getItemAddressOrderDetailService:getItemAddressOrderDetailService
     
 }

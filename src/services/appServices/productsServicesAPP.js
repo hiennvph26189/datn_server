@@ -395,6 +395,57 @@ let listSizeInproductServiceApp = (id)=>{
         }
      }) 
 }
+let getProductCartUserServiceAPP = (id_member)=>{
+    return new Promise(async(resolve, reject)=>{
+        try {
+         
+            const results = await sequelize.query(`
+                SELECT 
+                products.id as id_product,
+                products.tenSp,
+                products.giaSanPham,
+                products.sale,
+                products.image,
+                carts.id as id_cart,
+                carts.size,
+                carts.soLuong,
+                carts.thanhTien,
+                sizes.id as id_size,
+                sizes.S,
+                sizes.M,
+                sizes.L,
+                sizes.XL,
+                sizes.XXL
+                FROM carts
+                INNER JOIN 
+                    products ON carts.ipSanPham = products.id
+                INNER JOIN 
+                sizes ON sizes.id_sp = products.id
+                where carts.idUser = ${id_member} and carts.status = 0
+                `, { type: QueryTypes.SELECT });
+           
+                if (results.length > 0) {
+                  
+                    resolve({
+                        errCode: 0,
+                        errMessage: 'Thành công',
+                        data:results
+                    })
+                  } else {
+                    resolve({
+                        errCode: 1,
+                        errMessage: 'sản phẩm không tồn tại',
+                        data:{}
+                    })
+                  }
+
+                 
+  
+        } catch (error) {
+             reject(error);
+        }
+     }) 
+}
 module.exports  = {
     handleGetHotOrdersProductServices:handleGetHotOrdersProductServices,
     handleGetHotSaleProductServices:handleGetHotSaleProductServices,
@@ -403,6 +454,7 @@ module.exports  = {
     handleGetOneProductService:handleGetOneProductService,
     listSizeInproductServiceApp:listSizeInproductServiceApp,
     listSizeInCartInProductServiceApp:listSizeInCartInProductServiceApp,
-    getProductCartVoteStar:getProductCartVoteStar
+    getProductCartVoteStar:getProductCartVoteStar,
+    getProductCartUserServiceAPP:getProductCartUserServiceAPP
 
 }

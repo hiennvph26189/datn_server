@@ -195,11 +195,10 @@ let handleCheckSoLuongTheoSize = async (req, res) => {
 }
 let handleResetCart = async (req, res) => {
     try {
-        let data  = req.body.data2;
-        let arrTenSp  = req.body.arrTenSp;
-        let data_9pay  = req.body.data_9pay;
+        let data  = req.body;
        
-        let post9Pay = await orderServiceAPP.resetCartServiceAPP(data,arrTenSp,data_9pay);
+       
+        let post9Pay = await orderServiceAPP.resetCartServiceAPP(data);
   
             return res.status(200).json(post9Pay)
         

@@ -121,7 +121,7 @@ let apiApp = (app)=>{
     // api thêm địa chỉ members
     router.post('/api-app/address-member',addressControllerAPP.handlePostAddressMembers);
     // api xóa địa chỉ members
-    router.delete('/api-app/delete-address-member',addressControllerAPP.handleDeleteAddressMembers);
+    router.put('/api-app/delete-address-member',addressControllerAPP.handleDeleteAddressMembers);
     // api sửa địa chỉ members
     router.put('/api-app/put-address-member',addressControllerAPP.handlePutAddressMembers);
     // api sửa trạng thái địa chỉ members
@@ -157,6 +157,12 @@ let apiApp = (app)=>{
     router.get('/api-app/check-vote-star',starControllerAPP.checkVoteStarProduct);
     // total number star products
     router.get('/api-app/get-total-star-product',starControllerAPP.getTotalStarProduct);
+    // get card product in id_user
+    router.get('/api-app/get-cart-product-in-idmember',productsControllerAPP.getProductCartUser);
+    // get item address member
+    router.get('/api-app/get-item-address-in-idmember',addressControllerAPP.getItemAddressInIdMember);
+    // get address order detail
+    router.get('/api-app/get-item-address-order-detail',addressControllerAPP.getItemAddressOrderDetail);
     return app.use("/",router)
 }
 module.exports = apiApp

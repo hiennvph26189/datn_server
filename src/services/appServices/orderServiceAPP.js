@@ -59,10 +59,18 @@ let postDataOrder9PayService = (data,arrTenSp,data_9pay)=>{
 
             if(idCart.length>0){
                 if(user){
+                    let selectAddress  = await sequelize.query(`
+                    SELECT 
+                *
+                FROM address
+                WHERE id_members  = ${idUser} and status = "MAC-DINH" 
+                    `, { type: QueryTypes.SELECT });
+                let id_address = selectAddress[0].id
                   let oder_id =  await db.Orders.create({
                             idCart: data.idCart,
                             idUser: idUser,
                             tongTien: data.tongTien,
+                            id_address	: id_address,
                             status: 0
                         })
                         
@@ -829,28 +837,6 @@ let checkSoLuongSanPhamTheoSize = (data)=>{
                     if (soLuong <= product[size]) {
                       // Thực hiện đặt hàng
                       console.log(`Đặt hàng ${soLuong} sản phẩm ${product.tenSp} kích thước ${size}.`);
-          
-                      // Cập nhật số lượng trong database
-                    //   let oder_id =  await db.Orders.create({
-                    //     idCart: data.idCart,
-                    //     idUser: idUser,
-                    //     tongTien: data.tongTien,
-                    //     status: 0
-                    // })
-                    const replacements = {
-                        soLuong: soLuong,
-                        ipSanPham: ipSanPham
-                      };
-                      await sequelize.query(
-                        `UPDATE sizes SET ${size} = ${size} - :soLuong WHERE id_sp = :ipSanPham`,
-                        {
-                          replacements: { soLuong,ipSanPham },
-                          type: Sequelize.QueryTypes.UPDATE,
-                          transaction: t
-                        }
-                      );
-                      checkOrder = true;
-                       
                     } else {
                         resolve({ success: false, message: `Không đủ hàng để đặt mua ${soLuong} sản phẩm ${product.tenSp} kích thước ${size}.` });
                         checkOrder = false;
@@ -875,11 +861,11 @@ let checkSoLuongSanPhamTheoSize = (data)=>{
          
      }) 
 }
-let resetCartServiceAPP = (data,arrTenSp,data_9pay)=>{
+let resetCartServiceAPP = (data)=>{
 
     return new Promise(async(resolve, reject)=>{
         try {
-
+            console.log(data);
             let idCart = JSON.parse(data.idCart)
             let idUser = data.idUser
            
@@ -894,7 +880,7 @@ let resetCartServiceAPP = (data,arrTenSp,data_9pay)=>{
                 if(user){
                    
                       idCart.map(async(item)=>{
-                        console.log(item, ";alkds;fka'df")
+                       
                         let cartItem  = await sequelize.query(`
                             SELECT 
                                 *
