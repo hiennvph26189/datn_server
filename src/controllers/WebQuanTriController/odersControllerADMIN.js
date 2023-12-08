@@ -2,7 +2,8 @@ import odersService from "../../services/webQuanTriService/odersServiceADMIN";
 let handleGetAllOrdersProducts = async (req, res) => {
     try {
         let status = req.query.status
-        let message = await  odersService.handleGetAllOrder(status)
+        let page = req.query.page
+        let message = await  odersService.handleGetAllOrder(status,page)
         return res.status(200).json(message)
      } catch (error) {
          console.log("Lỗi phân quyền",error)

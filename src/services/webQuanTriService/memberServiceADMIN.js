@@ -1,21 +1,33 @@
 
 import db from "../../models/index";
+const { QueryTypes } = require('sequelize');
+// import sequelize from "../../src/config/queryDatabase"
+import sequelize from "../../config/queryDatabse"
+import datetime from "../webbanhangService/getdateService"
 import bcrypt from 'bcryptjs';
 let salt = bcrypt.genSaltSync(10);
-let handleGetAllMembers = () => {
+let handleGetAllMembers = (page) => {
     return new Promise(async (resolve, reject) => {
         try {
-            let res = {}
-            let members = await db.Members.findAll({
-                attributes: {
-                    exclude: ['matKhau']
-                }
-            });
-            res.errCode = 0;
-            res.errMessage = "OK",
-                res.data = members;
-            console.log(res.data)
-            resolve(res)
+            
+            let totalCount = await sequelize.query(`
+                    SELECT COUNT(*) as total FROM  members 
+                        `, { type: QueryTypes.SELECT });
+                    let pageNumber = page;
+                   
+                    let limit = 5; // Số lượng sản phẩm trên mỗi trang
+                    let offset = (pageNumber - 1) * limit;
+                    let  members = await sequelize.query(`
+                    SELECT * FROM  members  order by id desc limit ${limit} OFFSET ${offset}
+                        `, { type: QueryTypes.SELECT });
+                    
+                    let totalPages = Math.ceil(totalCount[0].total / limit);
+            resolve({
+                errCode: 0,
+                errMessage:"OK",
+                data:members,
+                totalCount:totalPages
+            })
         } catch (error) {
             reject(error);
         }

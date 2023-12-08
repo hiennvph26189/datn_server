@@ -463,17 +463,35 @@ let handleChiTietOrderCart = (id)=>{
          
      }) 
 }
-let handleGetAllOrder = (status)=>{
+let handleGetAllOrder = (status,page)=>{
     return new Promise(async(resolve, reject)=>{
         
         try {
             if(status =="All"){
-                let Order = await  db.Orders.findAll({
-                    order: [
-                        ['id', 'DESC'],
-                       
-                    ]
-                 });
+                let totalCount = await sequelize.query(`
+                    SELECT COUNT(*) as total FROM  orders where id_address	> 0 
+                        `, { type: QueryTypes.SELECT });
+                    let pageNumber = page;
+               
+                    let limit = 10; // Số lượng sản phẩm trên mỗi trang
+                    let offset = (pageNumber - 1) * limit;
+                    
+                const Order = await sequelize.query(`
+                SELECT 
+                orders.*,
+                address.hoTen,
+                address.soDienThoai,
+                address.diaChi
+                FROM orders
+                INNER JOIN 
+                address ON orders.id_address = address.id
+                order by orders.id DESC limit ${limit} offset ${offset}
+                 `, {
+                    
+                    type: Sequelize.QueryTypes.SELECT,
+                  
+                  });
+                  let totalPages = Math.ceil(totalCount[0].total / limit);
                
                  let getCarts = await db.Carts.findAll({
                     where: {
@@ -501,18 +519,36 @@ let handleGetAllOrder = (status)=>{
                         errCode:0,
                         errMessage: 'thành công',
                         getAllOrder: Order,
-                        getCarts: getCarts
+                        getCarts: getCarts,
+                        totalCount:totalPages
                      })
                  }
             }else{
-                let Order = await  db.Orders.findAll({
-                    where: {status:status},
-                    order: [
-                        ['id', 'DESC'],
-                       
-                    ]
-                 });
-               
+                let totalCount = await sequelize.query(`
+                SELECT COUNT(*) as total FROM  orders where id_address	> 0 and status = ${status}
+                    `, { type: QueryTypes.SELECT });
+                let pageNumber = page;
+                
+                let limit = 10; // Số lượng sản phẩm trên mỗi trang
+                let offset = (pageNumber - 1) * limit;
+                console.log(offset, "S:DAKD:KS:");
+                const Order = await sequelize.query(`
+                SELECT 
+                orders.*,
+                address.hoTen,
+                address.soDienThoai,
+                address.diaChi
+                FROM orders
+                INNER JOIN 
+                address ON orders.id_address = address.id
+                where orders.status = ${status}
+                order by orders.id DESC limit ${limit} offset ${offset}
+                 `, {
+                    
+                    type: Sequelize.QueryTypes.SELECT,
+                  
+                  });
+                  let totalPages = Math.ceil(totalCount[0].total / limit);
                  let getCarts = await db.Carts.findAll({
                     where: {
                             
@@ -540,7 +576,8 @@ let handleGetAllOrder = (status)=>{
                         errCode:0,
                         errMessage: 'thành công',
                         getAllOrder: Order,
-                        getCarts: getCarts
+                        getCarts: getCarts,
+                        totalCount:totalPages
                      })
                  }
 
