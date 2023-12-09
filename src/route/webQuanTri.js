@@ -94,8 +94,8 @@ let webQuanTri = (app)=>{
     router.delete('/api/delete-nap-tien-Member',memberController.handleDeleteNapTienMenber);
   
 
-    // API trên app điện thoại
- 
+    // Hoàn đơn order 
+    router.put('/api-admin/hoan-don-order',odersController.handHoanDonOrder);
     
    
 

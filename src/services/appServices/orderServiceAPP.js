@@ -56,17 +56,18 @@ let postDataOrder9PayService = (data,arrTenSp,data_9pay)=>{
           
             let date = datetime.getdate()
 
-
+            let tientk_member = user.tienTk
             if(idCart.length>0){
                 if(user){
-                    let selectAddress  = await sequelize.query(`
-                    SELECT 
-                *
-                FROM address
-                WHERE id_members  = ${idUser} and status = "MAC-DINH" 
-                    `, { type: QueryTypes.SELECT });
-                let id_address = selectAddress[0].id
-                  let oder_id =  await db.Orders.create({
+                       
+                        let selectAddress  = await sequelize.query(`
+                        SELECT 
+                    *
+                    FROM address
+                    WHERE id_members  = ${idUser} and status = "MAC-DINH" 
+                        `, { type: QueryTypes.SELECT });
+                        let id_address = selectAddress[0].id
+                        let oder_id =  await db.Orders.create({
                             idCart: data.idCart,
                             idUser: idUser,
                             tongTien: data.tongTien,
@@ -418,22 +419,31 @@ let handleCreateOrderCart = (data)=>{
     return new Promise(async(resolve, reject)=>{
         try {
 
-            let idCart = [...data.idCart]
+            let idCart = JSON.parse(data.idCart)
             let idUser = data.idUser
-            
+            let date = datetime.getdate()
             let user = await db.Members.findOne({
                 where : {id : idUser}
             })
 
-            let tienTk = user.tienTk
-            console.log(idCart.length)
-
             if(idCart.length>0){
+                
+           
                 if(user){
-                        await db.Orders.create({
+                    let tienTk = user.tienTk
+                    if(tienTk >=0 && tienTk >= data.tongTien){
+                        let [selectAddress]  = await sequelize.query(`
+                            SELECT 
+                        *
+                        FROM address
+                        WHERE id_members  = ${idUser} and status = "MAC-DINH" 
+                            `, { type: QueryTypes.SELECT });
+                    if(selectAddress){
+                      let oder_id =  await db.Orders.create({
                             idCart: data.idCart,
                             idUser: idUser,
                             tongTien: data.tongTien,
+                            id_address: selectAddress.id,
                             status: 0
                         })
                         await db.Carts.update(
@@ -444,18 +454,37 @@ let handleCreateOrderCart = (data)=>{
                                 }
                             }
                         )
-
                         await db.Members.update(
                             {tienTk: tienTk - data.tongTien },
                             {
                             where: {id : idUser}
                             }
                         )
-                        
+                        if(oder_id.id){
+                         
+                            await sequelize.query(`
+                            INSERT INTO thanhtoan (id_donhang, id_member, card_name, payment_no,invoice_no,amount,description,card_brand,card_number,method,status,created_at)
+                            VALUES (${oder_id.id}, ${idUser}, "${user.tenThanhVien}", "","","${data.tongTien}","Thanh toán bằng tiền trong tài khoản","tienTk","","TK",1,"${date}");
+                            `, { type: QueryTypes.INSERT });
+                         }
                         resolve({
                             errCode:0,
                             errMessage: 'Đã đặt hàng thành công vui lòng chờ bên shop giao hàng'
                          })
+                    }else{
+                        resolve({
+                            errCode:1,
+                            errMessage: 'Địa chỉ của bạn không tồn tại, vui lòng chọn địa chỉ khác'
+                         })
+                    }
+                    }else{
+                        resolve({
+                            errCode:1,
+                            errMessage: 'Số dư trong tài khoản không đủ'
+                         })
+                    }
+                    
+                        
                         
                    
                     

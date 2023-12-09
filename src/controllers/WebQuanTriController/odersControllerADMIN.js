@@ -92,6 +92,24 @@ let updateMaVanDonOrder = async (req, res) => {
         })
      } 
 }
+let handHoanDonOrder = async (req, res) => {
+    try {
+        
+        let data = req.body
+       
+        let message = await  odersService.handHoanDonOrderService(data)
+        return res.status(200).json(message)
+     } catch (error) {
+         console.log("Lỗi phân quyền",error)
+        return res.status(200).json({
+
+
+
+             errCode: -1,
+             errMessage: 'Không kết nối được với sever'
+        })
+     } 
+}
 
 module.exports = {
     handleGetAllOrdersProducts:handleGetAllOrdersProducts,
@@ -99,6 +117,7 @@ module.exports = {
     handleCheckOrder:handleCheckOrder,
     handleGiaoDonOrder:handleGiaoDonOrder,
     handleThongKeOrders:handleThongKeOrders,
-    updateMaVanDonOrder:updateMaVanDonOrder
+    updateMaVanDonOrder:updateMaVanDonOrder,
+    handHoanDonOrder:handHoanDonOrder
   
 }

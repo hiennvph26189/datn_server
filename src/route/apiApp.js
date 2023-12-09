@@ -6,6 +6,7 @@ import productsControllerAPP from "../controllers/AppController/productsControll
 import memberControllerAPP from "../controllers/AppController/memberControllerAPP";
 import lienHeControllerAPP from "../controllers/AppController/lienHeControllerApp";
 import starControllerAPP from "../controllers/AppController/starControllerAPP";
+import thanhToanController from "../controllers/AppController/thanhToanController";
 import testSocketControllerAPP from "../controllers/AppController/testSocketControllerAPP";
 
 import newsControllerAPP from "../controllers/AppController/newsControllerAPP";
@@ -163,6 +164,8 @@ let apiApp = (app)=>{
     router.get('/api-app/get-item-address-in-idmember',addressControllerAPP.getItemAddressInIdMember);
     // get address order detail
     router.get('/api-app/get-item-address-order-detail',addressControllerAPP.getItemAddressOrderDetail);
+    // get phuong thức thanh toán theo order
+    router.get('/api-app/get-method-thanh-toan',thanhToanController.getMethodPayOrder);
     return app.use("/",router)
 }
 module.exports = apiApp
