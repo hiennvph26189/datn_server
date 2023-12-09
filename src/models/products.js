@@ -28,6 +28,7 @@ module.exports = (sequelize, DataTypes) => {
     luotXem: DataTypes.INTEGER,
     luotTim: DataTypes.INTEGER,
     luotMua: DataTypes.INTEGER,
+    status: DataTypes.INTEGER,
     
     
   }, {

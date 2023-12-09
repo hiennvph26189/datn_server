@@ -13,6 +13,7 @@ let handleGetAllProductsService = (page)=>{
             let products = await db.Products.findAndCountAll({
                 offset,
                 limit,
+                where: {status: 0},
                 order: [
                     ['id', 'DESC'],
                     
@@ -247,12 +248,14 @@ let deleteProduct = (id)=>{
             })
            
          }else{
-            await db.Products.destroy({
-                where: {id: id}
-             })
+            db.Products.update({ status: 2 }, {
+                where: {
+                    id: id
+                },
+              });
              resolve({
                 errCode:0,
-                errMessage: 'Xóa thành công'
+                errMessage: 'Ẩn thành công'
              })
          }
          

@@ -4,7 +4,8 @@ let handleGetAllMenbers = async (req, res) => {
     
   
     try {
-        let data = await memberService.handleGetAllMembers();
+        let page = req.query.page
+        let data = await memberService.handleGetAllMembers(page);
         return res.status(200).json(data) 
      } catch (error) {
          console.log("Lỗi phân quyền",error)

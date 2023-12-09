@@ -2,10 +2,11 @@ import lienheService from "../../services/webbanhangService/lienheService";
 let handleLienHeMembers = async (req, res) => {
     try {
         let data  = req.body;
+        console.log(data);
         let postLienHe = await lienheService.postDataLienHeService(data);
-        if(postLienHe.errCode == 1){
-            return res.status(200).json(postLienHe)
-        }
+        
+        return res.status(200).json(postLienHe)
+        
         
      } catch (error) {
          console.log("Lỗi phân quyền",error)

@@ -5,6 +5,9 @@ import accountControllerAPP from "../controllers/AppController/accountController
 import productsControllerAPP from "../controllers/AppController/productsControllerAPP";
 import memberControllerAPP from "../controllers/AppController/memberControllerAPP";
 import lienHeControllerAPP from "../controllers/AppController/lienHeControllerApp";
+import starControllerAPP from "../controllers/AppController/starControllerAPP";
+import thanhToanController from "../controllers/AppController/thanhToanController";
+import testSocketControllerAPP from "../controllers/AppController/testSocketControllerAPP";
 
 import newsControllerAPP from "../controllers/AppController/newsControllerAPP";
 import orderControllerAPP from "../controllers/AppController/orderControllerAPP";
@@ -119,13 +122,50 @@ let apiApp = (app)=>{
     // api thêm địa chỉ members
     router.post('/api-app/address-member',addressControllerAPP.handlePostAddressMembers);
     // api xóa địa chỉ members
-    router.delete('/api-app/delete-address-member',addressControllerAPP.handleDeleteAddressMembers);
+    router.put('/api-app/delete-address-member',addressControllerAPP.handleDeleteAddressMembers);
     // api sửa địa chỉ members
     router.put('/api-app/put-address-member',addressControllerAPP.handlePutAddressMembers);
     // api sửa trạng thái địa chỉ members
     router.put('/api-app/edit-status-address-member',addressControllerAPP.handleEditStatusAddressMembers);
-    // 
+    //
     router.get('/api-app/convert-sha',orderControllerAPP.getConvertSha);
+    // test socket
+    router.post('/api-app/add-cart-products-size',orderControllerAPP.handleAddCardProductSizeAPP);
+    // list size > 0 theo products
+    router.get('/api-app/list-products-size',productsControllerAPP.listSizesInProduct);
+    // list cart product sizes 
+    router.get('/api-app/list-cart-products-size',productsControllerAPP.listSizesInCartNnProduct);
+
+    // api get tỉnh thành
+    router.get('/api-app/tinhThanh',addressControllerAPP.handleGetTinhThanh);
+    // api get Quận
+    router.get('/api-app/quan',addressControllerAPP.handleGetQuan);
+    // api get Xã
+    router.get('/api-app/xa',addressControllerAPP.handleGetXa);
+
+    // check số lượng sản phẩm tỏng khi order
+    router.post('/api-app/Check-soluong-sanpham-theo-size',orderControllerAPP.handleCheckSoLuongTheoSize);
+
+    // api get Xã
+    router.get('/api-app/get-address-member',addressControllerAPP.handleGetAddress);
+    // reset cart 
+    router.post('/api-app/post-reset-cart',orderControllerAPP.handleResetCart);
+    // get prodicts cart vote star
+    router.get('/api-app/get-product-cart-vote-star',productsControllerAPP.getProductCartVoteStar);
+    // post vote start 
+    router.post('/api-app/post-vote-star-product',starControllerAPP.postVoteStarProduct);
+    // check vote star products
+    router.get('/api-app/check-vote-star',starControllerAPP.checkVoteStarProduct);
+    // total number star products
+    router.get('/api-app/get-total-star-product',starControllerAPP.getTotalStarProduct);
+    // get card product in id_user
+    router.get('/api-app/get-cart-product-in-idmember',productsControllerAPP.getProductCartUser);
+    // get item address member
+    router.get('/api-app/get-item-address-in-idmember',addressControllerAPP.getItemAddressInIdMember);
+    // get address order detail
+    router.get('/api-app/get-item-address-order-detail',addressControllerAPP.getItemAddressOrderDetail);
+    // get phuong thức thanh toán theo order
+    router.get('/api-app/get-method-thanh-toan',thanhToanController.getMethodPayOrder);
     return app.use("/",router)
 }
 module.exports = apiApp

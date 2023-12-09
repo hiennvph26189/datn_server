@@ -15,5 +15,5 @@ let handleGetAllNews = async (req, res) => {
    
 };
 module.exports = {
-    handleGetAllNews
+    handleGetAllNews:handleGetAllNews
 }
