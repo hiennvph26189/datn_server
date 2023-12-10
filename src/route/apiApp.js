@@ -172,6 +172,9 @@ let apiApp = (app)=>{
     router.post('/api-app/xac-minh-email',accountControllerAPP.handleXacMinhEmail);
     // lấy lại mật khẩu
     router.put('/api-app/lay-mat-khau-member',accountControllerAPP.handleLayLaiMatKhauMember);
+    // nạp tiền tài khoản
+    router.post('/api-app/nap-tien-tk',accountControllerAPP.handleNapTienMenbers); 
+    router.get('/api-app/detail-nap-tien-tk',accountControllerAPP.handleDetailNapTienMenbers); 
     return app.use("/",router)
 }
 module.exports = apiApp

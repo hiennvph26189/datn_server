@@ -150,11 +150,43 @@ let handleLayLaiMatKhauMember = async (req, res) => {
         });
     }
 };
+let handleNapTienMenbers = async (req, res) => {
+    try {
+            let data = req.body
+           
+            let message = await accountServiceAPP.handleNapTienMenbersService(data);
+     
+            return res.status(200).json(message);
+    } catch (error) {
+        console.log("Lỗi phân quyền", error);
+        return res.status(200).json({
+            errCode: -1,
+            errMessage: "Không kết nối được với sever",
+        });
+    }
+};
+let handleDetailNapTienMenbers = async (req, res) => {
+    try {
+            let id = req.query.id_thanhtoan
+           
+            let message = await accountServiceAPP.handleDetailNapTienMenbersService(id);
+     
+            return res.status(200).json(message);
+    } catch (error) {
+        console.log("Lỗi phân quyền", error);
+        return res.status(200).json({
+            errCode: -1,
+            errMessage: "Không kết nối được với sever",
+        });
+    }
+};
 module.exports = {
     handleLoginMember: handleLoginMember,
     handleAddMembers:handleAddMembers,
     handleChangePassMembers:handleChangePassMembers,
     handleForGotAccount:handleForGotAccount,
     handleXacMinhEmail:handleXacMinhEmail,
-    handleLayLaiMatKhauMember:handleLayLaiMatKhauMember
+    handleLayLaiMatKhauMember:handleLayLaiMatKhauMember,
+    handleNapTienMenbers:handleNapTienMenbers,
+    handleDetailNapTienMenbers:handleDetailNapTienMenbers
 };

@@ -303,6 +303,75 @@ let handleLayLaiMatKhauMemberService = (data)=>{
         
     })
 }
+let handleNapTienMenbersService = (data)=>{
+    return new Promise(async(resolve, reject)=>{
+       try {
+        let idUser = data.id
+        let data_9pay = data.data9Pay
+        let date = getdateService.getdate()
+        let [checkEmail] =  await sequelize.query(`
+                    SELECT *
+                    FROM members
+                    where id=${idUser} 
+                `, { type: QueryTypes.SELECT });
+        if(checkEmail){
+            
+            await sequelize.query(`
+            UPDATE members
+            SET tienTk = tienTk + ${data_9pay.amount}
+            WHERE  id=${idUser};
+            `, { type: QueryTypes.UPDATE });
+           let itemThanhToan =  await sequelize.query(`
+            INSERT INTO thanhtoan (id_donhang, id_member, card_name, payment_no,invoice_no,amount,description,card_brand,card_number,method,status,created_at)
+            VALUES (0, ${idUser}, "${data_9pay.card_info.card_name}", "${data_9pay.payment_no}","${data_9pay.invoice_no}","${data_9pay.amount}","${data_9pay.description}","${data_9pay.card_info.card_brand}","${data_9pay.card_info.card_number}","${data_9pay.method}",1,"${date}");
+            `, { type: QueryTypes.INSERT })
+            let idThanhToan = itemThanhToan[0]
+            console.log(idThanhToan, "Let id thanh toán");
+            await sequelize.query(`
+            INSERT INTO prices (idUser, id_thanhtoan, tienNap,status,createdAt,updatedAt)
+            VALUES (${idUser}, ${idThanhToan}, ${data_9pay.amount},1,"${date}","${date}");
+            `, { type: QueryTypes.INSERT });
+            resolve({
+                errCode:0,
+                errMessage:"Nạp tiền thành công"
+            })
+        }else{
+            resolve({
+                errCode:1,
+                errMessage:"Tài khoản của bạn không tồn tại"
+            })
+        }
+       
+
+       } catch (error) {
+            reject(error);
+       }
+        
+        
+    })
+}
+let handleDetailNapTienMenbersService = (id_thanhtoaname)=>{
+    return new Promise(async(resolve, reject)=>{
+       try {
+           
+          
+            let [itemThanhToan] =  await sequelize.query(`
+                    SELECT *
+                    FROM thanhtoan
+                    where id=${id_thanhtoaname} 
+                `, { type: QueryTypes.SELECT });
+                resolve({
+                    errCode:0,
+                    errMessage:"OK",
+                    itemThanhToan: itemThanhToan
+                })
+       } catch (error) {
+            reject(error);
+       }
+        
+        
+    })
+}
 module.exports  = {
     
     handleUserMembersLoginService:handleUserMembersLoginService,
@@ -311,5 +380,8 @@ module.exports  = {
     handleForGotAccountService:handleForGotAccountService,
     handleXacMinhEmailService:handleXacMinhEmailService,
     checkUserEmail:checkUserEmail,
-    handleLayLaiMatKhauMemberService:handleLayLaiMatKhauMemberService
+    handleLayLaiMatKhauMemberService:handleLayLaiMatKhauMemberService,
+    handleNapTienMenbersService:handleNapTienMenbersService,
+    handleDetailNapTienMenbersService:handleDetailNapTienMenbersService
+    
 }
