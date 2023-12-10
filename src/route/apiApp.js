@@ -166,6 +166,12 @@ let apiApp = (app)=>{
     router.get('/api-app/get-item-address-order-detail',addressControllerAPP.getItemAddressOrderDetail);
     // get phuong thức thanh toán theo order
     router.get('/api-app/get-method-thanh-toan',thanhToanController.getMethodPayOrder);
+    // post quên mật khẩu
+    router.post('/api-app/quen-mat-khau',accountControllerAPP.handleForGotAccount);
+    // Xác minh email
+    router.post('/api-app/xac-minh-email',accountControllerAPP.handleXacMinhEmail);
+    // lấy lại mật khẩu
+    router.put('/api-app/lay-mat-khau-member',accountControllerAPP.handleLayLaiMatKhauMember);
     return app.use("/",router)
 }
 module.exports = apiApp

@@ -4,6 +4,7 @@ import sequelize from "../../config/queryDatabse"
 import bcrypt from 'bcryptjs';
 import db from "../../models/index";
 import getdateService from "../webbanhangService/getdateService";
+
 import {getOneEmail} from "../webbanhangService/accountService"
 let salt = bcrypt.genSaltSync(10);
 let checkUserEmail = (email)=>{
@@ -140,7 +141,7 @@ let handleUserMembersChangePassService = (data)=>{
           
             if(getOneMember.length>0){
                 let checkPassword =  bcrypt.compareSync(password,getOneMember[0].matKhau)
-              console.log(checkPassword);
+        
                 if(checkPassword){
                     // resolve({
                     //     errCode:1,
@@ -189,9 +190,126 @@ let handleUserMembersChangePassService = (data)=>{
         }
     })
 }
+let handleForGotAccountService = (email,keycode)=>{
+    return new Promise(async(resolve, reject)=>{
+       try {
+        console.log(email,"SK:ADKS");
+        let date = getdateService.getdate();
+        const getCheckEmail = await sequelize.query(`
+            SELECT *
+            FROM key_email
+            where email="${email}"
+            `, { type: QueryTypes.SELECT });
+        console.log(getCheckEmail.length);
+        if(getCheckEmail.length >0){
+         
+            await sequelize.query(`
+              DELETE FROM key_email WHERE email = '${email}'
+              `, { type: QueryTypes.DELETE });
+            await sequelize.query(`
+            INSERT INTO key_email (email, code, time)
+            VALUES ("${email}", "${keycode}", "${date}");
+            `, { type: QueryTypes.INSERT });
+            resolve({
+                errCode: 0,
+                errMessage:"Thành công"
+            });
+        }else{
+            await sequelize.query(`
+            INSERT INTO key_email (email, code, time)
+            VALUES ("${email}", "${keycode}", "${date}");
+            `, { type: QueryTypes.INSERT });
+            resolve({
+                errCode: 0,
+                errMessage:"Thành công"
+            });
+        }
+       
+        
+       
+
+       } catch (error) {
+            reject(error);
+       }
+        
+        
+    })
+}
+let handleXacMinhEmailService = (data)=>{
+    return new Promise(async(resolve, reject)=>{
+       try {
+        let email = data.email
+        let key_code = data.key_code
+   
+        const getCheckEmail = await sequelize.query(`
+        SELECT *
+        FROM key_email
+        where email="${email}" and code = "${key_code}"
+        `, { type: QueryTypes.SELECT });
+        if(getCheckEmail.length>0){
+            await sequelize.query(`
+              DELETE FROM key_email WHERE email = '${email}'
+              `, { type: QueryTypes.DELETE });
+            resolve({
+                errCode:0,
+                errMessage:"Thành công"
+            });
+        }else{
+            resolve({
+                errCode:1,
+                errMessage:"Mã xác minh không chính xác"
+            });
+        }
+       
+
+       } catch (error) {
+            reject(error);
+       }
+        
+        
+    })
+}
+let handleLayLaiMatKhauMemberService = (data)=>{
+    return new Promise(async(resolve, reject)=>{
+       try {
+        let email = data.email
+        let password = data.password
+   
+        let checkEmail = await checkUserEmail(email)
+        if(checkEmail == true){
+            let hashPasswordFromBcrypt =  await hashUserPassword(password);
+            await sequelize.query(`
+            UPDATE members
+            SET matkhau = "${hashPasswordFromBcrypt}"
+          
+            WHERE  email='${email}';
+            `, { type: QueryTypes.UPDATE });
+            resolve({
+                errCode:0,
+                errMessage:"Bạn đã lấy lại mật khẩu thành công, vui lòng đăng nhập lại bằng mật khẩu mới"
+            })
+        }else{
+            resolve({
+                errCode:1,
+                errMessage:"Tài khoản của bạn không tồn tại"
+            })
+        }
+       
+
+       } catch (error) {
+            reject(error);
+       }
+        
+        
+    })
+}
 module.exports  = {
     
     handleUserMembersLoginService:handleUserMembersLoginService,
     AddMembersService:AddMembersService,
-    handleUserMembersChangePassService:handleUserMembersChangePassService
+    handleUserMembersChangePassService:handleUserMembersChangePassService,
+    handleForGotAccountService:handleForGotAccountService,
+    handleXacMinhEmailService:handleXacMinhEmailService,
+    checkUserEmail:checkUserEmail,
+    handleLayLaiMatKhauMemberService:handleLayLaiMatKhauMemberService
 }
