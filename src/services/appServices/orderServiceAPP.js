@@ -207,6 +207,18 @@ let handleLichSuOrderCart = (id)=>{
                        
                     ]
                 })
+                let getDonHoan = await db.Orders.findAll({
+                    where: {idUser: id,
+                        [Op.or]: [
+                            { status: 10 },
+                            { status: 11 }
+                          ]
+                    },
+                    order: [
+                        ['id', 'DESC'],
+                       
+                    ]
+                })
                 let getAllProducts = await db.Products.findAll()
                 
                if(User){
@@ -219,7 +231,8 @@ let handleLichSuOrderCart = (id)=>{
                     getDaGiaoThanhCong:getDaGiaoThanhCong,
                     getDaDangGiao:getDaDangGiao,
                     getDonHuy:getDonHuy,
-                    getAllOrder:getAllOrder
+                    getAllOrder:getAllOrder,
+                    getDonHoan:getDonHoan
 
                 })
                }else{
