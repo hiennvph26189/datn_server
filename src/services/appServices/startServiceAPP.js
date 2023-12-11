@@ -145,8 +145,80 @@ let getTotalStarProductService = (id_sp)=>{
         }
      }) 
 }
+let handleListThongKeDanhGiaSaoDetailService = (data)=>{
+    return new Promise(async(resolve, reject)=>{
+        try {
+          
+            if(data){
+                let id_sp =  data.id_product;
+                let star = data.star;
+                if(star == 0){
+                        let [totalStar] = await sequelize.query(`
+                        SELECT COUNT(*) AS rowCount FROM  danhgia where  id_sp = ${id_sp} and status = 1
+                        `, { type: QueryTypes.SELECT });
+                        let getAllVoteStar = await sequelize.query(`
+                        SELECT 
+                        danhgia.*, 
+                        members.anhDaiDien,
+                        members.tenThanhVien,
+                        carts.size
+                        FROM danhgia
+                        INNER JOIN 
+                        members ON danhgia.id_member = members.id
+                        INNER JOIN 
+                        carts ON danhgia.id_cart = carts.id
+                        where danhgia.id_sp = ${id_sp} and danhgia.status = 1 order by danhgia.id desc 
+                    `, { type: QueryTypes.SELECT });
+                        resolve({ 
+                            errCode:0,
+                            errMessage: 'Thành công',
+                            totalStar:totalStar.rowCount,
+                            data: getAllVoteStar
+                        })
+                }else{
+                    let [totalStar] = await sequelize.query(`
+                        SELECT COUNT(*) AS rowCount FROM  danhgia where  id_sp = ${id_sp} and status = 1 and vote = ${star}
+                        `, { type: QueryTypes.SELECT });
+                        let getAllVoteStar = await sequelize.query(`
+                        SELECT 
+                        danhgia.*, 
+                        members.anhDaiDien,
+                        members.tenThanhVien,
+                        carts.size
+                        FROM danhgia
+                        INNER JOIN 
+                        members ON danhgia.id_member = members.id
+                        INNER JOIN 
+                        carts ON danhgia.id_cart = carts.id
+                        where danhgia.id_sp = ${id_sp} and danhgia.status = 1 and vote = ${star} order by danhgia.id desc 
+                    `, { type: QueryTypes.SELECT });
+                        resolve({ 
+                            errCode:0,
+                            errMessage: 'Thành công',
+                            totalStar:totalStar.rowCount,
+                            data: getAllVoteStar
+                        })
+                }
+             
+            }else{
+                resolve({ 
+                    errCode:1,
+                    errMessage: 'Đánh giá thất bại',
+                   
+                })   
+            }
+           
+
+                 
+  
+        } catch (error) {
+             reject(error);
+        }
+     }) 
+}
 module.exports  = {
     postVoteStarProductServiceAPP:postVoteStarProductServiceAPP,
     checkVoteStartProductService:checkVoteStartProductService,
-    getTotalStarProductService:getTotalStarProductService
+    getTotalStarProductService:getTotalStarProductService,
+    handleListThongKeDanhGiaSaoDetailService:handleListThongKeDanhGiaSaoDetailService
 }

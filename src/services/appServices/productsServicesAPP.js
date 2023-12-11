@@ -446,6 +446,61 @@ let getProductCartUserServiceAPP = (id_member)=>{
         }
      }) 
 }
+let ceilStar = (total, totalStar)=>{
+        let ceilStar = (totalStar/total)*100
+        return  parseFloat(ceilStar.toFixed(2))
+}
+let handleThongKeDanhGiaSaoServiceAPP = (id_product)=>{
+    return new Promise(async(resolve, reject)=>{
+        try {
+            
+            const [totalCount] = await sequelize.query(`
+            SELECT COUNT(*) as total FROM  danhgia where	id_sp = ${id_product}
+                `, { type: QueryTypes.SELECT });
+                
+            const [total5Star] = await sequelize.query(`
+            SELECT COUNT(*) as star5 FROM  danhgia where id_sp = ${id_product} and vote = 5
+                `, { type: QueryTypes.SELECT });
+               
+            const [total4Star] = await sequelize.query(`
+            SELECT COUNT(*) as star4 FROM  danhgia where id_sp = ${id_product} and vote = 4
+                `, { type: QueryTypes.SELECT });
+               
+            const [total3Star] = await sequelize.query(`
+            SELECT COUNT(*) as star3 FROM  danhgia where id_sp = ${id_product} and vote = 3
+                `, { type: QueryTypes.SELECT });
+            const [total2Star] = await sequelize.query(`
+            SELECT COUNT(*) as star2 FROM  danhgia where id_sp = ${id_product} and vote = 2
+                `, { type: QueryTypes.SELECT });
+            const [total1Star] = await sequelize.query(`
+            SELECT COUNT(*) as star1 FROM  danhgia where id_sp = ${id_product} and vote = 1
+                `, { type: QueryTypes.SELECT });
+              
+            let data = {
+                totalStar: totalCount.total,
+                star5 : total5Star.star5,
+                ceil5star: ceilStar(totalCount.total,total5Star.star5),
+                star4 : total4Star.star4,
+                ceil4star : ceilStar(totalCount.total,total4Star.star4),
+                star3 : total3Star.star3,
+                ceil3star : ceilStar(totalCount.total,total3Star.star3),
+                star2 : total2Star.star2,
+                ceil2star : ceilStar(totalCount.total,total2Star.star2),
+                star1 : total1Star.star1,
+                ceil1star : ceilStar(totalCount.total,total1Star.star1),
+            }     
+
+                resolve({
+                    errCode: 0,
+                    errMessage: 'Thành công',
+                    data:data
+                })
+  
+        } catch (error) {
+             reject(error);
+        }
+     }) 
+}
 module.exports  = {
     handleGetHotOrdersProductServices:handleGetHotOrdersProductServices,
     handleGetHotSaleProductServices:handleGetHotSaleProductServices,
@@ -455,6 +510,8 @@ module.exports  = {
     listSizeInproductServiceApp:listSizeInproductServiceApp,
     listSizeInCartInProductServiceApp:listSizeInCartInProductServiceApp,
     getProductCartVoteStar:getProductCartVoteStar,
-    getProductCartUserServiceAPP:getProductCartUserServiceAPP
+    getProductCartUserServiceAPP:getProductCartUserServiceAPP,
+    handleThongKeDanhGiaSaoServiceAPP:handleThongKeDanhGiaSaoServiceAPP,
+    
 
 }

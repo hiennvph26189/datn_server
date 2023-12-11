@@ -61,6 +61,12 @@ let webBanHang = (app)=>{
     router.post('/post-9pay',PayController.post9Pay);
     router.post('/api/post-9pay',PayController.postAPI9Pay);
     router.get('/api/get-9pay',PayController.getAPI9Pay);
+    // đăng xuất tài khoản
+    router.get('/get-log-out',myMiddleware.checkLogin,accountController.getLogOut);
+    // /profile-member
+    router.get('/profile-member',myMiddleware.checkLogin,accountController.getProfileMember);
+    router.get('/danhmuc-profile-member',myMiddleware.checkLogin,accountController.getDanhMucProfile);
+    
     return app.use("/",router)
 }
 module.exports = webBanHang

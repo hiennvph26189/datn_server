@@ -174,7 +174,14 @@ let apiApp = (app)=>{
     router.put('/api-app/lay-mat-khau-member',accountControllerAPP.handleLayLaiMatKhauMember);
     // nạp tiền tài khoản
     router.post('/api-app/nap-tien-tk',accountControllerAPP.handleNapTienMenbers); 
+    // 
     router.get('/api-app/detail-nap-tien-tk',accountControllerAPP.handleDetailNapTienMenbers); 
+    // Thống kê đánh giá sao
+    router.get('/api-app/thong-ke-danh-gia',productsControllerAPP.handleThongKeDanhGiaSao); 
+    // list star comment
+    router.get('/api-app/list-ke-danh-gia-detai',starControllerAPP.handleListThongKeDanhGiaSaoDetail); 
+    // search Product app
+    router.get('/api-app/search-product-app',productsControllerAPP.searchProductAPP); 
     return app.use("/",router)
 }
 module.exports = apiApp

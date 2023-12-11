@@ -543,15 +543,23 @@ let handleHuyOrderCart = (id)=>{
             })
            
          }else{
-            await db.Orders.update(
-                {status: 4},
-                {where: {id: id}}
-             )
-             
-             resolve({
-                errCode:0,
-                errMessage: 'update thành công'
-             })
+            if(Order.status === 0){
+                await db.Orders.update(
+                    {status: 4},
+                    {where: {id: id}}
+                 )
+                 
+                 resolve({
+                    errCode:0,
+                    errMessage: 'update thành công'
+                 })
+            }else{
+                resolve({
+                    errCode:1,
+                    errMessage: 'Đơn hàng của bạn đã được duyệt, bạn không thể hủy đơn hàng này'
+                 })
+            }
+            
          }
          
   
