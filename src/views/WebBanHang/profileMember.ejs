@@ -43,37 +43,57 @@
                     </div>
                 </div>
             </section>
-            <div class="collectiontitle">
+            <div class="collectiontitle" style="align-items: center; display: flex; justify-content: space-between;">
                 <h1 class="cat-heading">Thông tin cá nhân</h1>
+                <a class="button-edit-profile btn btn-primary" href="/edit-profile-member" style="float: right;">Sửa thông tin</a>
             </div>
-            <div class="container">
-                <div class="col-12">
-
-               
-                <div class="row">
-                    <div class="col-md-3 img-profile">
-                        <img  src="<%= infoUser.anhDaiDien %>"  alt="<%= infoUser.anhDaiDien %>" data-was-processed="true">
+            <div class="container ">
+                <div class="col-12 ">
+                    <div class="row contnen_profile">
+                        <div class="col-md-4 col-sm-12 img-profile">
+                            <img  src="<%= infoUser.anhDaiDien %>"  alt="<%= infoUser.anhDaiDien %>" data-was-processed="true">
+                            
+                        </div>
+                        <div class=" col-sm-12 col-md-8 item-profile">
+                            <div class="name-member item-child">
+                                <p><%= infoUser.tenThanhVien %></p>
+                            </div>
+                            <div class="gioitinh-member item-child">
+                              <% if(infoUser.gioiTinh){ %> 
+                                <p>Giới tính: Nam</p>
                         
-                    </div>
-                    <div class="col-md-8">
-                        <div class="name-member">
-                            <p><%= infoUser.tenThanhVien %></p>
-                        </div>
-                        <div class="name-member">
-                            <p><%= infoUser.gioiTinh %></p>
-                        </div>
-                        <div class="name-member">
-                            <p><%= infoUser.diaChi %></p>
-                        </div>
-                        <div class="name-member">
-                            <p><%= infoUser.soDienThoai %></p>
-                        </div>
-                        <div class="name-member">
-                            <p><%= infoUser.email %></p>
+                            <% } else{ %>
+                              <p>Giới tính: Nữ</p>
+                            <% } %>
+
+                            
+                              
+                              
+                            </div>
+                            <div class="address-member item-child">
+                                <p><i class="fas fa-map-marker-alt"></i>  <%= infoUser.diaChi %></p>
+                            </div>
+                            <div class="phone-member item-child">
+                                <p><i class="fas fa-phone-alt"></i>  <%= infoUser.soDienThoai %></p>
+                            </div>
+                            <div class="email-member item-child">
+                                <p><i class="fas fa-envelope"></i>  <%= infoUser.email %></p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+                <div class="col-12 price-order-profile">
+                      <div class="row">
+                            <div class="col-sm-12 col-md-6 price-order-member">
+                                  <p class="title-chil"><%= price %></p>
+                                  <p>Số dư</p>
+                            </div>
+                            <div class="col-sm-12 col-md-6 price-order-member">
+                                  <p class="title-chil"><%= totalOrder %></p>
+                                  <p>Order</p>
+                            </div>
+                      </div>
+                </div>
             </div>
            
            

@@ -1,4 +1,5 @@
 import productWebBanHangService from "../../services/webbanhangService/productWebBanHangService";
+import productsServicesAPP from "../../services/appServices/productsServicesAPP";
 require('dotenv').config();
 
 let getConvertArrProduct = (arrData)=>{
@@ -62,9 +63,16 @@ let getProductsDetailItem = async (req, res) => {
   try {
      let id = req.query.id
      let product =  await productWebBanHangService.getOneProductService(id)
+     let arrSizeProduct = await productsServicesAPP.listSizeInproductServiceApp(id);
+     let arr = []
+     if(arrSizeProduct.errCode == 0){
+      arr = Object.entries(arrSizeProduct.data).map(([key, value]) => ({ key, value }));
+     }
+      
+    
      let arrData = getConvertArrDetailProduct(product.getOneProduct)
      
-    return res.render("webBanHang/modalXemNhanh",{product:arrData[0]})
+    return res.render("webBanHang/modalXemNhanh",{product:arrData[0],arrSize:arr})
    
    } catch (error) {
        console.log("Lỗi phân quyền",error)

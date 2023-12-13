@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+  <head>
+    <%- include('./head'); %>
+    <title>Địa chỉ nhận hàng</title>
+  </head>
+  <body>
+    <style>
+      .bg-header-nav .header-nav>ul.item_big>li.active{
+          background: #252525;
+      }
+  ul.item_big li.nav-item:nth-last-child(3){
+    background: #66a182;
+  }
+  </style>
+    <%- include('./header'); %>
+    <div class="section_sidebar_slider">
+      <div class="container">
+        <div class="row">
+          <div class="dqdt-sidebar sidebar left-content col-lg-3 col-md-12 hidden-sm hidden-xs">
+            <div class="wrap_background_aside asidecollection">
+              
+            </div>
+            <div class="sanPhamBanChay">
+            </div>
+          </div>
+          
+          <div class="main_container collection col-lg-9 col-md-12 col-sm-12">
+            <section class="bread-crumb">
+                <span class="crumb-border"></span>
+                <div class="container no-padding">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <ul class="breadcrumb">					
+                                <li class="home">
+                                    <a href="/"><span>Trang chủ</span></a>						
+                                    <span class="mr_lr">&nbsp;<i class="fas fa-chervon-right"></i>&nbsp;</span>
+                                </li>
+                                <li><strong><span> Địa chỉ nhận hàng</span></strong></li>     
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <div class="collectiontitle" style="align-items: center; display: flex; justify-content: space-between; margin-bottom: 20px;">
+                <h1 class="cat-heading">Địa chỉ nhận hàng</h1>
+                <a class="btn btn-primary" href="/add-address-member" style="float: right;">Thêm mới địa chỉ</a>
+            </div>
+            <div class="container">
+                <div class="col-12">
+                        <div class="list-item-address">
+                                <div class="row item-child">
+                                    <div class="col-sm-1 col-md-1" style="display: flex;justify-content: center;align-items: center;">
+                                        <form action="/edit-status-member" method="post" style="margin-bottom: 0;">
+                                            <div class="form-check">
+                                                <input class="form-check-input" style="font-size: 20px;"  checked type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                                               
+                                              </div>
+                                        </form>
+                                    </div>
+                                    <div class="col-sm-9 col-md-89">
+                                        <div class="child-header">
+                                            <div class="fullname">Nguyễn Văn Hiển</div>    
+                                            <div style="margin: 0 15px;"> | </div>                                        
+                                            <div class="phone">0373753158</div>                                            
+                                        </div>
+                                        <div class="address">
+                                            Thông nhất - gialocj- hải dương
+                                        </div>
+                                        <div class="status-address">
+                                            Mặc định
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2 col-md-2" style="display: flex;justify-content: space-around;align-items: center;">
+                                          
+                                                <a href="/edit-address-member" class="btn btn-success">Sửa</a>
+                                                <a href="/delete-address" class="btn btn-danger">Xóa</a>
+                                          
+                                    </div>
+                                    
+                                </div>
+                        </div>
+                </div>
+            </div>
+           
+           
+           
+          </div>
+
+        </div>
+      </div>
+    </div>
+    
+    
+    <div class="modal fade " id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          
+        </div>
+      </div>
+    </div>
+    <%- include('./footer'); %>
+    <script
+        type="text/javascript"
+        src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"
+        ></script>
+    <script>
+    
+      $(document).ready(function () {
+        $.get("/danhmuc-profile-member", function (data) {
+                $(".asidecollection").empty().append(data);
+              });
+       
+      
+       
+      });
+     
+      $('#sapxep').on('change', function(e){
+    
+        let id_category = $(this).attr("data-id")
+        let value = $(this).val()
+        if(value && value != "") {
+          
+          $.get(`/sapXep-products?id=${id_category}&page=1&value=${value}`, function (data) {
+                $(".listProduct-category").empty().append(data);
+              });
+        }    
+      })
+      
+    </script>
+  </body>
+
+</html>

@@ -713,8 +713,10 @@ let addCardProductsSezesServiceAPP = (data)=>{
                                     })
                                 }
                         }else{
+
                                 let date = datetime.getdate()
-                                let thanh_tien = getOneProduct[0].giaSanPham - ((getOneProduct[0].giaSanPham*getOneProduct[0].sale)/100)
+                                let thanh_tien = getOneProduct[0].giaSanPham - ((getOneProduct[0].giaSanPham*getOneProduct[0].sale)/100) 
+                               
                                 await sequelize.query(`
                                 INSERT INTO carts (ipSanPham, idUser, size, soLuong,thanhTien,status,createdAt)
                                 VALUES (${id_product}, ${id_member}, "${size}", ${soLuong}, ${thanh_tien},0, "${date}");
@@ -801,7 +803,7 @@ let addCardProductsSezesServiceAPP = (data)=>{
 
                     }else{
                         let date = datetime.getdate()
-                        let thanh_tien = getOneProduct[0].giaSanPham - ((getOneProduct[0].giaSanPham*getOneProduct[0].sale)/100)
+                        let thanh_tien = (getOneProduct[0].giaSanPham - ((getOneProduct[0].giaSanPham*getOneProduct[0].sale)/100))*soLuong
                         await sequelize.query(`
                         INSERT INTO carts (ipSanPham, idUser, size, soLuong,thanhTien,status,createdAt)
                         VALUES (${id_product}, ${id_member}, "${size_data}", ${soLuong}, ${thanh_tien},0, "${date}");

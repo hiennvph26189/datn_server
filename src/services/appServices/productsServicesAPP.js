@@ -501,6 +501,86 @@ let handleThongKeDanhGiaSaoServiceAPP = (id_product)=>{
         }
      }) 
 }
+let listProductsCarrt = (id_member)=>{
+    return new Promise(async(resolve, reject)=>{
+        try {
+          
+            let results = await sequelize.query(`
+                SELECT 
+                products.id as id_product,
+                products.tenSp,
+                products.giaSanPham,
+                products.sale,
+                products.image,
+                carts.id as id_cart,
+                carts.size,
+                carts.soLuong,
+                carts.thanhTien,
+                sizes.id as id_size,
+                sizes.S,
+                sizes.M,
+                sizes.L,
+                sizes.XL,
+                sizes.XXL
+                FROM carts
+                INNER JOIN 
+                    products ON carts.ipSanPham = products.id
+                INNER JOIN 
+                sizes ON sizes.id_sp = products.id
+                where carts.idUser = ${id_member} and carts.status = 0
+                 `, { type: QueryTypes.SELECT });
+                    
+                    if (results.length > 0) {
+                        const data = {
+                          products: results.map(row => ({
+                            id_product: row.id_product,
+                            tenSp: row.tenSp,
+                            giaSanPham: row.giaSanPham,
+                            sale: row.sale,
+                            image: row.image,
+                            // Thêm các trường khác của products
+                          })),
+                          carts: results.map(row => ({
+                            id_cart: row.id_cart,
+                            size_name: row.size,
+                            soLuong: row.soLuong,
+                            thanhTien: row.thanhTien,
+                            // Thêm các trường khác của carts
+                          })),
+                          sizes: results.map(row => ({
+                            id_size: row.id_size,
+                            size: {
+                                S:row.S,
+                                M:row.M,
+                                L:row.L,
+                                XL:row.XL,
+                                XXL:row.XXL
+                            }
+                          })),
+                        };
+                    
+                        resolve({
+                            errCode: 0,
+                            errMessage: 'Thành công',
+                            data:data,
+                            dataCarrt:results
+                        })
+                      } else {
+                        resolve({
+                            errCode: 1,
+                            errMessage: 'sản phẩm không tồn tại',
+                            data:[],
+                            dataCarrt:[]
+                        })
+                      }
+                    
+        } catch (error) {
+             reject(error);
+        }
+         
+         
+     }) 
+  }
 module.exports  = {
     handleGetHotOrdersProductServices:handleGetHotOrdersProductServices,
     handleGetHotSaleProductServices:handleGetHotSaleProductServices,
@@ -512,6 +592,7 @@ module.exports  = {
     getProductCartVoteStar:getProductCartVoteStar,
     getProductCartUserServiceAPP:getProductCartUserServiceAPP,
     handleThongKeDanhGiaSaoServiceAPP:handleThongKeDanhGiaSaoServiceAPP,
+    listProductsCarrt:listProductsCarrt
     
 
 }

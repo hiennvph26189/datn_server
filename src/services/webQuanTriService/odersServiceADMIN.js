@@ -539,7 +539,7 @@ let handleGetAllOrder = (status,page)=>{
                 
                 let limit = 20; // Số lượng sản phẩm trên mỗi trang
                 let offset = (pageNumber - 1) * limit;
-                console.log(offset, "S:DAKD:KS:");
+           
                 const Order = await sequelize.query(`
                 SELECT 
                 orders.*,

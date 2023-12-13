@@ -150,8 +150,10 @@ let getProfileMember = async (req, res) => {
             
             });
         let infoUser =  await accountService.getOneUserInfoService(user_id)
-        console.log(infoUser, 'LSK"SA"S');
-        return res.render('webBanHang/profileMember.ejs',{infoUser:infoUser.selectUser})
+        let price_member = infoUser.selectUser.tienTk.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })
+        let list_order =  await accountService.getCountOrder(user_id)
+        
+        return res.render('webBanHang/profileMember.ejs',{infoUser:infoUser.selectUser,price:price_member,totalOrder:list_order.getCountOrder})
      } catch (error) {
          console.log("Lỗi phân quyền",error)
         return res.status(200).json({

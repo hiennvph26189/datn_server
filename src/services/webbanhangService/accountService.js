@@ -180,6 +180,33 @@ let postRegisterService = (data)=>{
          
      }) 
 }
+let getCountOrder = async(id)=>{
+    return new Promise(async(resolve, reject)=>{
+       try {
+           
+       let  getCountOrder = await sequelize.query(`
+            SELECT COUNT(*) as total FROM  orders where idUser	= ${id} and status = 3
+               `, { type: QueryTypes.SELECT });
+       
+               if(getCountOrder.length > 0){
+                   resolve({
+                       errCode:0,
+                       errMessage: 'Thành công',
+                       getCountOrder:getCountOrder[0].total
+                   })
+               }else{
+                   resolve({
+                       errCode:1,
+                       errMessage: 'Thất bại',
+                       getCountOrder:0
+                   })
+               }
+           } catch (error) {
+               reject(error);
+       }
+    }) 
+   
+}
 let getNameUser = async()=>{
     return new Promise(async(resolve, reject)=>{
        try {
@@ -223,6 +250,7 @@ module.exports  = {
     getOneEmail:getOneEmail,
     postLoginMemmberService:postLoginMemmberService,
     getOneUserInfoService:getOneUserInfoService,
-    getNameUser:getNameUser
+    getNameUser:getNameUser,
+    getCountOrder:getCountOrder
 
 }

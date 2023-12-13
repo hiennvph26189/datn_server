@@ -1,0 +1,99 @@
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col-2">Ảnh SP</th>
+        <th scope="col-3">Thông tin sản phẩm</th>
+        <th scope="col-2 ">Size</th>
+        <th scope="col-2">Số lượng</th>
+        <th scope="col-2">Thành tiền</th>
+        <th scope="col-1">Xóa</th>
+      </tr>
+    </thead>
+    <tbody>
+        <% data_cart.forEach(function(item, i){ %>
+      <tr class="center-td">
+        <td class="col-2">
+            <img src="<%= item.image %>" alt="" style="object-fit: cover;max-width: 100px;">
+        </td>
+        <td class="col-3">
+            <p class="ten-sp" ><%= item.tenSp %></p>
+            <% if(item.sale > 0){ %> 
+                <p class="gia-sp" s><span class="price-sale"><%= item.giaBanSale %></span> - <span class="price-odl-sale"><%= item.giaSanPham %></span></p>
+        
+            <% } else{ %>
+                <p class="gia-sp" s><span class="price-sale"><%= item.giaSanPham %></span> </p>
+            <% } %>
+           
+
+        </td>
+        <td class="col-2">
+           
+             <select class="form-select " aria-label="Default select example" style="width: 80%;">
+                <% if(item.size =="S" && item.S > 0){ %> 
+                    <option value="S" data-value="<%= item.S %>" selected>S</option> 
+               <% } else{ %>
+                    <option value="S" data-value="<%= item.S %>">S</option> 
+                <% } %>
+
+                <% if(item.size =="M" && item.M > 0){ %> 
+                <   option value="M" data-value="<%= item.M %>" selected>M</option> 
+                <% } else{ %>
+                    <option value="M" data-value="<%= item.M %>">M</option> 
+                    <% } %>
+
+                <% if(item.size =="L" && item.L > 0){ %> 
+                    <option value="L" data-value="<%= item.L %>" selected>L</option> 
+                <% } else{ %>
+                    <option value="L" data-value="<%= item.L %>">L</option> 
+                <% } %>
+
+                <% if(item.size =="XL" && item.XL > 0){ %> 
+                    <option value="XL" data-value="<%= item.XL %>" selected>XL</option> 
+                <% } else{ %>
+                    <option value="XL" data-value="<%= item.XL %>">XL</option> 
+                <% } %>
+
+                <% if(item.size =="XXL" && item.XXL > 0){ %> 
+                    <option value="XXL" data-value="<%= item.XXL %>" selected>XXL</option> 
+                <% } else{ %>
+                    <option value="XXL" data-value="<%= item.XXL %>">XXL</option> 
+                <% } %>
+            </select>
+        </td>
+        <td class="col-2">
+            <div class="edit-soluong">
+                <button onclick="congSoLuong(`<%= item.id_cart %>`)" data-id-cart="<%= item.id_cart %>" class="btn btn-primary"><i class="fa fa-plus "></i></button>
+                <div style="font-size: 17px;font-weight: 500;"><%= item.soLuong %></div>
+                <button onclick="truSoLuong(`<%= item.id_cart %>`)" class="btn btn-danger"><i class="fa fa-minus"></i></button>
+            </div>
+               
+          
+        </td>
+        <td class="col-2" style="color: red;font-weight: 500;">
+           <%= item.thanhTien %>
+        </td>
+        <td class="col-1">
+            <button onclick="deleteCart(`<%= item.id_cart %>`)" class="btn btn-danger"><i class="fas fa-trash"></i></button>
+        </td>
+      </tr>
+      <% }); %>  
+    </tbody>
+  </table>
+  <style>
+    .ten-sp{
+        font-size: 20px;
+        font-weight: 500;
+    }
+    .edit-soluong{
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+    .price-sale{
+        color: red;
+    }
+   .price-odl-sale{
+    color: #ccc;
+    text-decoration: line-through;
+   }
+  </style>
