@@ -1,4 +1,5 @@
 import productsServicesAPP from "../../services/appServices/productsServicesAPP";
+import menuService from "../../services/webbanhangService/menuService";
 let handleGetHotSaleProduct = async (req, res) => {
     try {
         let saleProductList = await productsServicesAPP.handleGetHotSaleProductServices();
@@ -129,6 +130,36 @@ let getProductCartUser = async (req, res) => {
     })
  }
 };
+let handleThongKeDanhGiaSao = async (req, res) => {
+    try {  
+       
+        let id_product = req.query.id_product;
+       
+        let data = await productsServicesAPP.handleThongKeDanhGiaSaoServiceAPP(id_product);
+     return res.status(200).json(data)
+ } catch (error) {
+     console.log("Lỗi phân quyền",error)
+    return res.status(200).json({
+         errCode: -1,
+         errMessage: 'Không kết nối được với sever'
+    })
+ }
+};
+let searchProductAPP = async (req, res) => {
+    try {  
+       
+        let key_search = req.query.key_search;
+       
+        let data = await menuService.searchService(key_search);
+     return res.status(200).json(data)
+ } catch (error) {
+     console.log("Lỗi phân quyền",error)
+    return res.status(200).json({
+         errCode: -1,
+         errMessage: 'Không kết nối được với sever'
+    })
+ }
+};
 module.exports = {
     handleGetHotOrdersProduct: handleGetHotOrdersProduct,
     handleGetHotSaleProduct: handleGetHotSaleProduct,
@@ -138,5 +169,7 @@ module.exports = {
     listSizesInProduct:listSizesInProduct,
     listSizesInCartNnProduct:listSizesInCartNnProduct,
     getProductCartVoteStar:getProductCartVoteStar,
-    getProductCartUser:getProductCartUser
+    getProductCartUser:getProductCartUser,
+    handleThongKeDanhGiaSao:handleThongKeDanhGiaSao,
+    searchProductAPP:searchProductAPP
 }

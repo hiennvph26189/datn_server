@@ -446,6 +446,141 @@ let getProductCartUserServiceAPP = (id_member)=>{
         }
      }) 
 }
+let ceilStar = (total, totalStar)=>{
+        let ceilStar = (totalStar/total)*100
+        return  parseFloat(ceilStar.toFixed(2))
+}
+let handleThongKeDanhGiaSaoServiceAPP = (id_product)=>{
+    return new Promise(async(resolve, reject)=>{
+        try {
+            
+            const [totalCount] = await sequelize.query(`
+            SELECT COUNT(*) as total FROM  danhgia where	id_sp = ${id_product}
+                `, { type: QueryTypes.SELECT });
+                
+            const [total5Star] = await sequelize.query(`
+            SELECT COUNT(*) as star5 FROM  danhgia where id_sp = ${id_product} and vote = 5
+                `, { type: QueryTypes.SELECT });
+               
+            const [total4Star] = await sequelize.query(`
+            SELECT COUNT(*) as star4 FROM  danhgia where id_sp = ${id_product} and vote = 4
+                `, { type: QueryTypes.SELECT });
+               
+            const [total3Star] = await sequelize.query(`
+            SELECT COUNT(*) as star3 FROM  danhgia where id_sp = ${id_product} and vote = 3
+                `, { type: QueryTypes.SELECT });
+            const [total2Star] = await sequelize.query(`
+            SELECT COUNT(*) as star2 FROM  danhgia where id_sp = ${id_product} and vote = 2
+                `, { type: QueryTypes.SELECT });
+            const [total1Star] = await sequelize.query(`
+            SELECT COUNT(*) as star1 FROM  danhgia where id_sp = ${id_product} and vote = 1
+                `, { type: QueryTypes.SELECT });
+              
+            let data = {
+                totalStar: totalCount.total,
+                star5 : total5Star.star5,
+                ceil5star: ceilStar(totalCount.total,total5Star.star5),
+                star4 : total4Star.star4,
+                ceil4star : ceilStar(totalCount.total,total4Star.star4),
+                star3 : total3Star.star3,
+                ceil3star : ceilStar(totalCount.total,total3Star.star3),
+                star2 : total2Star.star2,
+                ceil2star : ceilStar(totalCount.total,total2Star.star2),
+                star1 : total1Star.star1,
+                ceil1star : ceilStar(totalCount.total,total1Star.star1),
+            }     
+
+                resolve({
+                    errCode: 0,
+                    errMessage: 'Thành công',
+                    data:data
+                })
+  
+        } catch (error) {
+             reject(error);
+        }
+     }) 
+}
+let listProductsCarrt = (id_member)=>{
+    return new Promise(async(resolve, reject)=>{
+        try {
+          
+            let results = await sequelize.query(`
+                SELECT 
+                products.id as id_product,
+                products.tenSp,
+                products.giaSanPham,
+                products.sale,
+                products.image,
+                carts.id as id_cart,
+                carts.size,
+                carts.soLuong,
+                carts.thanhTien,
+                sizes.id as id_size,
+                sizes.S,
+                sizes.M,
+                sizes.L,
+                sizes.XL,
+                sizes.XXL
+                FROM carts
+                INNER JOIN 
+                    products ON carts.ipSanPham = products.id
+                INNER JOIN 
+                sizes ON sizes.id_sp = products.id
+                where carts.idUser = ${id_member} and carts.status = 0
+                 `, { type: QueryTypes.SELECT });
+                    
+                    if (results.length > 0) {
+                        const data = {
+                          products: results.map(row => ({
+                            id_product: row.id_product,
+                            tenSp: row.tenSp,
+                            giaSanPham: row.giaSanPham,
+                            sale: row.sale,
+                            image: row.image,
+                            // Thêm các trường khác của products
+                          })),
+                          carts: results.map(row => ({
+                            id_cart: row.id_cart,
+                            size_name: row.size,
+                            soLuong: row.soLuong,
+                            thanhTien: row.thanhTien,
+                            // Thêm các trường khác của carts
+                          })),
+                          sizes: results.map(row => ({
+                            id_size: row.id_size,
+                            size: {
+                                S:row.S,
+                                M:row.M,
+                                L:row.L,
+                                XL:row.XL,
+                                XXL:row.XXL
+                            }
+                          })),
+                        };
+                    
+                        resolve({
+                            errCode: 0,
+                            errMessage: 'Thành công',
+                            data:data,
+                            dataCarrt:results
+                        })
+                      } else {
+                        resolve({
+                            errCode: 1,
+                            errMessage: 'sản phẩm không tồn tại',
+                            data:[],
+                            dataCarrt:[]
+                        })
+                      }
+                    
+        } catch (error) {
+             reject(error);
+        }
+         
+         
+     }) 
+  }
 module.exports  = {
     handleGetHotOrdersProductServices:handleGetHotOrdersProductServices,
     handleGetHotSaleProductServices:handleGetHotSaleProductServices,
@@ -455,6 +590,9 @@ module.exports  = {
     listSizeInproductServiceApp:listSizeInproductServiceApp,
     listSizeInCartInProductServiceApp:listSizeInCartInProductServiceApp,
     getProductCartVoteStar:getProductCartVoteStar,
-    getProductCartUserServiceAPP:getProductCartUserServiceAPP
+    getProductCartUserServiceAPP:getProductCartUserServiceAPP,
+    handleThongKeDanhGiaSaoServiceAPP:handleThongKeDanhGiaSaoServiceAPP,
+    listProductsCarrt:listProductsCarrt
+    
 
 }

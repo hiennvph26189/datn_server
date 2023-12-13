@@ -4,6 +4,7 @@ import sequelize from "../../config/queryDatabse"
 import bcrypt from 'bcryptjs';
 import db from "../../models/index";
 import getdateService from "../webbanhangService/getdateService";
+
 import {getOneEmail} from "../webbanhangService/accountService"
 let salt = bcrypt.genSaltSync(10);
 let checkUserEmail = (email)=>{
@@ -140,7 +141,7 @@ let handleUserMembersChangePassService = (data)=>{
           
             if(getOneMember.length>0){
                 let checkPassword =  bcrypt.compareSync(password,getOneMember[0].matKhau)
-              console.log(checkPassword);
+        
                 if(checkPassword){
                     // resolve({
                     //     errCode:1,
@@ -189,9 +190,198 @@ let handleUserMembersChangePassService = (data)=>{
         }
     })
 }
+let handleForGotAccountService = (email,keycode)=>{
+    return new Promise(async(resolve, reject)=>{
+       try {
+        console.log(email,"SK:ADKS");
+        let date = getdateService.getdate();
+        const getCheckEmail = await sequelize.query(`
+            SELECT *
+            FROM key_email
+            where email="${email}"
+            `, { type: QueryTypes.SELECT });
+        console.log(getCheckEmail.length);
+        if(getCheckEmail.length >0){
+         
+            await sequelize.query(`
+              DELETE FROM key_email WHERE email = '${email}'
+              `, { type: QueryTypes.DELETE });
+            await sequelize.query(`
+            INSERT INTO key_email (email, code, time)
+            VALUES ("${email}", "${keycode}", "${date}");
+            `, { type: QueryTypes.INSERT });
+            resolve({
+                errCode: 0,
+                errMessage:"Thành công"
+            });
+        }else{
+            await sequelize.query(`
+            INSERT INTO key_email (email, code, time)
+            VALUES ("${email}", "${keycode}", "${date}");
+            `, { type: QueryTypes.INSERT });
+            resolve({
+                errCode: 0,
+                errMessage:"Thành công"
+            });
+        }
+       
+        
+       
+
+       } catch (error) {
+            reject(error);
+       }
+        
+        
+    })
+}
+let handleXacMinhEmailService = (data)=>{
+    return new Promise(async(resolve, reject)=>{
+       try {
+        let email = data.email
+        let key_code = data.key_code
+   
+        const getCheckEmail = await sequelize.query(`
+        SELECT *
+        FROM key_email
+        where email="${email}" and code = "${key_code}"
+        `, { type: QueryTypes.SELECT });
+        if(getCheckEmail.length>0){
+            await sequelize.query(`
+              DELETE FROM key_email WHERE email = '${email}'
+              `, { type: QueryTypes.DELETE });
+            resolve({
+                errCode:0,
+                errMessage:"Thành công"
+            });
+        }else{
+            resolve({
+                errCode:1,
+                errMessage:"Mã xác minh không chính xác"
+            });
+        }
+       
+
+       } catch (error) {
+            reject(error);
+       }
+        
+        
+    })
+}
+let handleLayLaiMatKhauMemberService = (data)=>{
+    return new Promise(async(resolve, reject)=>{
+       try {
+        let email = data.email
+        let password = data.password
+   
+        let checkEmail = await checkUserEmail(email)
+        if(checkEmail == true){
+            let hashPasswordFromBcrypt =  await hashUserPassword(password);
+            await sequelize.query(`
+            UPDATE members
+            SET matkhau = "${hashPasswordFromBcrypt}"
+          
+            WHERE  email='${email}';
+            `, { type: QueryTypes.UPDATE });
+            resolve({
+                errCode:0,
+                errMessage:"Bạn đã lấy lại mật khẩu thành công, vui lòng đăng nhập lại bằng mật khẩu mới"
+            })
+        }else{
+            resolve({
+                errCode:1,
+                errMessage:"Tài khoản của bạn không tồn tại"
+            })
+        }
+       
+
+       } catch (error) {
+            reject(error);
+       }
+        
+        
+    })
+}
+let handleNapTienMenbersService = (data)=>{
+    return new Promise(async(resolve, reject)=>{
+       try {
+        let idUser = data.id
+        let data_9pay = data.data9Pay
+        let date = getdateService.getdate()
+        let [checkEmail] =  await sequelize.query(`
+                    SELECT *
+                    FROM members
+                    where id=${idUser} 
+                `, { type: QueryTypes.SELECT });
+        if(checkEmail){
+            
+            await sequelize.query(`
+            UPDATE members
+            SET tienTk = tienTk + ${data_9pay.amount}
+            WHERE  id=${idUser};
+            `, { type: QueryTypes.UPDATE });
+           let itemThanhToan =  await sequelize.query(`
+            INSERT INTO thanhtoan (id_donhang, id_member, card_name, payment_no,invoice_no,amount,description,card_brand,card_number,method,status,created_at)
+            VALUES (0, ${idUser}, "${data_9pay.card_info.card_name}", "${data_9pay.payment_no}","${data_9pay.invoice_no}","${data_9pay.amount}","${data_9pay.description}","${data_9pay.card_info.card_brand}","${data_9pay.card_info.card_number}","${data_9pay.method}",1,"${date}");
+            `, { type: QueryTypes.INSERT })
+            let idThanhToan = itemThanhToan[0]
+            console.log(idThanhToan, "Let id thanh toán");
+            await sequelize.query(`
+            INSERT INTO prices (idUser, id_thanhtoan, tienNap,status,createdAt,updatedAt)
+            VALUES (${idUser}, ${idThanhToan}, ${data_9pay.amount},1,"${date}","${date}");
+            `, { type: QueryTypes.INSERT });
+            resolve({
+                errCode:0,
+                errMessage:"Nạp tiền thành công"
+            })
+        }else{
+            resolve({
+                errCode:1,
+                errMessage:"Tài khoản của bạn không tồn tại"
+            })
+        }
+       
+
+       } catch (error) {
+            reject(error);
+       }
+        
+        
+    })
+}
+let handleDetailNapTienMenbersService = (id_thanhtoaname)=>{
+    return new Promise(async(resolve, reject)=>{
+       try {
+           
+          
+            let [itemThanhToan] =  await sequelize.query(`
+                    SELECT *
+                    FROM thanhtoan
+                    where id=${id_thanhtoaname} 
+                `, { type: QueryTypes.SELECT });
+                resolve({
+                    errCode:0,
+                    errMessage:"OK",
+                    itemThanhToan: itemThanhToan
+                })
+       } catch (error) {
+            reject(error);
+       }
+        
+        
+    })
+}
 module.exports  = {
     
     handleUserMembersLoginService:handleUserMembersLoginService,
     AddMembersService:AddMembersService,
-    handleUserMembersChangePassService:handleUserMembersChangePassService
+    handleUserMembersChangePassService:handleUserMembersChangePassService,
+    handleForGotAccountService:handleForGotAccountService,
+    handleXacMinhEmailService:handleXacMinhEmailService,
+    checkUserEmail:checkUserEmail,
+    handleLayLaiMatKhauMemberService:handleLayLaiMatKhauMemberService,
+    handleNapTienMenbersService:handleNapTienMenbersService,
+    handleDetailNapTienMenbersService:handleDetailNapTienMenbersService
+    
 }

@@ -74,13 +74,19 @@
               </span>
             </div>
             
-            <div class="product-description product-summary">
-              <div class="rte"><%- product.mota  %></div>
-            </div>
             
-  
-  
-            <form action="/cart/add" method="post" enctype="multipart/form-data" class="quick_option variants form-ajaxtocart form-product" id="product-actions-2842763">
+            <% if(arrSize.length >0){ %>
+            
+            
+            <form action="/add-cart" method="post" class="quick_option variants form-ajaxtocart form-product" id="product-actions-2842763">
+              <select class="form-select" aria-label="Default select example" id="select-size" name="size" >
+                <option value="false-soluong" data-soLuong="0">Chọn size</option>
+                <% arrSize.forEach(function(item, i){ %>
+                <option value="<%= item.key %>" data-soLuong="<%= item.value %>" id="<%= item.key %>">Size <%= item.key %></option>
+                <% }); %> 
+               
+              </select>
+              <input type="text" value="<%= product.id %>" name="id_product" style="display: none;">
               <span class="price-product-detail hidden" style="opacity: 0;">
                 <span class=""></span>
               </span>
@@ -90,12 +96,12 @@
                   <div class="custom input_number_product soluong1">
                   <label>Số lượng:</label>
                   
-                    <input type="text" id="quantity-detail" name="quantity" value="1" maxlength="2" class="form-control prd_quantity" onkeypress="if ( isNaN(this.value + String.fromCharCode(event.keyCode) )) return false;" onchange="if(this.value == 0)this.value=1;">
-                    <a class="btn_num num_2 button button_qty" onclick="var result = document.getElementById('quantity-detail'); var qtyqv = result.value; if( !isNaN( qtyqv )) result.value++;return false;"><i class="fa fa-plus"></i></a>
-                    <a class="btn_num num_1 button button_qty" onclick="var result = document.getElementById('quantity-detail'); var qtyqv = result.value; if( !isNaN( qtyqv ) &amp;&amp; qtyqv > 1 ) result.value--;return false;"><i class="fa fa-minus"></i></a>
+                    <input type="number" id="quantity-detail" name="quantity" value="0" min="0" max="50" class="form-control prd_quantity" readonly>
+                    <a class="btn_num num_2 button button_qty" id="congSoLuong" style="cursor: pointer;"><i class="fa fa-plus"></i></a>
+                    <a class="btn_num num_1 button button_qty" id="truSoLuong" style="cursor: pointer;"><i class="fa fa-minus"></i></a>
                   </div>
                   <div class="button_actions clearfix">
-                    <button type="submit" class="btn_cool btn btn_base fix_add_to_cart ajax_addtocart btn_add_cart btn-cart add_to_cart add_to_cart_detail">
+                    <button type="button" id="cickButton" class="btn_cool btn btn_base fix_add_to_cart ajax_addtocart btn_add_cart btn-cart add_to_cart add_to_cart_detail">
                       <span class="btn-content">Cho vào giỏ hàng</span>
                     </button>
                   </div>
@@ -103,7 +109,8 @@
   
               </div>
   
-            <input type="hidden" name="id" value="2842763"><input type="hidden" name="variantId" value="4531458"></form>
+           
+            <% } %>
   
           </div>
         </div>
@@ -111,6 +118,62 @@
       
     </div>
   </div>
+  <script>
+    let maxSoluong = 0
+    let quantity =   $("#quantity-detail").val()
+      $('#select-size').on('change', function() {
+      let id_size = this.value
+
+      if(id_size != 'false-soluong'){
+        let soLuong =  $('#'+id_size).attr('data-soLuong')
+        maxSoluong = soLuong
+        quantity = 1
+        $("#quantity-detail").val(1)
+        $("#quantity-detail").attr('max', maxSoluong)
+        $(".button_actions").empty().append(`<button type="submit"  class="btn_cool btn btn_base fix_add_to_cart ajax_addtocart btn_add_cart btn-cart add_to_cart add_to_cart_detail">
+                      <span class="btn-content">Cho vào giỏ hàng</span>
+                    </button>`);
+       
+      }else{
+        maxSoluong = 0
+        $("#quantity-detail").val(0)
+        $("#quantity-detail").attr('max', 0)
+      }
+      
+
+      
+    });
+
+    $('#congSoLuong').on('click', function(){
+      let maxnumber = parseInt(maxSoluong)
+      
+      $("#quantity-detail").val(function (i, oldval) {
+                   
+                   let a = ++oldval
+
+                  let b = maxSoluong -a
+                  if(b> 0){
+                    return a
+                  }else{
+                    return maxSoluong
+                  }
+                    
+                    //return oldval < oldval ? ++oldval:maxnumber;
+                });
+      
+    })
+
+    $('#truSoLuong').on('click', function(){
+     
+        $("#quantity-detail").val(function (i, oldval) {
+                 
+                    return oldval > 1 ? --oldval : 1;
+                });
+    })
+    $("#cickButton").on('click', function(){
+      alert("Bạn chưa chọn size")
+    })
+  </script>
  
       
     

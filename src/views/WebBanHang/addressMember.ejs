@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+  <head>
+    <%- include('./head'); %>
+    <title>Địa chỉ nhận hàng</title>
+  </head>
+  <body>
+    <style>
+      .bg-header-nav .header-nav>ul.item_big>li.active{
+          background: #252525;
+      }
+  ul.item_big li.nav-item:nth-last-child(3){
+    background: #66a182;
+  }
+  .modal .modal-dialog .modal-content .modal-header{
+    background-color: #1f2224;
+    color: white;
+  }
+  
+   .close {
+    background: none;
+    border: none;
+    font-size: 30px;
+    color: #f79f60;
+}
+  </style>
+    <%- include('./header'); %>
+    <div class="section_sidebar_slider">
+      <div class="container">
+        <div class="row">
+          <div class="dqdt-sidebar sidebar left-content col-lg-3 col-md-12 hidden-sm hidden-xs">
+            <div class="wrap_background_aside asidecollection">
+              
+            </div>
+            <div class="sanPhamBanChay">
+            </div>
+          </div>
+          
+          <div class="main_container collection col-lg-9 col-md-12 col-sm-12">
+            <section class="bread-crumb">
+                <span class="crumb-border"></span>
+                <div class="container no-padding">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <ul class="breadcrumb">					
+                                <li class="home">
+                                    <a href="/"><span>Trang chủ</span></a>						
+                                    <span class="mr_lr">&nbsp;<i class="fas fa-chervon-right"></i>&nbsp;</span>
+                                </li>
+                                <li><strong><span> Địa chỉ nhận hàng</span></strong></li>     
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <div class="collectiontitle" style="align-items: center; display: flex; justify-content: space-between; margin-bottom: 20px;">
+                <h1 class="cat-heading">Địa chỉ nhận hàng</h1>
+                <button class="btn btn-primary" style="float: right;" data-bs-toggle="modal" data-bs-target="#add-address" id="add-address-button">Thêm mới địa chỉ</button>
+            </div>
+            <div class="container">
+                <div class="col-12">
+                        <div class="list-item-address">
+                                <div class="row item-child">
+                                    <div class="col-sm-1 col-md-1" style="display: flex;justify-content: center;align-items: center;">
+                                        <form action="/edit-status-member" method="post" style="margin-bottom: 0;">
+                                            <div class="form-check">
+                                                <input class="form-check-input" style="font-size: 20px;"  checked type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                                               
+                                              </div>
+                                        </form>
+                                    </div>
+                                    <div class="col-sm-9 col-md-89">
+                                        <div class="child-header">
+                                            <div class="fullname">Nguyễn Văn Hiển</div>    
+                                            <div style="margin: 0 15px;"> | </div>                                        
+                                            <div class="phone">0373753158</div>                                            
+                                        </div>
+                                        <div class="address">
+                                            Thông nhất - gialocj- hải dương
+                                        </div>
+                                        <div class="status-address">
+                                            Mặc định
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2 col-md-2" style="display: flex;justify-content: space-around;align-items: center;">
+                                          
+                                                <a href="/edit-address-member" class="btn btn-success">Sửa</a>
+                                                <a href="/delete-address" class="btn btn-danger">Xóa</a>
+                                          
+                                    </div>
+                                    
+                                </div>
+                        </div>
+                </div>
+            </div>
+           
+           
+           
+          </div>
+
+        </div>
+      </div>
+    </div>
+    
+    
+    <div class="modal fade " id="add-address" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Thêm mới địa chỉ</h5>
+            <button type="button" class="close" data-bs-dismiss="modal">
+              <span aria-hidden="true">×</span></button></div>
+          <form style="margin: 0;">
+            <div class="modal-body">
+            
+              <div class="form-group">
+                <label for="name">Họ tên người nhận</label>
+                <input type="text" name="name" class="form-control" id="name"  placeholder="Nhập họ tên người nhận">
+                
+              </div>
+              <div class="form-group">
+                <label for="number">Số điện thoại</label>
+                <input type="text" class="form-control" name="phone" id="number" placeholder="Nhập số điện thoại">
+              </div>
+              <div class="form-group col-6">
+                <label for="exampleFormControlSelect1">Tỉnh/thành phố</label>
+                <select class="form-select" onchange="getTinh()" id="tinh-tp">
+                 
+                </select>
+              </div>
+              <div class="form-group col-6" id="select-quan-huyen">
+                
+                  
+             
+              </div>
+              <div class="form-group col-6" id="select-xa-phuong">
+                
+            
+              </div>
+              <div class="form-group">
+                <label for="detai-address">Địa chỉ cụ thể</label>
+                <input type="text" name="detai-address" class="form-control" id="detai-address"  placeholder="Số đại chỉ cụ thể">
+                
+              </div>
+            </div>
+            
+            <div class="modal-footer">
+              
+              <button type="button" class="btn btn-success">Thêm mới</button>
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+            </div>
+        </form>
+        </div>
+      </div>
+    </div>
+    <%- include('./footer'); %>
+    <script
+        type="text/javascript"
+        src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"
+        ></script>
+    <script>
+    
+      $(document).ready(function () {
+        $.get("/danhmuc-profile-member", function (data) {
+                $(".asidecollection").empty().append(data);
+              });
+        
+             
+      
+       
+      });
+     
+      $('#sapxep').on('change', function(e){
+    
+        let id_category = $(this).attr("data-id")
+        let value = $(this).val()
+        if(value && value != "") {
+          
+          $.get(`/sapXep-products?id=${id_category}&page=1&value=${value}`, function (data) {
+                $(".listProduct-category").empty().append(data);
+              });
+        }    
+      })
+      $("#add-address-button").on("click",function(){
+        $.get("/api-app/tinhThanh", function (data) {
+         
+          if(data.errCode == 0){
+            let arrTinh = data.listTinhThanh
+            $("#tinh-tp").empty().append( 
+              '<option value="0">------ Chọn tỉnh thành --------</option> '+
+              arrTinh.map(function (item, i){
+                  return `<option value="${item.id}" data-tinh='${item._name}' >${item._name}</option>`
+              })
+
+            );
+          }
+         
+        });
+
+      })
+      function getTinh(){
+          let idTinh = $('#tinh-tp').val();
+          let name = $('#tinh-tp option:selected').data("tinh");
+          $("#select-xa-phuong").empty().append("")
+          if(parseFloat(idTinh)>0){
+           
+                $.get("/api-app/quan?tinh="+idTinh, function (data) {
+            
+                  
+                    if(data.errCode == 0){
+                      let arrQuan = data.listQuan
+                      console.log(arrQuan);
+                      $("#select-quan-huyen").empty().append( 
+                        `
+                        <label for="exampleFormControlSelect1" >Quận/huyện</label>
+                    <select class="form-select" onchange="getQuanHuyen()" id="quan-huyen">
+                        <option value="0">------ Chọn Quận Huyện --------</option> `+
+                        arrQuan.map(function (item, i){
+                            return `<option value="${item.id}" data-quan-huyen='${item._prefix +' '+item._name}' >${item._prefix +' '+item._name}</option>`
+                        })
+                        +
+                        `<select
+                        `
+                      );
+                }
+          
+                
+            })
+          }else{
+            $("#select-quan-huyen").empty().append("")
+            $("#select-xa-phuong").empty().append("")
+          }
+      }
+      function getQuanHuyen(){
+          let idTinh = $('#tinh-tp').val();
+          let idQuan = $('#quan-huyen').val();
+          let name = $('#quan-huyen option:selected').data("quan-huyen");
+          if(parseFloat(idTinh&&idQuan)>0){
+           
+                $.get("/api-app/xa?tinh="+idTinh+"&quan="+idQuan, function (data) {
+            
+                  
+                    if(data.errCode == 0){
+                      let arrXa = data.listXa
+                      console.log(arrXa);
+                      $("#select-xa-phuong").empty().append( 
+                        `
+                        <label for="exampleFormControlSelect1" >Xã/Phường</label>
+                    <select class="form-select" onchange="getXaPhuong()" id="quan-huyen">
+                        <option value="0">------ Chọn Xã Phường --------</option> `+
+                        arrXa.map(function (item, i){
+                            return `<option value="${item.id}" data-xa-phuong='${item._prefix +' '+item._name}' >${item._prefix +' '+item._name}</option>`
+                        })
+                        +
+                        `<select
+                        `
+                      );
+                }
+          
+                
+            })
+          }else{
+            $("#select-xa-phuong").empty().append("")
+          }
+      }
+      console.log("s");
+    </script>
+  </body>
+
+</html>

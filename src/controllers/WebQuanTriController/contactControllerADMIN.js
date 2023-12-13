@@ -28,13 +28,15 @@ let putPhanHoiContactADMIN = async (req, res) => {
             port: 465,
             secure: true,
             auth: {
-                user: 'vemouse123@gmail.com',
-                pass: 'aypi kxtk wvwo mazt',
+
+                user: 'testsendnodemail@gmail.com',
+                pass: 'qhvb xuyd sfjo vslc',
+
             },
         });
 
         const mailOptions = {
-            from: 'vemouse123@gmail.com',
+            from: 'testsendnodemail@gmail.com',
             to: email,
             subject: tieude,
             text: phanhoi,

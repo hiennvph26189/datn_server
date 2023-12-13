@@ -36,13 +36,13 @@ let getDanhSachSanPhamIdService = (id,page)=>{
                 `, { type: QueryTypes.SELECT });
            
             let totalCount = await sequelize.query(`
-            SELECT COUNT(*) as total FROM  products where idDanhSach = ${id} 
+            SELECT COUNT(*) as total FROM  products where idDanhSach = ${id} and status = 0
                 `, { type: QueryTypes.SELECT });
             let pageNumber = page;
             let limit = 6; // Số lượng sản phẩm trên mỗi trang
             let offset = (pageNumber - 1) * limit;
             let  products = await sequelize.query(`
-            SELECT id,tenSp,giaSanPham,sale,image,luotMua FROM  products where idDanhSach = ${id} order by id desc limit ${limit} OFFSET ${offset}
+            SELECT id,tenSp,giaSanPham,sale,image,luotMua FROM  products where idDanhSach = ${id} and status = 0 order by id desc limit ${limit} OFFSET ${offset}
                 `, { type: QueryTypes.SELECT });
             
             let totalPages = Math.ceil(totalCount[0].total / limit);
@@ -59,13 +59,13 @@ let getDanhSachSanPhamIdService = (id,page)=>{
             }else{
                 if(id=='san-pham-ban-chay'){
                     let totalCount = await sequelize.query(`
-                    SELECT COUNT(*) as total FROM  products where luotMua >1 
+                    SELECT COUNT(*) as total FROM  products where luotMua >1  and status = 0
                         `, { type: QueryTypes.SELECT });
                     let pageNumber = page;
                     let limit = 6; // Số lượng sản phẩm trên mỗi trang
                     let offset = (pageNumber - 1) * limit;
                     let  products = await sequelize.query(`
-                    SELECT id,tenSp,giaSanPham,sale,image,luotMua FROM  products where luotMua >1  order by luotMua desc limit ${limit} OFFSET ${offset}
+                    SELECT id,tenSp,giaSanPham,sale,image,luotMua FROM  products where luotMua >1 and status = 0 order by luotMua desc limit ${limit} OFFSET ${offset}
                         `, { type: QueryTypes.SELECT });
                     
                     let totalPages = Math.ceil(totalCount[0].total / limit);
@@ -81,13 +81,13 @@ let getDanhSachSanPhamIdService = (id,page)=>{
                     }   
                 }else if(id=='san-pham-moi'){
                     let totalCount = await sequelize.query(`
-                    SELECT COUNT(*) as total FROM  products where id > 0 order by id desc
+                    SELECT COUNT(*) as total FROM  products where id > 0 and status = 0 order by id desc
                         `, { type: QueryTypes.SELECT });
                     let pageNumber = page;
                     let limit = 9; // Số lượng sản phẩm trên mỗi trang
                     let offset = (pageNumber - 1) * limit;
                     let  products = await sequelize.query(`
-                    SELECT id,tenSp,giaSanPham,sale,image,luotMua FROM  products where id > 0   order by id desc limit ${limit} OFFSET ${offset}
+                    SELECT id,tenSp,giaSanPham,sale,image,luotMua FROM  products where id > 0 and status = 0  order by id desc limit ${limit} OFFSET ${offset}
                         `, { type: QueryTypes.SELECT });
                     
                     let totalPages = Math.ceil(totalCount[0].total / limit);
@@ -103,13 +103,13 @@ let getDanhSachSanPhamIdService = (id,page)=>{
                     } 
                 }else if(id == "san-pham-noi-bat"){
                     let totalCount = await sequelize.query(`
-                    SELECT COUNT(*) as total FROM  products where hot = 1 order by id desc
+                    SELECT COUNT(*) as total FROM  products where hot = 1 order and status = 0 by id desc
                         `, { type: QueryTypes.SELECT });
                     let pageNumber = page;
                     let limit = 9; // Số lượng sản phẩm trên mỗi trang
                     let offset = (pageNumber - 1) * limit;
                     let  products = await sequelize.query(`
-                    SELECT id,tenSp,giaSanPham,sale,image,luotMua FROM  products where hot = 1  order by id desc limit ${limit} OFFSET ${offset}
+                    SELECT id,tenSp,giaSanPham,sale,image,luotMua FROM  products where hot = 1 and status = 0 order by id desc limit ${limit} OFFSET ${offset}
                         `, { type: QueryTypes.SELECT });
                     
                     let totalPages = Math.ceil(totalCount[0].total / limit);
@@ -125,13 +125,13 @@ let getDanhSachSanPhamIdService = (id,page)=>{
                     } 
                 }else if(id == "san-pham-khuyen-mai"){
                     let totalCount = await sequelize.query(`
-                    SELECT COUNT(*) as total FROM  products where sale > 10 or sale = 10 
+                    SELECT COUNT(*) as total FROM  products where sale > 10 or sale = 10  and status = 0
                         `, { type: QueryTypes.SELECT });
                     let pageNumber = page;
                     let limit = 6; // Số lượng sản phẩm trên mỗi trang
                     let offset = (pageNumber - 1) * limit;
                     let  products = await sequelize.query(`
-                    SELECT id,tenSp,giaSanPham,sale,image,luotMua FROM  products where sale > 10 or sale = 10 order by sale desc limit ${limit} OFFSET ${offset}
+                    SELECT id,tenSp,giaSanPham,sale,image,luotMua FROM  products where sale > 10 or sale = 10 and status = 0 order by sale desc limit ${limit} OFFSET ${offset}
                         `, { type: QueryTypes.SELECT });
                     
                     let totalPages = Math.ceil(totalCount[0].total / limit);
@@ -169,44 +169,44 @@ let getSapXepDanhSachSanPhamIdService = (id,page,value)=>{
                     `, { type: QueryTypes.SELECT });
                
                 let totalCount = await sequelize.query(`
-                SELECT COUNT(*) as total FROM  products where idDanhSach = ${id} 
+                SELECT COUNT(*) as total FROM  products where idDanhSach = ${id} and status = 0
                     `, { type: QueryTypes.SELECT });
                 let pageNumber = page;
                 let limit = 6; // Số lượng sản phẩm trên mỗi trang
                 let offset = (pageNumber - 1) * limit;
                 if(value =="null"){
                     let  products = await sequelize.query(`
-                    SELECT id,tenSp,giaSanPham,sale,image,luotMua FROM  products where idDanhSach = ${id} order by id desc limit ${limit} OFFSET ${offset}
+                    SELECT id,tenSp,giaSanPham,sale,image,luotMua FROM  products where idDanhSach = ${id} and status = 0 order by id desc limit ${limit} OFFSET ${offset}
                         `, { type: QueryTypes.SELECT });
                         arrProducts = products
                 }else if(value =="alpha-asc"){
                     let  products = await sequelize.query(`
-                    SELECT id,tenSp,giaSanPham,sale,image,luotMua FROM  products where idDanhSach = ${id} order by tenSp asc limit ${limit} OFFSET ${offset}
+                    SELECT id,tenSp,giaSanPham,sale,image,luotMua FROM  products where idDanhSach = ${id} and status = 0 order by tenSp asc limit ${limit} OFFSET ${offset}
                         `, { type: QueryTypes.SELECT });
                         arrProducts = products
                 }else if(value =="alpha-desc"){
                     let  products = await sequelize.query(`
-                    SELECT id,tenSp,giaSanPham,sale,image,luotMua FROM  products where idDanhSach = ${id} order by tenSp desc limit ${limit} OFFSET ${offset}
+                    SELECT id,tenSp,giaSanPham,sale,image,luotMua FROM  products where idDanhSach = ${id} and status = 0 order by tenSp desc limit ${limit} OFFSET ${offset}
                         `, { type: QueryTypes.SELECT });
                         arrProducts = products
                 }else if(value =="price-asc"){
                     let  products = await sequelize.query(`
-                    SELECT id,tenSp,giaSanPham,sale,image,luotMua, (giaSanPham-(giaSanPham*(sale/100)))  AS sale_price FROM  products where idDanhSach = ${id} order by sale_price asc limit ${limit} OFFSET ${offset}
+                    SELECT id,tenSp,giaSanPham,sale,image,luotMua, (giaSanPham-(giaSanPham*(sale/100)))  AS sale_price FROM  products where idDanhSach = ${id} and status = 0 order by sale_price asc limit ${limit} OFFSET ${offset}
                         `, { type: QueryTypes.SELECT });
                         arrProducts = products
                 }else if(value =="price-desc"){
                     let  products = await sequelize.query(`
-                    SELECT id,tenSp,giaSanPham,sale,image,luotMua, (giaSanPham-(giaSanPham*(sale/100)))  AS sale_price FROM  products where idDanhSach = ${id} order by sale_price desc limit ${limit} OFFSET ${offset}
+                    SELECT id,tenSp,giaSanPham,sale,image,luotMua, (giaSanPham-(giaSanPham*(sale/100)))  AS sale_price FROM  products where idDanhSach = ${id} and status = 0 order by sale_price desc limit ${limit} OFFSET ${offset}
                         `, { type: QueryTypes.SELECT });
                         arrProducts = products
                 }else if(value =="created-desc"){
                     let  products = await sequelize.query(`
-                    SELECT id,tenSp,giaSanPham,sale,image,luotMua FROM  products where idDanhSach = ${id} order by id desc limit ${limit} OFFSET ${offset}
+                    SELECT id,tenSp,giaSanPham,sale,image,luotMua FROM  products where idDanhSach = ${id} and status = 0 order by id desc limit ${limit} OFFSET ${offset}
                         `, { type: QueryTypes.SELECT });
                         arrProducts = products
                 }else if(value =="created-asc"){
                     let  products = await sequelize.query(`
-                    SELECT id,tenSp,giaSanPham,sale,image,luotMua FROM  products where idDanhSach = ${id} order by id asc limit ${limit} OFFSET ${offset}
+                    SELECT id,tenSp,giaSanPham,sale,image,luotMua FROM  products where idDanhSach = ${id} and status = 0 order by id asc limit ${limit} OFFSET ${offset}
                         `, { type: QueryTypes.SELECT });
                         arrProducts = products
                 }
@@ -228,44 +228,44 @@ let getSapXepDanhSachSanPhamIdService = (id,page,value)=>{
                 
                 
                 let totalCount = await sequelize.query(`
-                SELECT COUNT(*) as total FROM  products where luotMua >1 
+                SELECT COUNT(*) as total FROM  products where luotMua >1 and status = 0
                     `, { type: QueryTypes.SELECT });
                 let pageNumber = page;
                 let limit = 6; // Số lượng sản phẩm trên mỗi trang
                 let offset = (pageNumber - 1) * limit;
                 if(value =="null"){
                     let  products = await sequelize.query(`
-                    SELECT id,tenSp,giaSanPham,sale,image,luotMua FROM  products where luotMua >1  order by id desc limit ${limit} OFFSET ${offset}
+                    SELECT id,tenSp,giaSanPham,sale,image,luotMua FROM  products where luotMua >1 and status = 0  order by id desc limit ${limit} OFFSET ${offset}
                         `, { type: QueryTypes.SELECT });
                         arrProducts = products
                 }else if(value =="alpha-asc"){
                     let  products = await sequelize.query(`
-                    SELECT id,tenSp,giaSanPham,sale,image,luotMua FROM  products where luotMua >1  order by tenSp asc limit ${limit} OFFSET ${offset}
+                    SELECT id,tenSp,giaSanPham,sale,image,luotMua FROM  products where luotMua >1 and status = 0 order by tenSp asc limit ${limit} OFFSET ${offset}
                         `, { type: QueryTypes.SELECT });
                         arrProducts = products
                 }else if(value =="alpha-desc"){
                     let  products = await sequelize.query(`
-                    SELECT id,tenSp,giaSanPham,sale,image,luotMua  FROM  products where luotMua >1  order by tenSp desc limit ${limit} OFFSET ${offset}
+                    SELECT id,tenSp,giaSanPham,sale,image,luotMua  FROM  products where luotMua >1 and status = 0 order by tenSp desc limit ${limit} OFFSET ${offset}
                         `, { type: QueryTypes.SELECT });
                         arrProducts = products
                 }else if(value =="price-asc"){
                     let  products = await sequelize.query(`
-                    SELECT id,tenSp,giaSanPham,sale,image,luotMua ,(giaSanPham-(giaSanPham*(sale/100))) AS sale_price FROM  products where luotMua >1  order by sale_price asc limit ${limit} OFFSET ${offset}
+                    SELECT id,tenSp,giaSanPham,sale,image,luotMua ,(giaSanPham-(giaSanPham*(sale/100))) AS sale_price FROM  products where luotMua >1 and status = 0 order by sale_price asc limit ${limit} OFFSET ${offset}
                         `, { type: QueryTypes.SELECT });
                         arrProducts = products
                 }else if(value =="price-desc"){
                     let  products = await sequelize.query(`
-                    SELECT id,tenSp,giaSanPham,sale,image,luotMua,(giaSanPham-(giaSanPham*(sale/100)))  AS sale_price FROM  products where luotMua >1  order by sale_price desc limit ${limit} OFFSET ${offset}
+                    SELECT id,tenSp,giaSanPham,sale,image,luotMua,(giaSanPham-(giaSanPham*(sale/100)))  AS sale_price FROM  products where luotMua >1 and status = 0 order by sale_price desc limit ${limit} OFFSET ${offset}
                         `, { type: QueryTypes.SELECT });
                         arrProducts = products
                 }else if(value =="created-desc"){
                     let  products = await sequelize.query(`
-                    SELECT id,tenSp,giaSanPham,sale,image,luotMua FROM  products where luotMua >1  order by id desc limit ${limit} OFFSET ${offset}
+                    SELECT id,tenSp,giaSanPham,sale,image,luotMua FROM  products where luotMua >1 and status = 0 order by id desc limit ${limit} OFFSET ${offset}
                         `, { type: QueryTypes.SELECT });
                         arrProducts = products
                 }else if(value =="created-asc"){
                     let  products = await sequelize.query(`
-                    SELECT id,tenSp,giaSanPham,sale,image,luotMua FROM  products where luotMua >1  order by id asc limit ${limit} OFFSET ${offset}
+                    SELECT id,tenSp,giaSanPham,sale,image,luotMua FROM  products where luotMua >1 and status = 0 order by id asc limit ${limit} OFFSET ${offset}
                         `, { type: QueryTypes.SELECT });
                         arrProducts = products
                 }
@@ -285,44 +285,44 @@ let getSapXepDanhSachSanPhamIdService = (id,page,value)=>{
                 }
             }else if(id == "san-pham-moi"){
                 let totalCount = await sequelize.query(`
-                SELECT COUNT(*) as total FROM  products where id > 0 order by id desc
+                SELECT COUNT(*) as total FROM  products where id > 0 and status = 0 order by id desc
                     `, { type: QueryTypes.SELECT });
                 let pageNumber = page;
                 let limit = 9; // Số lượng sản phẩm trên mỗi trang
                 let offset = (pageNumber - 1) * limit;
                 if(value =="null"){
                     let  products = await sequelize.query(`
-                    SELECT id,tenSp,giaSanPham,sale,image,luotMua FROM  products where id > 0  order by id desc limit ${limit} OFFSET ${offset}
+                    SELECT id,tenSp,giaSanPham,sale,image,luotMua FROM  products where id > 0 and status = 0 order by id desc limit ${limit} OFFSET ${offset}
                         `, { type: QueryTypes.SELECT });
                         arrProducts = products
                 }else if(value =="alpha-asc"){
                     let  products = await sequelize.query(`
-                    SELECT id,tenSp,giaSanPham,sale,image,luotMua FROM  products where id > 0  order by tenSp asc limit ${limit} OFFSET ${offset}
+                    SELECT id,tenSp,giaSanPham,sale,image,luotMua FROM  products where id > 0 and status = 0 order by tenSp asc limit ${limit} OFFSET ${offset}
                         `, { type: QueryTypes.SELECT });
                         arrProducts = products
                 }else if(value =="alpha-desc"){
                     let  products = await sequelize.query(`
-                    SELECT id,tenSp,giaSanPham,sale,image,luotMua  FROM  products where id > 0  order by tenSp desc limit ${limit} OFFSET ${offset}
+                    SELECT id,tenSp,giaSanPham,sale,image,luotMua  FROM  products where id > 0 and status = 0 order by tenSp desc limit ${limit} OFFSET ${offset}
                         `, { type: QueryTypes.SELECT });
                         arrProducts = products
                 }else if(value =="price-asc"){
                     let  products = await sequelize.query(`
-                    SELECT id,tenSp,giaSanPham,sale,image,luotMua ,(giaSanPham-(giaSanPham*(sale/100))) AS sale_price FROM  products where id > 0  order by sale_price asc limit ${limit} OFFSET ${offset}
+                    SELECT id,tenSp,giaSanPham,sale,image,luotMua ,(giaSanPham-(giaSanPham*(sale/100))) AS sale_price FROM  products where id > 0 and status = 0 order by sale_price asc limit ${limit} OFFSET ${offset}
                         `, { type: QueryTypes.SELECT });
                         arrProducts = products
                 }else if(value =="price-desc"){
                     let  products = await sequelize.query(`
-                    SELECT id,tenSp,giaSanPham,sale,image,luotMua,(giaSanPham-(giaSanPham*(sale/100)))  AS sale_price FROM  products where id > 0  order by sale_price desc limit ${limit} OFFSET ${offset}
+                    SELECT id,tenSp,giaSanPham,sale,image,luotMua,(giaSanPham-(giaSanPham*(sale/100)))  AS sale_price FROM  products where id > 0 and status = 0 order by sale_price desc limit ${limit} OFFSET ${offset}
                         `, { type: QueryTypes.SELECT });
                         arrProducts = products
                 }else if(value =="created-desc"){
                     let  products = await sequelize.query(`
-                    SELECT id,tenSp,giaSanPham,sale,image,luotMua FROM  products where id > 0  order by id desc limit ${limit} OFFSET ${offset}
+                    SELECT id,tenSp,giaSanPham,sale,image,luotMua FROM  products where id > 0 and status = 0 order by id desc limit ${limit} OFFSET ${offset}
                         `, { type: QueryTypes.SELECT });
                         arrProducts = products
                 }else if(value =="created-asc"){
                     let  products = await sequelize.query(`
-                    SELECT id,tenSp,giaSanPham,sale,image,luotMua FROM  products where id > 0  order by id asc limit ${limit} OFFSET ${offset}
+                    SELECT id,tenSp,giaSanPham,sale,image,luotMua FROM  products where id > 0 and status = 0 order by id asc limit ${limit} OFFSET ${offset}
                         `, { type: QueryTypes.SELECT });
                         arrProducts = products
                 }
@@ -342,44 +342,44 @@ let getSapXepDanhSachSanPhamIdService = (id,page,value)=>{
                 }
             }else if(id == "san-pham-noi-bat"){
                 let totalCount = await sequelize.query(`
-                SELECT COUNT(*) as total FROM  products where hot = 1 order by id desc
+                SELECT COUNT(*) as total FROM  products where hot = 1 and status = 0 order by id desc
                     `, { type: QueryTypes.SELECT });
                 let pageNumber = page;
                 let limit = 9; // Số lượng sản phẩm trên mỗi trang
                 let offset = (pageNumber - 1) * limit;
                 if(value =="null"){
                     let  products = await sequelize.query(`
-                    SELECT id,tenSp,giaSanPham,sale,image,luotMua FROM  products where  hot = 1  order by id desc limit ${limit} OFFSET ${offset}
+                    SELECT id,tenSp,giaSanPham,sale,image,luotMua FROM  products where  hot = 1 and status = 0 order by id desc limit ${limit} OFFSET ${offset}
                         `, { type: QueryTypes.SELECT });
                         arrProducts = products
                 }else if(value =="alpha-asc"){
                     let  products = await sequelize.query(`
-                    SELECT id,tenSp,giaSanPham,sale,image,luotMua FROM  products where  hot = 1  order by tenSp asc limit ${limit} OFFSET ${offset}
+                    SELECT id,tenSp,giaSanPham,sale,image,luotMua FROM  products where  hot = 1 and status = 0 order by tenSp asc limit ${limit} OFFSET ${offset}
                         `, { type: QueryTypes.SELECT });
                         arrProducts = products
                 }else if(value =="alpha-desc"){
                     let  products = await sequelize.query(`
-                    SELECT id,tenSp,giaSanPham,sale,image,luotMua  FROM  products where  hot = 1  order by tenSp desc limit ${limit} OFFSET ${offset}
+                    SELECT id,tenSp,giaSanPham,sale,image,luotMua  FROM  products where  hot = 1 and status = 0 order by tenSp desc limit ${limit} OFFSET ${offset}
                         `, { type: QueryTypes.SELECT });
                         arrProducts = products
                 }else if(value =="price-asc"){
                     let  products = await sequelize.query(`
-                    SELECT id,tenSp,giaSanPham,sale,image,luotMua ,(giaSanPham-(giaSanPham*(sale/100))) AS sale_price FROM  products where  hot = 1  order by sale_price asc limit ${limit} OFFSET ${offset}
+                    SELECT id,tenSp,giaSanPham,sale,image,luotMua ,(giaSanPham-(giaSanPham*(sale/100))) AS sale_price FROM  products where  hot = 1 and status = 0 order by sale_price asc limit ${limit} OFFSET ${offset}
                         `, { type: QueryTypes.SELECT });
                         arrProducts = products
                 }else if(value =="price-desc"){
                     let  products = await sequelize.query(`
-                    SELECT id,tenSp,giaSanPham,sale,image,luotMua,(giaSanPham-(giaSanPham*(sale/100)))  AS sale_price FROM  products where  hot = 1  order by sale_price desc limit ${limit} OFFSET ${offset}
+                    SELECT id,tenSp,giaSanPham,sale,image,luotMua,(giaSanPham-(giaSanPham*(sale/100)))  AS sale_price FROM  products where  hot = 1 and status = 0 order by sale_price desc limit ${limit} OFFSET ${offset}
                         `, { type: QueryTypes.SELECT });
                         arrProducts = products
                 }else if(value =="created-desc"){
                     let  products = await sequelize.query(`
-                    SELECT id,tenSp,giaSanPham,sale,image,luotMua FROM  products where  hot = 1  order by id desc limit ${limit} OFFSET ${offset}
+                    SELECT id,tenSp,giaSanPham,sale,image,luotMua FROM  products where  hot = 1 and status = 0 order by id desc limit ${limit} OFFSET ${offset}
                         `, { type: QueryTypes.SELECT });
                         arrProducts = products
                 }else if(value =="created-asc"){
                     let  products = await sequelize.query(`
-                    SELECT id,tenSp,giaSanPham,sale,image,luotMua FROM  products where  hot = 1  order by id asc limit ${limit} OFFSET ${offset}
+                    SELECT id,tenSp,giaSanPham,sale,image,luotMua FROM  products where  hot = 1 and status = 0 order by id asc limit ${limit} OFFSET ${offset}
                         `, { type: QueryTypes.SELECT });
                         arrProducts = products
                 }
@@ -399,44 +399,44 @@ let getSapXepDanhSachSanPhamIdService = (id,page,value)=>{
                 }
             }else if(id == "san-pham-khuyen-mai"){
                 let totalCount = await sequelize.query(`
-                SELECT COUNT(*) as total FROM  products where sale > 10 or sale = 10 
+                SELECT COUNT(*) as total FROM  products where sale > 10 or sale = 10  and status = 0
                     `, { type: QueryTypes.SELECT });
                 let pageNumber = page;
                 let limit = 9; // Số lượng sản phẩm trên mỗi trang
                 let offset = (pageNumber - 1) * limit;
                 if(value =="null"){
                     let  products = await sequelize.query(`
-                    SELECT id,tenSp,giaSanPham,sale,image,luotMua FROM  products where sale > 10 or sale = 10  order by sale desc limit ${limit} OFFSET ${offset}
+                    SELECT id,tenSp,giaSanPham,sale,image,luotMua FROM  products where sale > 10 or sale = 10 and status = 0  order by sale desc limit ${limit} OFFSET ${offset}
                         `, { type: QueryTypes.SELECT });
                         arrProducts = products
                 }else if(value =="alpha-asc"){
                     let  products = await sequelize.query(`
-                    SELECT id,tenSp,giaSanPham,sale,image,luotMua FROM  products where sale > 10 or sale = 10  order by tenSp asc limit ${limit} OFFSET ${offset}
+                    SELECT id,tenSp,giaSanPham,sale,image,luotMua FROM  products where sale > 10 or sale = 10 and status = 0 order by tenSp asc limit ${limit} OFFSET ${offset}
                         `, { type: QueryTypes.SELECT });
                         arrProducts = products
                 }else if(value =="alpha-desc"){
                     let  products = await sequelize.query(`
-                    SELECT id,tenSp,giaSanPham,sale,image,luotMua  FROM  products where  sale > 10 or sale = 10  order by tenSp desc limit ${limit} OFFSET ${offset}
+                    SELECT id,tenSp,giaSanPham,sale,image,luotMua  FROM  products where  sale > 10 or sale = 10 and status = 0 order by tenSp desc limit ${limit} OFFSET ${offset}
                         `, { type: QueryTypes.SELECT });
                         arrProducts = products
                 }else if(value =="price-asc"){
                     let  products = await sequelize.query(`
-                    SELECT id,tenSp,giaSanPham,sale,image,luotMua ,(giaSanPham-(giaSanPham*(sale/100))) AS sale_price FROM  products where  sale > 10 or sale = 10  order by sale_price asc limit ${limit} OFFSET ${offset}
+                    SELECT id,tenSp,giaSanPham,sale,image,luotMua ,(giaSanPham-(giaSanPham*(sale/100))) AS sale_price FROM  products where  sale > 10 or sale = 10 and status = 0  order by sale_price asc limit ${limit} OFFSET ${offset}
                         `, { type: QueryTypes.SELECT });
                         arrProducts = products
                 }else if(value =="price-desc"){
                     let  products = await sequelize.query(`
-                    SELECT id,tenSp,giaSanPham,sale,image,luotMua,(giaSanPham-(giaSanPham*(sale/100)))  AS sale_price FROM  products where  sale > 10 or sale = 10  order by sale_price desc limit ${limit} OFFSET ${offset}
+                    SELECT id,tenSp,giaSanPham,sale,image,luotMua,(giaSanPham-(giaSanPham*(sale/100)))  AS sale_price FROM  products where  sale > 10 or sale = 10 and status = 0 order by sale_price desc limit ${limit} OFFSET ${offset}
                         `, { type: QueryTypes.SELECT });
                         arrProducts = products
                 }else if(value =="created-desc"){
                     let  products = await sequelize.query(`
-                    SELECT id,tenSp,giaSanPham,sale,image,luotMua FROM  products where  sale > 10 or sale = 10  order by id desc limit ${limit} OFFSET ${offset}
+                    SELECT id,tenSp,giaSanPham,sale,image,luotMua FROM  products where  sale > 10 or sale = 10 and status = 0 order by id desc limit ${limit} OFFSET ${offset}
                         `, { type: QueryTypes.SELECT });
                         arrProducts = products
                 }else if(value =="created-asc"){
                     let  products = await sequelize.query(`
-                    SELECT id,tenSp,giaSanPham,sale,image,luotMua FROM  products where  sale > 10 or sale = 10  order by id asc limit ${limit} OFFSET ${offset}
+                    SELECT id,tenSp,giaSanPham,sale,image,luotMua FROM  products where  sale > 10 or sale = 10 and status = 0 order by id asc limit ${limit} OFFSET ${offset}
                         `, { type: QueryTypes.SELECT });
                         arrProducts = products
                 }
@@ -470,7 +470,7 @@ let searchService = (key_search)=>{
     return new Promise(async(resolve, reject)=>{
         try {
             let  data = await sequelize.query(`
-            SELECT id,tenSp,giaSanPham,sale,image,luotMua name FROM  products where  tenSp LIKE '${key_search}%' order by id DESC 
+            SELECT id,tenSp,giaSanPham,sale,image,luotMua FROM  products where  tenSp LIKE '${key_search}%' and status = 0 order by id DESC 
                 `, { type: QueryTypes.SELECT });
                
             if(data.length > 0 && key_search !==""){

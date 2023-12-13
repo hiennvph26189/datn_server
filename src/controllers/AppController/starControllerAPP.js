@@ -44,8 +44,24 @@ let getTotalStarProduct = async (req, res) => {
     })
  }
 };
+let handleListThongKeDanhGiaSaoDetail = async (req, res) => {
+    try {  
+       
+        let data = req.query
+   
+        let message = await startServiceAPP.handleListThongKeDanhGiaSaoDetailService(data);
+     return res.status(200).json(message)
+ } catch (error) {
+     console.log("Lỗi phân quyền",error)
+    return res.status(200).json({
+         errCode: -1,
+         errMessage: 'Không kết nối được với sever'
+    })
+ }
+};
 module.exports = {
     postVoteStarProduct: postVoteStarProduct,
     checkVoteStarProduct:checkVoteStarProduct,
-    getTotalStarProduct:getTotalStarProduct
+    getTotalStarProduct:getTotalStarProduct,
+    handleListThongKeDanhGiaSaoDetail:handleListThongKeDanhGiaSaoDetail
 }

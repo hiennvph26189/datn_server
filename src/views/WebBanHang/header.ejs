@@ -42,20 +42,17 @@
 					$.get("/getName", function (data) {
 							if(data.errCode == 1){
 								var infoUser = data.selectUser
-								console.log(infoUser.tenThanhVien)
+								
 								$("#contenttop_id").empty().append(`
 								<div class="infoUser">
-										<div class="image">
+										<a href="/profile-member" style="display:flex">
+											<div class="image">
 											<img class="img-member" src="${infoUser.anhDaiDien}">
-										</div>
-										<div class="name">${infoUser.tenThanhVien}</div>
-										<div class="list-click-user">
-											<ul>
-												<li><a href="">Thông tin người dùng</a></li>
-												<li><a href="">Đơn hàng</a></li>
-												<li><a href="">Đăng xuất</a></li>
-											</ul>	
-										</div>
+											</div>
+											<div class="name">${infoUser.tenThanhVien}</div>
+										</a>
+										
+										<a href="/get-log-out" class="dang-xuat"><i class="fas fa-sign-out-alt"></i></a>
 								</div>`
 								);
 							}else{

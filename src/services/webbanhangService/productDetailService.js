@@ -16,7 +16,7 @@ let getSanPhamLienQuan = (idDanhSach,idSp)=>{
                 SELECT 
                 *  
                 FROM products
-                where idDanhSach = ${idDanhSach}  order by id DESC limit 12
+                where idDanhSach = ${idDanhSach} and status = 0  order by id DESC limit 12
                 `, { type: QueryTypes.SELECT });
            
             if(getSanPhamLienQuanId.length > 0&& getIdCategory.length >0){

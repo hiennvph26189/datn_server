@@ -2,8 +2,7 @@ import accountService from "../../services/webbanhangService/accountService";
 import setToken from "./convertToken.js"
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
-const cookies = require('cookie');
-require('dotenv').config();
+const cookie = require('cookie');
 
 let getLogin = async (req, res) => {
   
@@ -72,14 +71,6 @@ let postLoginMenber = async (req, res) => {
                 
             }else{
                 await setToken.setToken(req, res, dataUser)
-                // const secretKey = process.env.MY_SECRET_KEY
-                // const token = jwt.sign(dataUser, secretKey, { expiresIn: '1d' });
-                // res.setHeader('Set-Cookie', cookies.serialize('accessToken', token, {
-                //   httpOnly: true,
-                //   maxAge: 1 * 24 * 60 * 60, // 30 days in seconds
-                //   sameSite: 'strict',
-                //   path: '/'
-                // }));
                 return res.send(postLogin)
             }
        
@@ -126,10 +117,74 @@ let getNameUser = async (req, res) => {
      }
    
   };
+  let getLogOut = async (req, res) => {
+    
+  
+    try {
+        await setToken.setTokenLogOut(req, res)
+        
+      
+     
+     } catch (error) {
+         console.log("Lỗi phân quyền",error)
+        return res.status(200).json({
+             errCode: -1,
+             errMessage: 'Không kết nối được với sever'
+        })
+     }
+   
+  }; 
+
+let getProfileMember = async (req, res) => {
+    
+  
+    try {
+        var cookie = req.cookies.accessToken;
+        const secretKey = process.env.MY_SECRET_KEY 
+        let user_id = jwt.verify(cookie, secretKey, (err, user) => {
+            if (err) {
+                return res.status(403).json({ message: 'Token verification failed' });
+            }
+            req.user = user;
+            return user.id
+            
+            });
+        let infoUser =  await accountService.getOneUserInfoService(user_id)
+        let price_member = infoUser.selectUser.tienTk.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })
+        let list_order =  await accountService.getCountOrder(user_id)
+        
+        return res.render('webBanHang/profileMember.ejs',{infoUser:infoUser.selectUser,price:price_member,totalOrder:list_order.getCountOrder})
+     } catch (error) {
+         console.log("Lỗi phân quyền",error)
+        return res.status(200).json({
+             errCode: -1,
+             errMessage: 'Không kết nối được với sever'
+        })
+     }
+   
+  };
+let getDanhMucProfile = async (req, res) => {
+    
+  
+    try {
+        
+        return res.render('webBanHang/listDanhMucProfileMember.ejs')
+     } catch (error) {
+         console.log("Lỗi phân quyền",error)
+        return res.status(200).json({
+             errCode: -1,
+             errMessage: 'Không kết nối được với sever'
+        })
+     }
+   
+  };
 module.exports = {
     getLogin:getLogin,
     getRegister:getRegister,
     postRegister:postRegister,
     postLoginMenber:postLoginMenber,
-    getNameUser:getNameUser
+    getNameUser:getNameUser,
+    getLogOut:getLogOut,
+    getProfileMember:getProfileMember,
+    getDanhMucProfile:getDanhMucProfile
 }

@@ -61,8 +61,8 @@ let webQuanTri = (app)=>{
     router.post('/api/post-image-product',uploadCloud.single('image'),productController.handleUploadFileProduct);
     router.post('/api/delete-image-product',productController.handleDeleteFileProduct);
     router.get('/api/get-all-catygory-product',productController.handleGetAllCategoryProduct);
-    
-  
+    // tìm kiếm sản phẩm admin
+    router.get('/api/search-product-admin',productController.handleSearchProduct);
 
     
    

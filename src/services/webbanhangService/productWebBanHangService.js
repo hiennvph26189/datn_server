@@ -8,7 +8,7 @@ let getSanPhamBanChayProductsService = ()=>{
         try {
 
             let  data = await sequelize.query(`
-            SELECT id,tenSp,giaSanPham,sale,image,luotMua FROM  products order by luotMua desc limit 6 
+            SELECT id,tenSp,giaSanPham,sale,image,luotMua FROM  products where status = 0 order by luotMua desc limit 6 
                 `, { type: QueryTypes.SELECT });
                
                
@@ -32,7 +32,7 @@ let getNewProductsService = ()=>{
         try {
 
             let  newProducts = await sequelize.query(`
-            SELECT id,tenSp,giaSanPham,sale,image FROM  products  order by id desc limit 12
+            SELECT id,tenSp,giaSanPham,sale,image FROM  products where status = 0  order by id desc limit 12
                 `, { type: QueryTypes.SELECT });
                
                 resolve({ 
@@ -56,7 +56,7 @@ let getProductsSaleService = ()=>{
         try {
 
             let  productsSales = await sequelize.query(`
-            SELECT id,tenSp,giaSanPham,sale,image FROM  products where sale > 15 or sale = 15 order by sale desc limit 12
+            SELECT id,tenSp,giaSanPham,sale,image FROM  products where sale > 15 or sale = 15 and status = 0 order by sale desc limit 12
                 `, { type: QueryTypes.SELECT });
                
                 resolve({ 
@@ -80,7 +80,7 @@ let getProductsOrderService = ()=>{
         try {
 
             let  productsOrders = await sequelize.query(`
-            SELECT id,tenSp,giaSanPham,sale,image FROM  products  order by luotMua desc limit 12
+            SELECT id,tenSp,giaSanPham,sale,image FROM  products where status = 0  order by luotMua desc limit 12
                 `, { type: QueryTypes.SELECT });
                
                 resolve({ 
@@ -107,6 +107,7 @@ let getCategoriesService = ()=>{
             SELECT categories.id AS category_id, categories.name, products.id AS product_id, products.tenSp, products.idDanhSach, products.giaSanPham,products.sale,products.image
             FROM categories
              JOIN products ON categories.id = products.idDanhSach 
+             where products.status = 0
                 `, { type: QueryTypes.SELECT });
             // let arrData = []
             const combinedArray = [];
@@ -159,7 +160,7 @@ let getOneProductService = (id)=>{
         try {
 
             let  getOneProduct = await sequelize.query(`
-            SELECT * FROM  products  where id = '${id}'
+            SELECT * FROM  products  where id = '${id}' and status = 0
                 `, { type: QueryTypes.SELECT });
                
             if(getOneProduct.length > 0) {

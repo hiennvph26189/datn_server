@@ -207,6 +207,18 @@ let handleLichSuOrderCart = (id)=>{
                        
                     ]
                 })
+                let getDonHoan = await db.Orders.findAll({
+                    where: {idUser: id,
+                        [Op.or]: [
+                            { status: 10 },
+                            { status: 11 }
+                          ]
+                    },
+                    order: [
+                        ['id', 'DESC'],
+                       
+                    ]
+                })
                 let getAllProducts = await db.Products.findAll()
                 
                if(User){
@@ -219,7 +231,8 @@ let handleLichSuOrderCart = (id)=>{
                     getDaGiaoThanhCong:getDaGiaoThanhCong,
                     getDaDangGiao:getDaDangGiao,
                     getDonHuy:getDonHuy,
-                    getAllOrder:getAllOrder
+                    getAllOrder:getAllOrder,
+                    getDonHoan:getDonHoan
 
                 })
                }else{
@@ -530,15 +543,23 @@ let handleHuyOrderCart = (id)=>{
             })
            
          }else{
-            await db.Orders.update(
-                {status: 4},
-                {where: {id: id}}
-             )
-             
-             resolve({
-                errCode:0,
-                errMessage: 'update thành công'
-             })
+            if(Order.status === 0){
+                await db.Orders.update(
+                    {status: 4},
+                    {where: {id: id}}
+                 )
+                 
+                 resolve({
+                    errCode:0,
+                    errMessage: 'update thành công'
+                 })
+            }else{
+                resolve({
+                    errCode:1,
+                    errMessage: 'Đơn hàng của bạn đã được duyệt, bạn không thể hủy đơn hàng này'
+                 })
+            }
+            
          }
          
   
@@ -692,8 +713,10 @@ let addCardProductsSezesServiceAPP = (data)=>{
                                     })
                                 }
                         }else{
+
                                 let date = datetime.getdate()
-                                let thanh_tien = getOneProduct[0].giaSanPham - ((getOneProduct[0].giaSanPham*getOneProduct[0].sale)/100)
+                                let thanh_tien = getOneProduct[0].giaSanPham - ((getOneProduct[0].giaSanPham*getOneProduct[0].sale)/100) 
+                               
                                 await sequelize.query(`
                                 INSERT INTO carts (ipSanPham, idUser, size, soLuong,thanhTien,status,createdAt)
                                 VALUES (${id_product}, ${id_member}, "${size}", ${soLuong}, ${thanh_tien},0, "${date}");
@@ -780,7 +803,7 @@ let addCardProductsSezesServiceAPP = (data)=>{
 
                     }else{
                         let date = datetime.getdate()
-                        let thanh_tien = getOneProduct[0].giaSanPham - ((getOneProduct[0].giaSanPham*getOneProduct[0].sale)/100)
+                        let thanh_tien = (getOneProduct[0].giaSanPham - ((getOneProduct[0].giaSanPham*getOneProduct[0].sale)/100))*soLuong
                         await sequelize.query(`
                         INSERT INTO carts (ipSanPham, idUser, size, soLuong,thanhTien,status,createdAt)
                         VALUES (${id_product}, ${id_member}, "${size_data}", ${soLuong}, ${thanh_tien},0, "${date}");

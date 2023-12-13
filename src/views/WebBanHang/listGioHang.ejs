@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+  <head>
+    <%- include('./head'); %>
+    <title>Giỏ hàng</title>
+  </head>
+  <body>
+    <style>
+      .bg-header-nav .header-nav>ul.item_big>li.active{
+          background: #252525;
+      }
+
+  </style>
+    <%- include('./header'); %>
+    <div class="section_sidebar_slider">
+      <div class="container">
+        <div class="row">
+          <div class="dqdt-sidebar sidebar left-content col-lg-3 col-md-12 hidden-sm hidden-xs">
+            <div class="wrap_background_aside asidecollection">
+              
+            </div>
+            <div class="sanPhamBanChay">
+            </div>
+          </div>
+          
+          <div class="main_container collection col-lg-9 col-md-12 col-sm-12">
+            <section class="bread-crumb">
+                <span class="crumb-border"></span>
+                <div class="container no-padding">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <ul class="breadcrumb">					
+                                <li class="home">
+                                    <a href="/"><span>Trang chủ</span></a>						
+                                    <span class="mr_lr">&nbsp;<i class="fas fa-chervon-right"></i>&nbsp;</span>
+                                </li>
+                                <li><strong><span> Giỏ hàng</span></strong></li>     
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <div class="collectiontitle">
+                <h1 class="cat-heading">Giỏ hàng </h1>
+            </div>
+            <div class="container">
+
+                <div class="col-12 list-don-hang">
+
+                </div>
+            </div>
+           
+           
+           
+          </div>
+
+        </div>
+      </div>
+    </div>
+    
+    
+    <div class="modal fade " id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          
+        </div>
+      </div>
+    </div>
+    <%- include('./footer'); %>
+    <script
+        type="text/javascript"
+        src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"
+        ></script>
+    <script>
+    
+      $(document).ready(function () {
+        $.get("/danhmuc-profile-member", function (data) {
+                $(".asidecollection").empty().append(data);
+              });
+        $.get("/ajax-list-don-hang", function (data) {
+                $(".list-don-hang").empty().append(data);
+              });
+       
+      
+       
+      });
+     
+     function loadData() {
+      $.get("/ajax-list-don-hang", function (data) {
+                $(".list-don-hang").empty().append(data);
+              });
+     }
+
+      function congSoLuong(id){
+       let id_cart = parseInt(id)
+        $.get("/cong-soluong-cart?id_cart="+id_cart, function (data) {
+                console.log(data.errCode);
+                  if(data.errCode == 0){
+                    loadData()
+                  }
+              });
+      }
+      function truSoLuong(id){
+        let id_cart = parseInt(id)
+        $.get("/tru-soluong-cart?id_cart="+id_cart, function (data) {
+       
+          if(data.errCode == 0){
+            loadData()
+              }
+          });
+      }
+      function deleteCart(id){
+        let id_cart = parseInt(id)
+          if(id_cart){
+            $.ajax({
+              url: "/delete-cart?id_cart="+id_cart,
+              type: 'DELETE',
+              success: function(data) {
+                console.log(data);
+                if(data.errCode == 0){
+                  loadData()
+              }else{
+                alert(data.errMessage)
+              }
+              }
+          });
+          }else{
+            alert("Thất bại")
+          }   
+      }
+      function selectSize(id_cart) {
+          let value = $(this).val()
+          console.log(value);
+      }
+    </script>
+  </body>
+
+</html>
