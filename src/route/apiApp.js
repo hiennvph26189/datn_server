@@ -119,6 +119,8 @@ let apiApp = (app)=>{
     router.get('/api-app/get-like-products',likeProductControllerAPP.getLikeProducts);
    // api post sản phẩm yêu thích
     router.post('/api-app/like-products',likeProductControllerAPP.handlePostLikeProduct);
+    // get one sản phẩm yêu thích
+    router.get('/api-app/get-one-like-product',likeProductControllerAPP.handleGetOneLikeProducts);
     // api xóa sản phẩm yêu thích
     router.delete('/api-app/delete-like-products',likeProductControllerAPP.handleDeleteLikeProduct);
     // api thêm địa chỉ members
@@ -168,6 +170,7 @@ let apiApp = (app)=>{
     router.get('/api-app/get-item-address-order-detail',addressControllerAPP.getItemAddressOrderDetail);
     // get phuong thức thanh toán theo order
     router.get('/api-app/get-method-thanh-toan',thanhToanController.getMethodPayOrder);
+
     return app.use("/",router)
 }
 module.exports = apiApp
