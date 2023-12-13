@@ -89,12 +89,15 @@ let ajaxListDonHangCart = async (req, res) => {
         
         let id_member = checkIdUser(req,res,cookie)
         let data_cart = await productsServicesAPP.listProductsCarrt(id_member)
+        let total_price_cart = await orderCartServiceWev.totalPriceCart(id_member)
+        let tongTien = total_price_cart.tongTien.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })
         let newArrProducts = getConvertArrProduct(data_cart.dataCarrt)
         let arr_size = data_cart.data.sizes
-        console.log(arr_size);
+       
         return res.render("webBanHang/ajaxListDonHang.ejs",{
            data_cart: newArrProducts,
-           arr_size: arr_size
+           arr_size: arr_size,
+           tongTien:tongTien
         } )
      } catch (error) {
          console.log("Lỗi phân quyền",error)

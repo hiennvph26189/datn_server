@@ -13,7 +13,7 @@ let getDiaChimember = async (req, res) => {
         })
      }
    
-};
+};  
 
 module.exports = {
     getDiaChimember:getDiaChimember,

@@ -28,7 +28,7 @@
         </td>
         <td class="col-2">
            
-             <select class="form-select " aria-label="Default select example" style="width: 80%;">
+             <select class="form-select " onchange="selectSize(`<%= item.id_cart %>`)" aria-label="Default select example" style="width: 80%;">
                 <% if(item.size =="S" && item.S > 0){ %> 
                     <option value="S" data-value="<%= item.S %>" selected>S</option> 
                <% } else{ %>
@@ -62,9 +62,9 @@
         </td>
         <td class="col-2">
             <div class="edit-soluong">
-                <button onclick="congSoLuong(`<%= item.id_cart %>`)" data-id-cart="<%= item.id_cart %>" class="btn btn-primary"><i class="fa fa-plus "></i></button>
+                <button onclick="congSoLuong(`<%= item.id_cart %>`)" data-id-cart="<%= item.id_cart %>" class="btn btn-primary btn-sm"><i class="fa fa-plus "></i></button>
                 <div style="font-size: 17px;font-weight: 500;"><%= item.soLuong %></div>
-                <button onclick="truSoLuong(`<%= item.id_cart %>`)" class="btn btn-danger"><i class="fa fa-minus"></i></button>
+                <button onclick="truSoLuong(`<%= item.id_cart %>`)" class="btn btn-danger btn-sm"><i class="fa fa-minus"></i></button>
             </div>
                
           
@@ -79,6 +79,12 @@
       <% }); %>  
     </tbody>
   </table>
+  <div class="total-price" style="text-align: right;font-size: 28px;font-weight: 600; color: red;">
+        Tổng tiền: <%= tongTien %>
+  </div>
+  <div style="text-align: right; margin-bottom: 20px;">
+    <button class="btn-lg btn-dark">Đặt hàng</button>
+  </div>
   <style>
     .ten-sp{
         font-size: 20px;
