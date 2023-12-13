@@ -3,7 +3,8 @@ import categoriesService from "../../services/webQuanTriService/categoriesServic
 
 let handleAddCategories = async (req, res) => {
     try {
-        let message = await  categoriesService.AddCategoriesService(req.body)
+        let page =  req.query.page;
+        let message = await categoriesService.getCategoryWithPagination(page)
         console.log(message)
         return res.status(200).json(message)
      } catch (error) {

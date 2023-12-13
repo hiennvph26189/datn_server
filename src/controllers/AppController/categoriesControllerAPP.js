@@ -1,9 +1,9 @@
 import categoriesService from "../../services/appServices/categoriesServiceAPP";
 let handleGetAllcategories = async (req, res) => {
-    
-  
+
     try {
-        let data = await categoriesService.handleGetAllCategories();
+        let page =  req.query.page;
+        let data = await categoriesService.getCategoryWithPagination(page);
         return res.status(200).json(data) 
      } catch (error) {
          console.log("Lỗi phân quyền",error)
