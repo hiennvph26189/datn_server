@@ -48,14 +48,14 @@ let handleAddHangsxServices = (data) => {
 }
 let handlePutHangsxServices = (data) => {
     return new Promise(async (resolve, reject) => {
-
+        console.log(data.id)
         try {
+            
             let selectIdHangsx = await sequelize.query(`
             SELECT *
             FROM hangsx
             WHERE id=${data.id}
             `, { type: QueryTypes.SELECT });
-
             if (selectIdHangsx.length > 0) {
                 let id = data.id;
                 let name = data.name;
@@ -65,7 +65,7 @@ let handlePutHangsxServices = (data) => {
                  UPDATE hangsx
                  SET name = '${name}', status = '${status}', updateAt = '${date}'
                  WHERE id=${id};
-                    `, { type: QueryTypes.UPDATE });
+                    `, { type: QueryTypes.UPDATE});
 
                 resolve({
                     errCode: 0,
@@ -114,10 +114,39 @@ let handleDeleteHangsxServices = (data) => {
         }
     })
 }
+let getHangsxWithPagination = (page)=>{
+    return new Promise(async(resolve, reject)=>{
+        try {
+            let totalCount = await sequelize.query(`
+                    SELECT COUNT(*) as total FROM  hangsx 
+                        `, { type: QueryTypes.SELECT });
+                    let pageNumber = page;
+                    let limit = 2; // Số lượng sản phẩm trên mỗi trang
+                    let offset = (pageNumber - 1) * limit;
+                    let  hangsx = await sequelize.query(`
+                    SELECT * FROM  hangsx  order by id desc limit ${limit} OFFSET ${offset}
+                        `, { type: QueryTypes.SELECT });
+                    let totalPages = Math.ceil(totalCount[0].total / limit);
+                    if(hangsx.length > 0 ){
+                        resolve({ 
+                            errCode:0,
+                            errMessage: 'thành công',
+                            hangsx:hangsx,
+                            nameHangsx: "Hang San Xuat",
+                            totalCount:totalPages
+                        })
+                    }    
+  
+        } catch (error) {
+             reject(error);
+        }
+     }) 
+}
 module.exports  = {
     handleGetHangsxServices:handleGetHangsxServices,
     handleAddHangsxServices:handleAddHangsxServices,
     handlePutHangsxServices:handlePutHangsxServices,
     handleDeleteHangsxServices:handleDeleteHangsxServices,
+    getHangsxWithPagination:getHangsxWithPagination,
     
 }

@@ -2,7 +2,8 @@ import HangsxServieceADMIN from "../../services/webQuanTriService/hangsxServiceA
 
 let HangsxADMIN = async (req, res) => {
     try {
-        let dulieu = await HangsxServieceADMIN.handleGetHangsxServices();
+        let page =  req.query.page;
+        let dulieu = await HangsxServieceADMIN.getHangsxWithPagination(page);
         return res.status(200).json(dulieu)
     } catch (error) {
         console.log("Lỗi phân quyền", error)
