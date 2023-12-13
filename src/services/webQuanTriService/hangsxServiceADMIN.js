@@ -121,7 +121,7 @@ let getHangsxWithPagination = (page)=>{
                     SELECT COUNT(*) as total FROM  hangsx 
                         `, { type: QueryTypes.SELECT });
                     let pageNumber = page;
-                    let limit = 2; // Số lượng sản phẩm trên mỗi trang
+                    let limit = 10; // Số lượng sản phẩm trên mỗi trang
                     let offset = (pageNumber - 1) * limit;
                     let  hangsx = await sequelize.query(`
                     SELECT * FROM  hangsx  order by id desc limit ${limit} OFFSET ${offset}

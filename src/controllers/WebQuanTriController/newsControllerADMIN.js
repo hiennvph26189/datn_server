@@ -2,8 +2,6 @@ import newsService from "../../services/webQuanTriService/newsServiceADMIN";
 
 
 let handleAddNews = async (req, res) => {
-    
-  
     try {
         let data = req.body
         let message = await newsService.AddNewsService(data);
@@ -18,8 +16,6 @@ let handleAddNews = async (req, res) => {
    
 };
 let handleEditNews = async (req, res) => {
-    
-  
     try {
         let data = req.body
         let message = await newsService.EditNewsService(data);
