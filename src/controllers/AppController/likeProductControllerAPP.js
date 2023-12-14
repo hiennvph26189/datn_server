@@ -3,9 +3,9 @@ let handlePostLikeProduct = async (req, res) => {
     try {
         let data  = req.body;
         let postLienHe = await likeProductServiceAPP.postLikeProductService(data);
-        if(postLienHe.errCode == 1){
+       
             return res.status(200).json(postLienHe)
-        }
+      
         
      } catch (error) {
          console.log("Lỗi phân quyền",error)
@@ -19,9 +19,9 @@ let handleDeleteLikeProduct = async (req, res) => {
     try {
         let data  = req.body;
         let postLienHe = await likeProductServiceAPP.deleteLikeProductService(data);
-        if(postLienHe.errCode == 1){
+   
             return res.status(200).json(postLienHe)
-        }
+      
         
      } catch (error) {
          console.log("Lỗi phân quyền",error)
