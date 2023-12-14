@@ -716,7 +716,7 @@ let addCardProductsSezesServiceAPP = (data)=>{
 
                                 let date = datetime.getdate()
                                 let thanh_tien = getOneProduct[0].giaSanPham - ((getOneProduct[0].giaSanPham*getOneProduct[0].sale)/100) 
-                               
+                                console.log(thanh_tien);
                                 await sequelize.query(`
                                 INSERT INTO carts (ipSanPham, idUser, size, soLuong,thanhTien,status,createdAt)
                                 VALUES (${id_product}, ${id_member}, "${size}", ${soLuong}, ${thanh_tien},0, "${date}");
@@ -779,7 +779,7 @@ let addCardProductsSezesServiceAPP = (data)=>{
                         let soluong_size_sp = selectSize[0][size_data]
                     
                         let soLuongSize = parseInt(soluongCart) + parseInt(soLuong)
-                        console.log(soluong_size_sp, "a;kd;fakd")
+                        
                         if(soLuongSize > soluong_size_sp){
                             resolve({
                                 errCode:1,
@@ -803,6 +803,7 @@ let addCardProductsSezesServiceAPP = (data)=>{
 
                     }else{
                         let date = datetime.getdate()
+                        console.log(getOneProduct);
                         let thanh_tien = (getOneProduct[0].giaSanPham - ((getOneProduct[0].giaSanPham*getOneProduct[0].sale)/100))*soLuong
                         await sequelize.query(`
                         INSERT INTO carts (ipSanPham, idUser, size, soLuong,thanhTien,status,createdAt)

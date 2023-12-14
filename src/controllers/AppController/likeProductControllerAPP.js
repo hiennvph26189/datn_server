@@ -17,7 +17,7 @@ let handlePostLikeProduct = async (req, res) => {
 };
 let handleDeleteLikeProduct = async (req, res) => {
     try {
-        let data  = req.body;
+        let data  = req.query;
         let postLienHe = await likeProductServiceAPP.deleteLikeProductService(data);
    
             return res.status(200).json(postLienHe)
