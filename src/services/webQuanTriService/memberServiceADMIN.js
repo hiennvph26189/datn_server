@@ -64,10 +64,6 @@ let hashUserPassword = (password) => {
     })
 }
 
-
-
-
-
 let EditMembersService = (data) => {
     return new Promise(async (resolve, reject) => {
 
@@ -376,10 +372,50 @@ let DeleteNapTienMember = (id) => {
 
     })
 }
+
+let handleSearchMemberServiceADMIN = (key_search,page)=>{
+    return new Promise(async(resolve, reject)=>{
+        try {
+            let totalCount = await sequelize.query(`
+                SELECT COUNT(*) as total FROM  members where email LIKE '${key_search}%'
+                    `, { type: QueryTypes.SELECT });
+                let pageNumber = page;
+                let limit = 3; // Số lượng sản phẩm trên mỗi trang
+                let offset = (pageNumber - 1) * limit;
+            let  data = await sequelize.query(`
+            SELECT id,email,tenThanhVien,gioiTinh,anhDaiDien,soDienThoai,diaChi,tienTk,status FROM  members where  email LIKE '${key_search}%' order by id DESC limit ${limit} offset ${offset}
+                `, { type: QueryTypes.SELECT });
+            let totalPages = Math.ceil(totalCount[0].total / limit); 
+            if(data.length > 0 && key_search !==""){
+                resolve({ 
+                    errCode:0,
+                    errMessage: 'thành công',
+                    data:data,
+                    totalCount:totalPages,
+                 
+                 })
+            }else{
+                resolve({ 
+                    errCode:1,
+                    errMessage: 'Không có Members nào tồn tại',
+                    data:[],
+                    totalCount:0
+                 })
+            }
+         
+         
+         
+  
+        } catch (error) {
+             reject(error);
+        }
+         
+         
+     }) 
+}
 module.exports = {
     handleGetAllMembers: handleGetAllMembers,
-   
-   
+    handleSearchMemberServiceADMIN:handleSearchMemberServiceADMIN,
     EditMembersService: EditMembersService,
     deleteMembersService: deleteMembersService,
     napTienMembersService: napTienMembersService,
