@@ -115,7 +115,9 @@ let apiApp = (app)=>{
     // list all news
     router.get('/api/get-all-news',newsControllerAPP.handleGetAllNews);
     router.get('/get/one-member',memberControllerAPP.handleGetOneMembers);
-   // api sản phẩm yêu thích
+    // api san pham yeu thich
+    router.get('/api-app/get-like-products',likeProductControllerAPP.getLikeProducts);
+   // api post sản phẩm yêu thích
     router.post('/api-app/like-products',likeProductControllerAPP.handlePostLikeProduct);
     // api xóa sản phẩm yêu thích
     router.delete('/api-app/delete-like-products',likeProductControllerAPP.handleDeleteLikeProduct);

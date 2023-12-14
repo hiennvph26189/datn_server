@@ -1,4 +1,8 @@
 import db from "../../models/index";
+const { QueryTypes } = require('sequelize');
+// import sequelize from "../../src/config/queryDatabase"
+import sequelize from "../../config/queryDatabse"
+import dateTime from "../getDate";
 
 let handleGetAllCategories = ()=>{
     return new Promise(async(resolve, reject)=>{
@@ -114,10 +118,12 @@ let editCategoryService = (data)=>{
         
     })
 }
+
 module.exports  = {
     handleGetAllCategories: handleGetAllCategories,
     AddCategoriesService:AddCategoriesService,
     deleteCategory:deleteCategory,
-    editCategoryService:editCategoryService
+    editCategoryService:editCategoryService,
+
     
 }

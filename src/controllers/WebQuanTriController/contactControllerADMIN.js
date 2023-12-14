@@ -28,8 +28,10 @@ let putPhanHoiContactADMIN = async (req, res) => {
             port: 465,
             secure: true,
             auth: {
+
                 user: 'testsendnodemail@gmail.com',
                 pass: 'qhvb xuyd sfjo vslc',
+
             },
         });
 

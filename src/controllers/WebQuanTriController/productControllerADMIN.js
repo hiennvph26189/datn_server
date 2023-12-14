@@ -150,6 +150,8 @@ let handleGetAllCategoryProduct = async (req, res) => {
     })
  }
 };
+
+
 let handleSearchProduct = async (req, res) => {
     try {  
         let key_search = req.query.key_search;

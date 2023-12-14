@@ -11,6 +11,7 @@ import newsController from "../controllers/WebQuanTriController/newsControllerAD
 import sizeControllerADMIN from "../controllers/WebQuanTriController/sizeControllerADMIN";
 import contactControllerADMIN from "../controllers/WebQuanTriController/contactControllerADMIN";
 import thanhtoanControllerADMIN from "../controllers/WebQuanTriController/thanhtoanControllerADMIN";
+import hangsxControllerADMIN from "../controllers/WebQuanTriController/hangsxControllerADMIN";
 
 import appRoot from "app-root-path"
 import  uploadCloud from '../config/uploadFile'
@@ -114,6 +115,15 @@ let webQuanTri = (app)=>{
 
     // get Sise admin WebQuanTri
     router.get('/api-admin/getSize',sizeControllerADMIN.getSizeADMIN);
+
+    // API Hangsx ADMIN
+    router.get('/api-admin/hangsx',hangsxControllerADMIN.HangsxADMIN);
+    //API POST Hangsx
+    router.post('/api-admin/post-hangsx',hangsxControllerADMIN.handlePostHangsx);
+    // API PUT HANGSX ADMIN
+    router.put('/api-admin/put-hangsx',hangsxControllerADMIN.handlePutHangsx);
+    // API DELETE HANGSX ADMIN
+    router.delete('/api-admin/delete-hangsx',hangsxControllerADMIN.handleDeleteHangsx);
     
     
     return app.use("/",router)

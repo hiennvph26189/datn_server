@@ -55,7 +55,6 @@ let getUserWithPagination = (page)=>{
                     SELECT COUNT(*) as total FROM  contact 
                         `, { type: QueryTypes.SELECT });
                     let pageNumber = page;
-                   
                     let limit = 10; // Số lượng sản phẩm trên mỗi trang
                     let offset = (pageNumber - 1) * limit;
                     let  lienhe = await sequelize.query(`

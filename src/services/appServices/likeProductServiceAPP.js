@@ -88,7 +88,30 @@ let deleteLikeProductService = (data)=>{
          
      }) 
 }
+
+let LikeProductServices = () => {
+    return new Promise(async (resolve, reject) => {
+
+        try {
+            const data = await sequelize.query(`
+                SELECT *
+                FROM like_products
+                ORDER BY id DESC
+                `, { type: QueryTypes.SELECT });
+
+            resolve({
+                errCode: 0,
+                errMessage: 'thành công',
+                data: data
+            })
+
+        } catch (error) {
+            reject(error);
+        }
+    })
+}
 module.exports={
     postLikeProductService:postLikeProductService,
-    deleteLikeProductService:deleteLikeProductService
+    deleteLikeProductService:deleteLikeProductService,
+    LikeProductServices:LikeProductServices
 }
