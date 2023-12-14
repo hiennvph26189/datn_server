@@ -60,38 +60,10 @@
             </div>
             <div class="container">
                 <div class="col-12">
-                        <div class="list-item-address">
-                                <div class="row item-child">
-                                    <div class="col-sm-1 col-md-1" style="display: flex;justify-content: center;align-items: center;">
-                                        <form action="/edit-status-member" method="post" style="margin-bottom: 0;">
-                                            <div class="form-check">
-                                                <input class="form-check-input" style="font-size: 20px;"  checked type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                                               
-                                              </div>
-                                        </form>
-                                    </div>
-                                    <div class="col-sm-9 col-md-89">
-                                        <div class="child-header">
-                                            <div class="fullname">Nguyễn Văn Hiển</div>    
-                                            <div style="margin: 0 15px;"> | </div>                                        
-                                            <div class="phone">0373753158</div>                                            
-                                        </div>
-                                        <div class="address">
-                                            Thông nhất - gialocj- hải dương
-                                        </div>
-                                        <div class="status-address">
-                                            Mặc định
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-2 col-md-2" style="display: flex;justify-content: space-around;align-items: center;">
-                                          
-                                                <a href="/edit-address-member" class="btn btn-success">Sửa</a>
-                                                <a href="/delete-address" class="btn btn-danger">Xóa</a>
-                                          
-                                    </div>
-                                    
-                                </div>
-                        </div>
+                      <div class="list-item-address" style="margin-bottom: 30px;">
+                              
+                              
+                      </div>
                 </div>
             </div>
            
@@ -105,13 +77,13 @@
     
     
     <div class="modal fade " id="add-address" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
+      <div class="modal-dialog  modal-lg">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">Thêm mới địa chỉ</h5>
-            <button type="button" class="close" data-bs-dismiss="modal">
+            <button type="button" class="close" data-bs-dismiss="modal" id="closeAddDiaChi">
               <span aria-hidden="true">×</span></button></div>
-          <form style="margin: 0;">
+          <form action="/add-address-member" method="post" style="margin: 0;" id="themmoichiachi">
             <div class="modal-body">
             
               <div class="form-group">
@@ -125,7 +97,7 @@
               </div>
               <div class="form-group col-6">
                 <label for="exampleFormControlSelect1">Tỉnh/thành phố</label>
-                <select class="form-select" onchange="getTinh()" id="tinh-tp">
+                <select class="form-select" onchange="getTinh()" id="tinh-tp" name="tenTinh">
                  
                 </select>
               </div>
@@ -135,19 +107,89 @@
              
               </div>
               <div class="form-group col-6" id="select-xa-phuong">
-                
+              
             
               </div>
-              <div class="form-group">
-                <label for="detai-address">Địa chỉ cụ thể</label>
-                <input type="text" name="detai-address" class="form-control" id="detai-address"  placeholder="Số đại chỉ cụ thể">
+              <div class="form-group" id="detai-address">
+               
                 
               </div>
             </div>
             
             <div class="modal-footer">
+              <button type="button" data-bs-toggle="modal" data-bs-target="#thongBao" id="showThongBao" hidden>Thông báo</button>
+              <button type="submit" class="btn btn-success">Thêm mới</button>
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+            </div>
+        </form>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="thongBao" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-top">
+        <div class="modal-content">
+          <div class="modal-header bg-white " >
+            <h5 class="modal-title text-dark" id="staticBackdropLabel">Thông báo</h5>
+            <button type="button" class="close" data-bs-dismiss="modal">
+              <span aria-hidden="true">×</span></button>
+          </div>
+          <div class="modal-body" id="errMessage">
+            
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+           
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade " id="edit-address" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog  modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Sửa địa chỉ</h5>
+            <button type="button" class="close" data-bs-dismiss="modal" id="closeAddDiaChi">
+              <span aria-hidden="true">×</span></button></div>
+          <form action="/edit-address-member" method="post" style="margin: 0;" id="suaDiaChi">
+            <div class="modal-body">
+            
+              <div class="form-group">
+                <label for="name">Họ tên người nhận</label>
+                <input type="text" name="name" class="form-control" id="editname" value=""  placeholder="Nhập họ tên người nhận">
+                
+              </div>
+              <div class="form-group">
+                <label for="number">Số điện thoại</label>
+                <input type="text" class="form-control" name="phone" id="editnumber" value="" placeholder="Nhập số điện thoại">
+              </div>
+              <div class="form-group">
+                <label for="number">Địa chỉ</label>
+                <input type="text" class="form-control" name="address" id="editaddress" value="" placeholder="Địa chỉ của bạn" disabled>
+              </div>
+              <div class="form-group col-6">
+                <label for="exampleFormControlSelect1">Tỉnh/thành phố</label>
+                <select class="form-select" onchange="getTinh()" id="tinh-tp" name="tenTinh">
+                 
+                </select>
+              </div>
+              <div class="form-group col-6" id="select-quan-huyen">
+                
+                  
+             
+              </div>
+              <div class="form-group col-6" id="select-xa-phuong">
               
-              <button type="button" class="btn btn-success">Thêm mới</button>
+            
+              </div>
+              <div class="form-group" id="detai-address">
+               
+                
+              </div>
+            </div>
+            
+            <div class="modal-footer">
+              <button type="button" data-bs-toggle="modal" data-bs-target="#thongBao" id="showThongBao" hidden>Thông báo</button>
+              <button type="submit" class="btn btn-success">Thêm mới</button>
               <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
             </div>
         </form>
@@ -160,16 +202,17 @@
         src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"
         ></script>
     <script>
-    
-      $(document).ready(function () {
-        $.get("/danhmuc-profile-member", function (data) {
-                $(".asidecollection").empty().append(data);
-              });
-        
-             
-      
-       
-      });
+      function loadItemAddresses() {
+          $.get("/item-list-addess", function (data) {
+                  $(".list-item-address").empty().append(data);
+                });
+        }
+        $(document).ready(function () {
+          $.get("/danhmuc-profile-member", function (data) {
+                  $(".asidecollection").empty().append(data);
+                });
+            loadItemAddresses()
+        });
      
       $('#sapxep').on('change', function(e){
     
@@ -188,9 +231,9 @@
           if(data.errCode == 0){
             let arrTinh = data.listTinhThanh
             $("#tinh-tp").empty().append( 
-              '<option value="0">------ Chọn tỉnh thành --------</option> '+
+              '<option value="" data-tinh="0">------ Chọn tỉnh thành --------</option> '+
               arrTinh.map(function (item, i){
-                  return `<option value="${item.id}" data-tinh='${item._name}' >${item._name}</option>`
+                  return `<option value="${item._name}" data-tinh='${item.id}' >${item._name}</option>`
               })
 
             );
@@ -200,24 +243,26 @@
 
       })
       function getTinh(){
-          let idTinh = $('#tinh-tp').val();
-          let name = $('#tinh-tp option:selected').data("tinh");
+          let  name = $('#tinh-tp').val();
+          let  idTinh= $('#tinh-tp option:selected').data("tinh");
           $("#select-xa-phuong").empty().append("")
+          $("#detai-address").empty().append("")
+   
           if(parseFloat(idTinh)>0){
            
                 $.get("/api-app/quan?tinh="+idTinh, function (data) {
             
                   
-                    if(data.errCode == 0){
+                    if(data.errCode ==0){
                       let arrQuan = data.listQuan
-                      console.log(arrQuan);
+                     
                       $("#select-quan-huyen").empty().append( 
                         `
                         <label for="exampleFormControlSelect1" >Quận/huyện</label>
-                    <select class="form-select" onchange="getQuanHuyen()" id="quan-huyen">
-                        <option value="0">------ Chọn Quận Huyện --------</option> `+
+                    <select class="form-select" onchange="getQuanHuyen()" id="quan-huyen" name="tenQuanHuyen">
+                        <option value="">------ Chọn Quận Huyện --------</option> `+
                         arrQuan.map(function (item, i){
-                            return `<option value="${item.id}" data-quan-huyen='${item._prefix +' '+item._name}' >${item._prefix +' '+item._name}</option>`
+                            return `<option value="${item._prefix +' '+item._name}" data-quan-huyen='${item.id}' >${item._prefix +' '+item._name}</option>`
                         })
                         +
                         `<select
@@ -230,12 +275,14 @@
           }else{
             $("#select-quan-huyen").empty().append("")
             $("#select-xa-phuong").empty().append("")
+            $("#detai-address").empty().append("")
           }
       }
       function getQuanHuyen(){
-          let idTinh = $('#tinh-tp').val();
-          let idQuan = $('#quan-huyen').val();
-          let name = $('#quan-huyen option:selected').data("quan-huyen");
+          let idTinh = $('#tinh-tp option:selected').data("tinh");
+          let  name= $('#quan-huyen').val();
+          let  idQuan= $('#quan-huyen option:selected').data("quan-huyen");
+          $("#detai-address").empty().append("")
           if(parseFloat(idTinh&&idQuan)>0){
            
                 $.get("/api-app/xa?tinh="+idTinh+"&quan="+idQuan, function (data) {
@@ -243,19 +290,31 @@
                   
                     if(data.errCode == 0){
                       let arrXa = data.listXa
-                      console.log(arrXa);
-                      $("#select-xa-phuong").empty().append( 
+                      if(arrXa.length > 0){
+                        $("#select-xa-phuong").empty().append( 
                         `
                         <label for="exampleFormControlSelect1" >Xã/Phường</label>
-                    <select class="form-select" onchange="getXaPhuong()" id="quan-huyen">
-                        <option value="0">------ Chọn Xã Phường --------</option> `+
+                    <select class="form-select" onchange="getXaPhuong()" name="tenXaPhuong" id="xa-phuong">
+                        <option value="">------ Chọn Xã Phường --------</option> `+
                         arrXa.map(function (item, i){
-                            return `<option value="${item.id}" data-xa-phuong='${item._prefix +' '+item._name}' >${item._prefix +' '+item._name}</option>`
+                            return `<option value="${item._prefix +' '+item._name}" data-xa-phuong='${item.id}' >${item._prefix +' '+item._name}</option>`
                         })
                         +
                         `<select
                         `
                       );
+                      }else{
+                        $("#select-xa-phuong").empty().append( 
+                        `
+                        <label for="exampleFormControlSelect1" >Xã/Phường</label>
+                    <select class="form-select" onchange="getXaPhuong()" name="tenXaPhuong" id="xa-phuong">
+                        <option value="koCo">------ Không có --------</option> `+
+                        
+                        `<select
+                        `
+                      );
+                      }
+                      
                 }
           
                 
@@ -264,7 +323,89 @@
             $("#select-xa-phuong").empty().append("")
           }
       }
-      console.log("s");
+     function getXaPhuong(){
+      let  name= $("#xa-phuong").val();
+      console.log("OKSPJSA");
+      if(name !=""){
+        $("#detai-address").empty().append(` <label for="detai-address">Địa chỉ cụ thể</label>
+                <input type="text" name="detai_address" class="form-control" id="detai-address"  placeholder="Số đại chỉ cụ thể">` )
+      }else{
+        $("#detai-address").empty().append("")
+      }
+          
+      }
+      $("#themmoichiachi").submit(function(e) {
+
+          e.preventDefault(); // avoid to execute the actual submit of the form.
+
+          var form = $(this);
+          var actionUrl = form.attr('action');
+            
+          $.ajax({
+            type: "POST",
+            url: actionUrl,
+            data: form.serialize(), 
+            success: function (data) {
+                    if(data.errCode == 0){
+                        $("#name").val("")
+                        $("#phone").val("")
+                        $("#tinh-tp").val("")
+                        $("#select-quan-huyen").empty().append("")
+                        $("#select-xa-phuong").empty().append("")
+                        $("#detai-address").empty().append("")
+                        loadItemAddresses()
+                        $("#closeAddDiaChi").click()
+
+                    }else{
+                     
+                      $("#errMessage").empty().append(`<h5>${data.errMessage}</h5>`)
+                      $('#showThongBao').click()
+                    
+                     //alert(data.errMessage)
+                    }
+                  },
+                  error: function (data) {
+                      console.log('An error occurred.');
+                      console.log(data);
+                  },
+          });
+
+          });
+
+      function deleteAddressMember(id_addres) {
+        // console.log(id_address);
+        let id_address = parseInt(id_addres)
+          if(id_address){
+            $.ajax({
+              url: "/delete-address-member?id_address="+id_address,
+              type: 'DELETE',
+              success: function(data) {
+                console.log(data);
+                if(data.errCode == 0){
+                  loadItemAddresses()
+              }else{
+                $("#errMessage").empty().append(`<h5>${data.errMessage}</h5>`)
+              }
+              }
+          });
+          }else{
+            alert("Thất bại")
+          }  
+      }
+      function setStatusAddress(id){
+        let id_address = parseInt(id)
+          if(id_address){
+            $.get("/set-status-address?id_address="+id_address, function (data) {
+                if(data.errCode == 0){
+                  loadItemAddresses()
+                }else{
+                  $("#errMessage").empty().append(`<h5>${data.errMessage}</h5>`)
+                }
+            })
+          }else{
+            alert("Thất bại")
+          }  
+      }
     </script>
   </body>
 

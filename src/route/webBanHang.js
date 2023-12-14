@@ -75,6 +75,10 @@ let webBanHang = (app)=>{
     router.get('/cong-soluong-cart',myMiddleware.checkLogin,orderController.congSoLuongCart);
     router.get('/tru-soluong-cart',myMiddleware.checkLogin,orderController.truSoLuongCart);
     router.delete('/delete-cart',myMiddleware.checkLogin,orderController.deleteCart);
+    router.get('/item-list-addess',myMiddleware.checkLogin,addressMember.handleItemListAddess);
+    router.post('/add-address-member',myMiddleware.checkLogin,addressMember.addDiaChiMemmber);
+    router.delete('/delete-address-member',myMiddleware.checkLogin,addressMember.delateAddressMember);
+    router.get('/set-status-address',myMiddleware.checkLogin,addressMember.setStatusAddress);
     
     return app.use("/",router)
 }

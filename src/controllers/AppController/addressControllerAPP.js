@@ -148,6 +148,7 @@ let getItemAddressOrderDetail = async (req, res) => {
         })
      }
 };
+
 module.exports = {
     handlePostAddressMembers:handlePostAddressMembers,
     handleDeleteAddressMembers:handleDeleteAddressMembers,
@@ -158,5 +159,6 @@ module.exports = {
     handleGetXa:handleGetXa,
     handleGetAddress:handleGetAddress,
     getItemAddressInIdMember:getItemAddressInIdMember,
-    getItemAddressOrderDetail:getItemAddressOrderDetail
+    getItemAddressOrderDetail:getItemAddressOrderDetail,
+
 };

@@ -169,5 +169,6 @@ module.exports = {
     ajaxListDonHangCart:ajaxListDonHangCart,
     congSoLuongCart:congSoLuongCart,
     truSoLuongCart:truSoLuongCart,
-    deleteCart:deleteCart
+    deleteCart:deleteCart,
+    checkIdUser:checkIdUser
 }

@@ -240,7 +240,8 @@ let GetAddressService = (id_member)=>{
                 }else{
                     resolve({ 
                         errCode:0,
-                        errMessage: 'Không có member',
+                        errMessage: 'Không có địa chỉ',
+                        listAddress:[]
             
                      })   
                 }

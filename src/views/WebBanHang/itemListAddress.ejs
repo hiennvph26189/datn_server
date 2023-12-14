@@ -1,0 +1,46 @@
+
+<% listAddress.forEach(function(item, i){ %>
+<div class="row item-child">
+    <div class="col-sm-1 col-md-1" style="display: flex;justify-content: center;align-items: center;">
+        <form action="/edit-status-member" method="post" style="margin-bottom: 0;">
+            <div class="form-check">
+                <% if(item.status =="MAC-DINH"){ %> 
+                    <input class="form-check-input" style="font-size: 20px; cursor: pointer;" checked type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                <% } else{ %>
+                    <input class="form-check-input" style="font-size: 20px; cursor: pointer;" type="radio" name="flexRadioDefault" id="flexRadioDefault1" onclick="setStatusAddress(`<%= item.id %>`)" >
+                    <% } %>
+              </div>
+        </form>
+    </div>
+    <div class="col-sm-9 col-md-9" style="display: flex;justify-content: space-between;">
+        <div class="col-10">
+            <div class="child-header">
+                <div class="fullname"><%= item.hoTen %></div>    
+                <div style="margin: 0 15px;"> | </div>                                        
+                <div class="phone"><%= item.soDienThoai %></div>                                            
+            </div>
+            <div class="address">
+                <%= item.diaChi %>
+            </div>
+        </div>
+        <div class="col-2">
+            <% if(item.status =="MAC-DINH"){ %> 
+                <div class="status-address">
+                    Mặc định
+                   
+                </div>
+                <% } %>
+        </div>
+        
+    </div>
+    <div class="col-sm-2 col-md-2" style="display: flex;justify-content: space-around;align-items: center;">
+                <% if(item.status !="MAC-DINH"){ %> 
+                    <button onclick="showItemEditAddress(`<%= item.id %>`)" href="/edit-address-member" class="btn btn-success">Sửa</button>
+                <% } %>
+                
+                <button onclick="deleteAddressMember(`<%= item.id %>`)" class="btn btn-danger">Xóa</button>
+          
+    </div>
+    
+</div>
+<% }); %>  
