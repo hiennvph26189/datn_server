@@ -702,7 +702,7 @@ let addCardProductsSezesServiceAPP = (data)=>{
                                 }else{
                                     await sequelize.query(`
                                     UPDATE carts
-                                    SET soLuong = soLuong + ${soLuong}
+                                    SET soLuong = soLuong + ${soLuong},thanhTien=thanhTien+thanhTien 
                                     WHERE ipSanPham = ${id_product} and idUser = ${id_member} and size = '${getOneSizes[0].size}' and status = 0;
                                     `, { type: QueryTypes.UPDATE });
                                     resolve({

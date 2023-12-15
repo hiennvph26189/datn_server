@@ -13,7 +13,7 @@ let handleGetAllProductsService = (page)=>{
             let products = await db.Products.findAndCountAll({
                 offset,
                 limit,
-                where: {status: 0},
+                
                 order: [
                     ['id', 'DESC'],
                     
@@ -341,6 +341,7 @@ let editProductsService = (data)=>{
                 products.soLuong= data.dataImput.soLuong,
                 products.mota= data.dataImput.mota,
                 products.image= data.dataImput.image,
+                products.status= data.dataImput.status,
 
                 
             await products.save()

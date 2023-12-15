@@ -63,7 +63,7 @@ let deleteLikeProductService = (data)=>{
                      if (oneLikeProduct.length>0) {
                         await sequelize.query(`
                         DELETE FROM like_products
-                        WHERE id= ${id}
+                        WHERE id_sp= ${id_product} and id_members = ${id_member}
                         `, { type: QueryTypes.DELETE });
                         await sequelize.query(`
                         UPDATE products
@@ -89,27 +89,6 @@ let deleteLikeProductService = (data)=>{
      }) 
 }
 
-let LikeProductServices = () => {
-    return new Promise(async (resolve, reject) => {
-
-        try {
-            const data = await sequelize.query(`
-                SELECT *
-                FROM like_products
-                ORDER BY id DESC
-                `, { type: QueryTypes.SELECT });
-
-            resolve({
-                errCode: 0,
-                errMessage: 'thành công',
-                data: data
-            })
-
-        } catch (error) {
-            reject(error);
-        }
-    })
-}
 let handleGetOneLikeProductsService = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -144,6 +123,41 @@ let handleGetOneLikeProductsService = (data) => {
         }
 
 
+    })
+}
+let LikeProductServices = (id_members) => {
+    
+    return new Promise(async (resolve, reject) => {
+
+        try {
+            const data = await sequelize.query(`
+            SELECT * FROM  members WHERE id = '${id_members}'
+                `, { type: QueryTypes.SELECT });
+            if (data.length > 0) {
+                const listLikePrd = await sequelize.query(`
+                SELECT lp.id as id_like, p.*
+                FROM like_products lp
+                INNER JOIN products p ON lp.id_sp = p.id
+                WHERE lp.id_members = '${id_members}'
+                    `, { type: QueryTypes.SELECT });
+
+                resolve({
+                    errCode: 0,
+                    errMessage: 'thành công',
+                    listLikePrd: listLikePrd
+                })
+            } else {
+                resolve({
+                    errCode: 0,
+                    errMessage: 'Không có member',
+
+                })
+            }
+
+        } catch (error) {
+
+            reject(error);
+        }
     })
 }
 module.exports={

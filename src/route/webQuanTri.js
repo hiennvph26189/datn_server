@@ -128,7 +128,8 @@ let webQuanTri = (app)=>{
     router.put('/api-admin/put-hangsx',hangsxControllerADMIN.handlePutHangsx);
     // API DELETE HANGSX ADMIN
     router.delete('/api-admin/delete-hangsx',hangsxControllerADMIN.handleDeleteHangsx);
-    
+    // list hãng sản xuất
+    router.get('/api-admin/list-hangsx',hangsxControllerADMIN.getHangSx);
     
     return app.use("/",router)
 }

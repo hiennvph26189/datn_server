@@ -56,10 +56,24 @@ let handleDeleteHangsx = async (req, res) => {
         });
     }
 };
+let getHangSx = async (req, res) => {
+    try {
+       
+        let getAllHangSx = await HangsxServieceADMIN.getHangSxServices();
+        return res.status(200).json(getAllHangSx);
+        // return res.send(ten)
+    } catch (error) {
+        console.log("Lỗi phân quyền", error);
+        return res.status(200).json({
+            errCode: -1,
+            errMessage: "Không kết nối được với sever",
+        });
+    }
+};
 module.exports = {
     HangsxADMIN:HangsxADMIN,
     handlePostHangsx:handlePostHangsx,
     handlePutHangsx:handlePutHangsx,
     handleDeleteHangsx:handleDeleteHangsx,
-    
+    getHangSx:getHangSx
 }

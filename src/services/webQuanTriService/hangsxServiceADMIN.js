@@ -142,11 +142,40 @@ let getHangsxWithPagination = (page)=>{
         }
      }) 
 }
+let getHangSxServices = ()=>{
+    return new Promise(async(resolve, reject)=>{
+        try {
+            
+                    let  hangsx = await sequelize.query(`
+                    SELECT * FROM  hangsx where  status = 0  order by id desc 
+                        `, { type: QueryTypes.SELECT });
+                  
+                    if(hangsx.length > 0 ){
+                        resolve({ 
+                            errCode:0,
+                            errMessage: 'Thành công',
+                            hangsx:hangsx,
+                           
+                        })
+                    }else{
+                        resolve({ 
+                            errCode:1,
+                            errMessage: 'thành công',
+                            hangsx:[],
+                           
+                        })
+                    }    
+  
+        } catch (error) {
+             reject(error);
+        }
+     }) 
+}
 module.exports  = {
     handleGetHangsxServices:handleGetHangsxServices,
     handleAddHangsxServices:handleAddHangsxServices,
     handlePutHangsxServices:handlePutHangsxServices,
     handleDeleteHangsxServices:handleDeleteHangsxServices,
     getHangsxWithPagination:getHangsxWithPagination,
-    
+    getHangSxServices:getHangSxServices
 }

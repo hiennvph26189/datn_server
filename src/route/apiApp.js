@@ -186,6 +186,8 @@ let apiApp = (app)=>{
     router.get('/api-app/search-product-app',productsControllerAPP.searchProductAPP); 
     // 
     router.get('/api-app/get-one-like-product',likeProductControllerAPP.handleGetOneLikeProducts);
+    //
+    router.get('/api-app/get-like-products',likeProductControllerAPP.getLikeProducts);
     return app.use("/",router)
 }
 module.exports = apiApp
