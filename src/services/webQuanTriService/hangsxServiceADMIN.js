@@ -147,7 +147,7 @@ let getHangSxServices = ()=>{
         try {
             
                     let  hangsx = await sequelize.query(`
-                    SELECT * FROM  hangsx where  status = 0  order by id desc 
+                    SELECT * FROM  hangsx where status = 0  order by id desc 
                         `, { type: QueryTypes.SELECT });
                   
                     if(hangsx.length > 0 ){

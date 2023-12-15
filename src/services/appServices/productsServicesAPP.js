@@ -527,7 +527,7 @@ let listProductsCarrt = (id_member)=>{
                     products ON carts.ipSanPham = products.id
                 INNER JOIN 
                 sizes ON sizes.id_sp = products.id
-                where carts.idUser = ${id_member} and carts.status = 0
+                where carts.idUser = ${id_member} and carts.status = 0 
                  `, { type: QueryTypes.SELECT });
                     
                     if (results.length > 0) {

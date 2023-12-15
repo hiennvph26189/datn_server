@@ -49,6 +49,9 @@
                 <div class="col-12 list-don-hang">
 
                 </div>
+                <div style="text-align: right; margin-bottom: 20px;">
+                  <button class="btn-lg btn-dark"  id="datHang">Đặt hàng</button>
+                </div>
             </div>
            
            
@@ -59,11 +62,27 @@
       </div>
     </div>
     
-    
-    <div class="modal fade " id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <button  data-bs-toggle="modal" data-bs-target="#modalListThanhToan" id="showModal" hidden>show</button>
+    <div class="modal fade " id="modalListThanhToan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-          
+        <div class="modal-content" >
+          <form action="/post-thanh-toan" method="post" id="postThanhToan">
+
+         
+          <div class="modal-header bg-white " >
+            <h5 class="modal-title text-dark" id="staticBackdropLabel">Thanh toán đơn hàng</h5>
+            <button type="button" class="close  btn btn-danger" data-bs-dismiss="modal" id="close-modal-thanhtoan">
+              <span aria-hidden="true">×</span></button>
+          </div>
+          <div class="modal-body" id="content-list-thanh-toan">
+            
+          </div>
+          <div class="modal-footer">
+            <button type="submit" fo class="btn btn-success" >Đặt hàng</button>
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+           
+          </div>   
+        </form>
         </div>
       </div>
     </div>
@@ -73,7 +92,7 @@
         src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"
         ></script>
     <script>
-    
+       
       $(document).ready(function () {
         $.get("/danhmuc-profile-member", function (data) {
                 $(".asidecollection").empty().append(data);
@@ -82,7 +101,10 @@
                 $(".list-don-hang").empty().append(data);
               });
        
-      
+          $.get("/list-order-thanhtoan", function (data) {
+        $("#content-list-thanh-toan").empty().append(data);
+      });
+
        
       });
      
@@ -129,10 +151,60 @@
             alert("Thất bại")
           }   
       }
+
       function selectSize(id_cart) {
-          let value = $(this).val()
-          console.log(value);
+        let size = $('#id_size'+id_cart).val();
+        // console.log(size, "size-value");
+        // console.log(cart_id, "cart_id");
+        // console.log(id_data, "id-data");
+        
+        // console.log(data_value, "size-data-value");
+        $.get("/update-size-order?id_cart="+id_cart+"&size="+size, function (data) {
+          console.log(data);
+          if(data.errCode == 0){
+            
+            loadData()
+              }
+          });
       }
+     $("#datHang").on("click", function(){
+      $.get("/list-order-thanhtoan", function (data) {
+            $("#content-list-thanh-toan").empty().append(data);
+              
+          });
+          $("#showModal").click()
+     }) 
+
+     $("#postThanhToan").submit(function(e) {
+
+          e.preventDefault(); // avoid to execute the actual submit of the form.
+
+          var form = $(this);
+          var actionUrl = form.attr('action');
+            
+          $.ajax({
+            type: "POST",
+            url: actionUrl,
+            data: form.serialize(), 
+            success: function (data) {
+                if(data.errCode == 0){
+                    loadData()
+                    $("#close-modal-thanhtoan").click()
+                    alert(data.errMessage);
+                   
+                }else if(data.errCode == 10){
+                  window.location.href = data.url;
+                }else{
+                  alert(data.errMessage);
+                }
+            },
+            error: function (data) {
+                console.log('An error occurred.');
+                console.log(data);
+            },
+          });
+
+          });
     </script>
   </body>
 

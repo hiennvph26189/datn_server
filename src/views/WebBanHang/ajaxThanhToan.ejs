@@ -1,0 +1,149 @@
+
+  <div style="max-height: 300px; overflow: auto;">
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col-2">Ảnh SP</th>
+            <th scope="col-3">Thông tin sản phẩm</th>
+            <th scope="col-2 " style="text-align: center;">Size</th>
+            <th scope="col-2">Số lượng</th>
+            <th scope="col-2">Thành tiền</th>
+           
+          </tr>
+        </thead>
+        <tbody>
+            <% data_cart.forEach(function(item, i){ %>
+          <tr class="center-td">
+            <td class="col-2">
+                <img src="<%= item.image %>" alt="" style="object-fit: cover;max-width: 60px;">
+            </td>
+            <td class="col-3">
+                <p class="ten-sp" ><%= item.tenSp %></p>
+                <% if(item.sale > 0){ %> 
+                    <p class="gia-sp" s><span class="price-sale"><%= item.giaBanSale %></span> - <span class="price-odl-sale"><%= item.giaSanPham %></span></p>
+            
+                <% } else{ %>
+                    <p class="gia-sp" s><span class="price-sale"><%= item.giaSanPham %></span> </p>
+                <% } %>
+               
+    
+            </td>
+            <td class="col-2" style="text-align: center; font-weight: 600;">
+               
+                <%= item.size %>
+            </td>
+            <td class="col-2">
+                <div class="">
+                   
+                    <div style="font-size: 17px;font-weight: 500;">x<%= item.soLuong %></div>
+                    
+                </div>
+                   
+              
+            </td>
+            <td class="col-2" style="color: red;font-weight: 500;">
+               <%= item.thanhTien %>
+            </td>
+            
+          </tr>
+          <% }); %>  
+        </tbody>
+      </table>
+  </div>
+  <div class="total-price" style="text-align: right;font-size: 23px;font-weight: 600; color: red;">
+        Tổng tiền: 
+        <% if(tongTien){ %> 
+            <%= tongTien %>
+        <% } else{ %>
+            0
+        <% } %>
+        
+      
+  </div>
+
+  <div class="phuong-thuc-thanh-toan">
+        <div style="font-size: 20px;font-weight: 600;">Chọn phương thức thanh toán:</div>
+        <div class="form-check" style="margin-left: 20px;">
+            <input class="form-check-input" type="radio" name="thanhtoan" value="vi9Pay" id="flexRadioDefault1" checked>
+            <label class="form-check-label" for="thanhtoan" style="font-weight: 600;">
+                Thanh toán quá 9Pay
+            </label>
+          </div>
+          <div class="form-check" style="margin-left: 20px;">
+            <input class="form-check-input" type="radio" name="thanhtoan" value="tienTK" id="flexRadioDefault2" >
+            <label class="form-check-label" for="thanhtoan"   style="font-weight: 600;">
+                Thanh toán bằng tiền trong tài khoản
+            </label>
+          </div>
+  </div>
+
+
+  <div class="dia-chi-nhan-hang" style=" margin-top: 15px;">
+    <div class="col-12">
+        <div class="" style="display: flex;justify-content: space-between;align-items: center; ">
+            <div style="font-size: 20px;font-weight: 600;">
+                Thông tin địa chỉ nhận hàng
+            </div>
+            <a href="/dia-chi-member" class="btn btn-primary">
+                Thay đổi địa chỉ
+            </a>
+        </div>
+    </div>
+        
+       
+        <div class="diachinhanhang" style="margin-left: 20px;"> 
+            <!-- <p><i class="fas fa-user"></i>Nguyễn VĂn Hiển</p>
+            <p><i class="fas fa-phone-alt"></i>0373753158</p>
+            <p><i class="fas fa-map-marker-alt"></i>Thống Nhất- Gia Lộc - Hải Dương</p> -->
+        </div>
+  </div>
+  <style>
+    .ten-sp{
+        font-size: 18px;
+        font-weight: 600;
+    }
+    .edit-soluong{
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+    .price-sale{
+        color: red;
+    }
+   .price-odl-sale{
+    color: #ccc;
+    text-decoration: line-through;
+   }
+   .diachinhanhang{
+    margin-top: 10px;
+   }
+   .diachinhanhang p{
+        margin: 0;
+        line-height: 32px;
+        font-size: 16px;
+        font-weight: 500;
+   }
+   .diachinhanhang p i{
+        margin-right: 20px;
+    }
+  </style>
+  <script>
+     $(document).ready(function () {
+        $.get("/list-one-address-member", function (data) {
+            if(data.errCode == 0){
+                let itemAddress = data.itemAddress
+                $(".diachinhanhang").empty().append(
+                    `<p><i class="fas fa-user"></i>${itemAddress.hoTen}</p>
+                    <p><i class="fas fa-phone-alt"></i>${itemAddress.soDienThoai}</p>
+                    <p><i class="fas fa-map-marker-alt"></i>${itemAddress.diaChi}</p>
+                    `
+                );
+            }else{
+                $(".diachinhanhang").empty().append("Bạn chưa chọn đại chỉ")
+            }
+                
+              });
+
+     })
+  </script>
+ 

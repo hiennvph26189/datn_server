@@ -79,6 +79,16 @@ let webBanHang = (app)=>{
     router.post('/add-address-member',myMiddleware.checkLogin,addressMember.addDiaChiMemmber);
     router.delete('/delete-address-member',myMiddleware.checkLogin,addressMember.delateAddressMember);
     router.get('/set-status-address',myMiddleware.checkLogin,addressMember.setStatusAddress);
+    router.get('/update-size-order',myMiddleware.checkLogin,orderController.updateSizeOrder);
+    router.get('/list-order-thanhtoan',myMiddleware.checkLogin,orderController.listOrderThanhToan);
+    router.get('/list-one-address-member',myMiddleware.checkLogin,addressMember.listOneAddressMember);
+    router.post('/post-thanh-toan',myMiddleware.checkLogin,orderController.postThanhToanWeb);
+    router.get('/get-check-thanh-toan-9Pay',orderController.checkThanhToan9Pay);
+    router.get('/thanh-toan-that-bai',orderController.thanhToanThatBai);
+    router.get('/thanh-toan-thanh-cong',orderController.thanhToanThanhCong);
+    router.get('/lich-su-mua-hang',orderController.lichSuMuaHang);
+    router.get('/item-don-dang-xu-ly',orderController.itemDonDangXuLy);
+
     
     return app.use("/",router)
 }

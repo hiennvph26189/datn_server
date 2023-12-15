@@ -438,12 +438,13 @@ let handleCreateOrderCart = (data)=>{
             let user = await db.Members.findOne({
                 where : {id : idUser}
             })
-
+            console.log(data, 'data');
             if(idCart.length>0){
                 
            
                 if(user){
                     let tienTk = user.tienTk
+                  
                     if(tienTk >=0 && tienTk >= data.tongTien){
                         let [selectAddress]  = await sequelize.query(`
                             SELECT 
@@ -699,10 +700,12 @@ let addCardProductsSezesServiceAPP = (data)=>{
                                     
                                     
                                     })
+                               
                                 }else{
+                                    let price = getOnecart[0].thanhTien / getOnecart[0].soLuong
                                     await sequelize.query(`
                                     UPDATE carts
-                                    SET soLuong = soLuong + ${soLuong},thanhTien=thanhTien+thanhTien 
+                                    SET soLuong = soLuong + 1,thanhTien=thanhTien+ ${price} 
                                     WHERE ipSanPham = ${id_product} and idUser = ${id_member} and size = '${getOneSizes[0].size}' and status = 0;
                                     `, { type: QueryTypes.UPDATE });
                                     resolve({

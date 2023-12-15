@@ -22,7 +22,7 @@ let handleItemListAddess = async (req, res) => {
         var cookie = req.cookies.accessToken;
         let id_member = checkIDMember.checkIdUser(req, res,cookie)
         let getAddress = await addressServiceAPP.GetAddressService(id_member);
-        console.log(getAddress);
+        
         return res.render("webBanHang/itemListAddress.ejs",{listAddress:getAddress.listAddress}) 
      } catch (error) {
          console.log("Lỗi phân quyền",error)
@@ -159,10 +159,31 @@ let setStatusAddress = async (req, res) => {
         })
      }
 };
+let listOneAddressMember = async (req, res) => {
+    try {
+        var cookie = req.cookies.accessToken;
+        
+        let id_member = checkIDMember.checkIdUser(req, res,cookie)
+       
+        let getAddress = await addressServiceAPP.getItemAddressInIdMemberService(id_member);
+       
+        return res.send(getAddress) 
+     } catch (error) {
+         console.log("Lỗi phân quyền",error)
+        return res.status(200).json({
+             errCode: -1,
+             errMessage: 'Không kết nối được với sever'
+        })
+     }
+};
+
+      
+
 module.exports = {
     getDiaChimember:getDiaChimember,
     handleItemListAddess:handleItemListAddess,
     addDiaChiMemmber:addDiaChiMemmber,
     delateAddressMember:delateAddressMember,
-    setStatusAddress:setStatusAddress
+    setStatusAddress:setStatusAddress,
+    listOneAddressMember:listOneAddressMember
 }

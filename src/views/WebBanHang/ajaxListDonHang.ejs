@@ -28,35 +28,35 @@
         </td>
         <td class="col-2">
            
-             <select class="form-select " onchange="selectSize(`<%= item.id_cart %>`)" aria-label="Default select example" style="width: 80%;">
+             <select class="form-select " onchange="selectSize(`<%= item.id_cart %>`)" id="id_size<%= item.id_cart %>" aria-label="Default select example" style="width: 80%;">
                 <% if(item.size =="S" && item.S > 0){ %> 
-                    <option value="S" data-value="<%= item.S %>" selected>S</option> 
+                    <option value="S" data-id="<%= item.id_cart %>" data-value="S" selected>S</option> 
                <% } else{ %>
-                    <option value="S" data-value="<%= item.S %>">S</option> 
+                    <option value="S" data-id="<%= item.id_cart %>" data-value="S">S</option> 
                 <% } %>
 
                 <% if(item.size =="M" && item.M > 0){ %> 
-                    <option value="M" data-value="<%= item.M %>" selected>M</option> 
+                    <option value="M" data-id="<%= item.id_cart %>" data-value="M" selected>M</option> 
                 <% } else{ %>
-                    <option value="M" data-value="<%= item.M %>">M</option> 
+                    <option value="M" data-id="<%= item.id_cart %>" data-value="M">M</option> 
                     <% } %>
 
                 <% if(item.size =="L" && item.L > 0){ %> 
-                    <option value="L" data-value="<%= item.L %>" selected>L</option> 
+                    <option value="L" data-id="<%= item.id_cart %>" data-value="L" selected>L</option> 
                 <% } else{ %>
-                    <option value="L" data-value="<%= item.L %>">L</option> 
+                    <option value="L" data-id="<%= item.id_cart %>" data-value="L">L</option> 
                 <% } %>
 
                 <% if(item.size =="XL" && item.XL > 0){ %> 
-                    <option value="XL" data-value="<%= item.XL %>" selected>XL</option> 
+                    <option value="XL" data-id="<%= item.id_cart %>" data-value="XL" selected>XL</option> 
                 <% } else{ %>
-                    <option value="XL" data-value="<%= item.XL %>">XL</option> 
+                    <option value="XL" data-id="<%= item.id_cart %>" data-value="XL">XL</option> 
                 <% } %>
 
                 <% if(item.size =="XXL" && item.XXL > 0){ %> 
-                    <option value="XXL" data-value="<%= item.XXL %>" selected>XXL</option> 
+                    <option value="XXL" data-id="<%= item.id_cart %>" data-value="XXL" selected>XXL</option> 
                 <% } else{ %>
-                    <option value="XXL" data-value="<%= item.XXL %>">XXL</option> 
+                    <option value="XXL" data-id="<%= item.id_cart %>" data-value="XXL">XXL</option> 
                 <% } %>
             </select>
         </td>
@@ -89,9 +89,7 @@
         
       
   </div>
-  <div style="text-align: right; margin-bottom: 20px;">
-    <button class="btn-lg btn-dark">Đặt hàng</button>
-  </div>
+  
   <style>
     .ten-sp{
         font-size: 20px;

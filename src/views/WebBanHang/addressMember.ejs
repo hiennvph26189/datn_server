@@ -313,6 +313,8 @@
                         `<select
                         `
                       );
+                      $("#detai-address").empty().append(` <label for="detai-address">Địa chỉ cụ thể</label>
+                    <input type="text" name="detai_address" class="form-control" id="detai-address"  placeholder="Số địa chỉ cụ thể">` )
                       }
                       
                 }
@@ -328,7 +330,7 @@
       console.log("OKSPJSA");
       if(name !=""){
         $("#detai-address").empty().append(` <label for="detai-address">Địa chỉ cụ thể</label>
-                <input type="text" name="detai_address" class="form-control" id="detai-address"  placeholder="Số đại chỉ cụ thể">` )
+                <input type="text" name="detai_address" class="form-control" id="detai-address"  placeholder="Số địa chỉ cụ thể">` )
       }else{
         $("#detai-address").empty().append("")
       }

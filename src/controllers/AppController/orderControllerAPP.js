@@ -97,7 +97,7 @@ let handleUpdateCartProducts = async (req, res) => {
 let handleOrserCartProducts = async (req, res) => {
     try {
         let data = req.body
-        console.log(data)
+    
         let message = await  orderServiceAPP.handleCreateOrderCart(data)
         return res.status(200).json(message)
      } catch (error) {

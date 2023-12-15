@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+  <head>
+    <%- include('./head'); %>
+    <title>Lịch sử mua hàng</title>
+  </head>
+  <body>
+    <style>
+      .bg-header-nav .header-nav>ul.item_big>li.active{
+          background: #252525;
+      }
+  ul.item_big li.nav-item:nth-last-child(3){
+    background: #66a182;
+  }
+  </style>
+    <%- include('./header'); %>
+    <div class="section_sidebar_slider">
+      <div class="container">
+        <div class="row">
+          <div class="dqdt-sidebar sidebar left-content col-lg-3 col-md-12 hidden-sm hidden-xs">
+            <div class="wrap_background_aside asidecollection">
+              
+            </div>
+            <div class="sanPhamBanChay">
+            </div>
+          </div>
+          
+          <div class="main_container collection col-lg-9 col-md-12 col-sm-12">
+            <section class="bread-crumb">
+                <span class="crumb-border"></span>
+                <div class="container no-padding">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <ul class="breadcrumb">					
+                                <li class="home">
+                                    <a href="/"><span>Trang chủ</span></a>						
+                                    <span class="mr_lr">&nbsp;<i class="fas fa-chervon-right"></i>&nbsp;</span>
+                                </li>
+                                <li><strong><span> Lịch sử mua hàng</span></strong></li>     
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+           
+            <div class="nav-lich-su-mua-hang">
+                    <ul >
+                        <li class="Item-lsmh" id="don-xu-ly">Đơn đang xử lý</li>
+                        <li class="Item-lsmh" id="don-dang-giao">Đơn đang giao</li>
+                        <li class="Item-lsmh" id="don-da-giao">Đã giao thành công</li>
+                        <li class="Item-lsmh" id="don-da-huy">Đơn đã hủy</li>
+                        <li class="Item-lsmh" id="don-hoan">Đơn hoàn</li>
+                    </ul>
+            </div>
+           <div class="list-don-hang">
+
+           </div>
+           
+           
+          </div>
+
+        </div>
+      </div>
+    </div>
+    
+    
+    <div class="modal fade " id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          
+        </div>
+      </div>
+    </div>
+    <%- include('./footer'); %>
+    <script
+        type="text/javascript"
+        src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"
+        ></script>
+    <script>
+    
+      $(document).ready(function () {
+        $.get("/danhmuc-profile-member", function (data) {
+                $(".asidecollection").empty().append(data);
+              });
+       $.get("/item-don-dang-xu-ly?page=1", function (data) {
+                $(".list-don-hang").empty().append(data);
+              });
+      
+       
+      });
+     
+      $('#sapxep').on('change', function(e){
+    
+        let id_category = $(this).attr("data-id")
+        let value = $(this).val()
+        if(value && value != "") {
+          
+          $.get(`/sapXep-products?id=${id_category}&page=1&value=${value}`, function (data) {
+                $(".listProduct-category").empty().append(data);
+              });
+        }    
+      })
+      
+    </script>
+  </body>
+
+</html>

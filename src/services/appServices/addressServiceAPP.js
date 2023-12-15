@@ -268,15 +268,23 @@ let getItemAddressInIdMemberService = (id_member)=>{
                     FROM address WHERE id_members = '${id_member}'
                    and status = "MAC-DINH"
                     `, { type: QueryTypes.SELECT });
-                
+                if(listAddress.length>0){
                     resolve({ 
                         errCode:0,
                         errMessage: 'thành công',
                         itemAddress:listAddress[0]
-                     })   
+                     }) 
                 }else{
                     resolve({ 
-                        errCode:0,
+                        errCode:1,
+                        errMessage: 'Chưa chọn địa chỉ',
+                        itemAddress:{}
+                     }) 
+                }
+                     
+                }else{
+                    resolve({ 
+                        errCode:1,
                         errMessage: 'Không có member',
             
                      })   
