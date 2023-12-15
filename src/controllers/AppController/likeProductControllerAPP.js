@@ -44,9 +44,25 @@ let getLikeProducts = async (req, res) => {
     }
 
 }
+let handleGetOneLikeProducts = async (req, res) => {
+    try {
+        let data  = req.query;
+        let postLienHe = await likeProductServiceAPP.handleGetOneLikeProductsService(data);
+            return res.status(200).json(postLienHe)
+        
+        
+     } catch (error) {
+         console.log("Lỗi phân quyền",error)
+        return res.status(200).json({
+             errCode: -1,
+             errMessage: 'Không kết nối được với sever'
+        })
+     }
+};
 module.exports = {
     handlePostLikeProduct:handlePostLikeProduct,
     handleDeleteLikeProduct:handleDeleteLikeProduct,
     getLikeProducts:getLikeProducts,
+    handleGetOneLikeProducts:handleGetOneLikeProducts
 };
 
