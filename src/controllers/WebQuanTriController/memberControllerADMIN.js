@@ -155,12 +155,25 @@ let handleDeleteNapTienMenber = async (req, res) => {
      }
    
 };
-
+let handleSearchMembers = async (req, res) => {
+    try {  
+        let key_search = req.query.key_search;
+        let page = req.query.page;
+        let data = await memberService.handleSearchMemberServiceADMIN(key_search,page);
+     return res.status(200).json(data)
+ } catch (error) {
+     console.log("Lỗi phân quyền",error)
+    return res.status(200).json({
+         errCode: -1,
+         errMessage: 'Không kết nối được với sever'
+    })
+ }
+};
 
 
 module.exports = {
     handleGetAllMenbers:handleGetAllMenbers,
-    
+    handleSearchMembers:handleSearchMembers,
     handleDeleteMenbers:handleDeleteMenbers,
     handleLoginMember:handleLoginMember,
    

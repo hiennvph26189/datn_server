@@ -94,6 +94,8 @@ let webQuanTri = (app)=>{
     router.put('/api/huynaptien-members-admin',memberController.handleHuyNapTienMenbersADmin);
     router.delete('/api/delete-nap-tien-Member',memberController.handleDeleteNapTienMenber);
   
+    // SREACH MEMBERS 
+    router.get('/api/search-members-admin',memberController.handleSearchMembers);
 
     // Hoàn đơn order 
     router.put('/api-admin/hoan-don-order',odersController.handHoanDonOrder);
@@ -111,6 +113,8 @@ let webQuanTri = (app)=>{
 
     //API THANH TOAN
     router.get('/api-admin/9pay',thanhtoanControllerADMIN.handleGetThanhToan);
+    // API SREACH THANH TOAN ADMIN
+    router.get('/api/search-thanhtoan-admin',thanhtoanControllerADMIN.handleSearchThanhtoan);
 
 
     // get Sise admin WebQuanTri
