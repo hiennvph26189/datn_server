@@ -90,7 +90,19 @@ let ajaxListDonHangCart = async (req, res) => {
         let id_member = checkIdUser(req,res,cookie)
         let data_cart = await productsServicesAPP.listProductsCarrt(id_member)
         let total_price_cart = await orderCartServiceWev.totalPriceCart(id_member)
-        let tongTien = total_price_cart.tongTien.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })
+        let tongTien = 0
+        if(total_price_cart.errCode == 0){
+            console.log(total_price_cart);
+            if(total_price_cart.tongTien < 0){
+                tongTien = 0
+            }else{
+                tongTien = total_price_cart.tongTien.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })
+            }
+             
+        }else{
+            tongTien = 0
+        }
+        
         let newArrProducts = getConvertArrProduct(data_cart.dataCarrt)
         let arr_size = data_cart.data.sizes
        

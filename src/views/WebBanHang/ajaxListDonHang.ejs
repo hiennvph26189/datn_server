@@ -80,7 +80,14 @@
     </tbody>
   </table>
   <div class="total-price" style="text-align: right;font-size: 28px;font-weight: 600; color: red;">
-        Tổng tiền: <%= tongTien %>
+        Tổng tiền: 
+        <% if(tongTien){ %> 
+            <%= tongTien %>
+        <% } else{ %>
+            0
+        <% } %>
+        
+      
   </div>
   <div style="text-align: right; margin-bottom: 20px;">
     <button class="btn-lg btn-dark">Đặt hàng</button>

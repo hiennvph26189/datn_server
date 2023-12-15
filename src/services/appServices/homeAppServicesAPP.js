@@ -213,7 +213,7 @@ let handleGetNewProductServices = ()=>{
             const data = await sequelize.query(`
                 SELECT *
                 FROM products
-                WHERE id > 0 ORDER BY id DESC limit 10
+                WHERE id > 0 and status = 0 ORDER BY id DESC limit 10
                 `, { type: QueryTypes.SELECT });
             if (data.length > 0) {
                 let newData = await getConvertArrProduct(data);

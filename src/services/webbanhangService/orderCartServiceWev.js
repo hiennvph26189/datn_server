@@ -198,17 +198,17 @@ let totalPriceCart = (id_member)=>{
                 FROM carts
                 where idUser = ${id_member}  and status = 0
                 `, { type: QueryTypes.SELECT });
-                
-                if(getItemCart){
+                console.log(getItemCart);
+                if(getItemCart.tongTien != null){
                     resolve({ 
                         errCode:0,
-                        errMessage: 'Thất bại',
+                        errMessage: 'OK',
                         tongTien:parseInt(getItemCart.tongTien)
                        
                      })
                 }else{
                     resolve({ 
-                        errCode:0,
+                        errCode:1,
                         errMessage: 'Thất bại',
                         tongTien:0
                        
