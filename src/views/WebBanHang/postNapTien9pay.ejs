@@ -3,15 +3,18 @@
  
   <head>
     <%- include('./head'); %>
-    <title>Thanh toán 9pay thành công</title>
+    <title>Nạp tiền tài khoản</title>
   </head>
   <body>
     <style>
       .bg-header-nav .header-nav>ul.item_big>li.active{
           background: #252525;
       }
-  ul.item_big li.nav-item:nth-last-child(3){
+  #info-naptien{
     background: #66a182;
+  }
+  #info-naptien a{
+    color: #fff;
   }
   </style>
     <%- include('./header'); %>
@@ -37,21 +40,28 @@
                                     <a href="/"><span>Trang chủ</span></a>						
                                     <span class="mr_lr">&nbsp;<i class="fas fa-chervon-right"></i>&nbsp;</span>
                                 </li>
-                                <li><strong><span> Thanh toán 9pay thành công</span></strong></li>     
+                                <li><strong><span> Nạp tiền tài khoản</span></strong></li>     
                             </ul>
                         </div>
                     </div>
                 </div>
             </section>
-            <div class="collectiontitle" style="text-align: center;">
-                <div  style="display: flex; justify-content: center; align-items: center;">
-                        <div style="width: 50px; height: 50px; border-radius: 50%; background: forestgreen; align-items: center; display: flex; justify-content: center; font-size: 25px; color: #fff;">
-                            <i class="fas fa-check"></i>
-                        </div>
-                    </div>
-                <h1 class="cat-heading" style="margin-top: 20px;">Thanh toán thành công</h1>
+            
+            <div class="col-5">
+               
+                <form action="/post-naptien-9pay" method="post" id="post-nap-tien">
+                <div class="mb-3 form-group">
+                    <label for="exampleInputEmail1" class="form-label">Nhập số tiền muốn nạp</label>
+                    <input type="number" class="form-control" min="20000" name="price">
+                  
+                </div>
+              
+                <button type="submit" class="btn btn-success">Nạp tiền</button>
+                </form>
             </div>
-
+           
+           
+           
           </div>
 
         </div>
@@ -82,17 +92,32 @@
        
       });
      
-      $('#sapxep').on('change', function(e){
-    
-        let id_category = $(this).attr("data-id")
-        let value = $(this).val()
-        if(value && value != "") {
-          
-          $.get(`/sapXep-products?id=${id_category}&page=1&value=${value}`, function (data) {
-                $(".listProduct-category").empty().append(data);
-              });
-        }    
-      })
+      $("#post-nap-tien").submit(function(e) {
+
+        e.preventDefault(); // avoid to execute the actual submit of the form.
+
+        var form = $(this);
+        var actionUrl = form.attr('action');
+            
+        $.ajax({
+            type: "POST",
+            url: actionUrl,
+            data: form.serialize(), 
+            success: function (data) {
+                if(data.errCode ==0){
+                    window.location.href = data.url;
+                }else{
+                    alert(data.errMessage);
+                }
+                
+            },
+            error: function (data) {
+                console.log('An error occurred.');
+                console.log(data);
+            },
+        });
+
+        });
       
     </script>
   </body>

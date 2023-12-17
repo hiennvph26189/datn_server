@@ -93,6 +93,10 @@ let webBanHang = (app)=>{
     router.get('/item-don-giao-thanh-cong',myMiddleware.checkLogin,orderController.itemDonGiaoThanhCong);
     router.get('/item-don-huy',myMiddleware.checkLogin,orderController.itemDonHuy);
     router.get('/item-don-hoan',myMiddleware.checkLogin,orderController.itemDonHoan);
+    router.get('/nap-tien',myMiddleware.checkLogin,accountController.handleNapTien);
+    router.post('/post-naptien-9pay',myMiddleware.checkLogin,accountController.postNapTien9Pay);
+    router.get('/check-thanh-toan-nap-tien',accountController.checkNapTien9Pay);
+    router.get('/lich-su-nap-tien',myMiddleware.checkLogin,accountController.lichSuNapTien);
 
     
     return app.use("/",router)
