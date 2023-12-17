@@ -51,13 +51,17 @@
                
                 <form action="/post-naptien-9pay" method="post" id="post-nap-tien">
                 <div class="mb-3 form-group">
+                  <div id="tienNap" style="font-weight: 600;">
+                  
+                  </div>
                     <label for="exampleInputEmail1" class="form-label">Nhập số tiền muốn nạp</label>
-                    <input type="number" class="form-control" min="20000" name="price">
+                    <input type="number" class="form-control" min="20000" value="" name="price" id="price9pay">
                   
                 </div>
               
                 <button type="submit" class="btn btn-success">Nạp tiền</button>
                 </form>
+                
             </div>
            
            
@@ -118,7 +122,16 @@
         });
 
         });
-      
+        $("#price9pay").on('keyup',function(){
+            let value = $(this).val();
+            let price = parseInt(value).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })
+            $("#tienNap").empty().append("Số tiền bạn nạp là: "+"<span style='color:red'>" +price+"</span>")
+        })
+        $("#price9pay").on('change',function(){
+            let value = $(this).val();
+            let price = parseInt(value).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })
+            $("#tienNap").empty().append("Số tiền bạn nạp là: "+"<span style='color:red'>" +price+"</span>")
+        })
     </script>
   </body>
 

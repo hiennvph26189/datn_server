@@ -83,7 +83,6 @@ let handleDeleteCartProducts = async (req, res) => {
 let handleUpdateCartProducts = async (req, res) => {
     try {
         let data = req.body
-        console.log(data)
         let message = await  orderServiceAPP.handleUpdateCart(data)
         return res.status(200).json(message)
      } catch (error) {
@@ -125,7 +124,6 @@ let handleLichSuCartProducts = async (req, res) => {
 let handleHuyDonCartProducts = async (req, res) => {
     try {
         let id = req.body.id
-        console.log(id)
         let message = await  orderServiceAPP.handleHuyOrderCart(id)
         return res.status(200).json(message)
      } catch (error) {
@@ -139,7 +137,6 @@ let handleHuyDonCartProducts = async (req, res) => {
 let handleChiTietDonProducts = async (req, res) => {
     try {
         let id = req.query.id
-        console.log(id)
         let message = await  orderServiceAPP.handleChiTietOrderCart(id)
         return res.status(200).json(message)
      } catch (error) {
@@ -167,7 +164,6 @@ let handleDeleteOrder = async (req, res) => {
 let handleAddCardProductSizeAPP = async (req, res) => {
     try {
         let data = req.body
-        console.log(data);
         let message = await  orderServiceAPP.addCardProductsSezesServiceAPP(data)
         return res.status(200).json(message)
      } catch (error) {

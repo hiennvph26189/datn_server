@@ -1,11 +1,11 @@
 <% data.forEach(function(item, i){ %>
     <div class="item-ls-don-hang">
        <div class="time-item">
-           <%= item.arrOrder.createdAt %>
+           <%= item.arrOrder.updatedAt %>
        </div>
        <% item.arr_sp_cart.forEach(function(item2, i2){ %>
-       <div class="item-list-sp col-12" style="margin-bottom: 10px; border-bottom: 1px solid #ccc; padding-bottom: 10px; cursor: pointer;" onclick="showDetaiOrder(`<%= item.arrOrder.id %>`)">
-           <div class="row" >
+       <div class="item-list-sp col-12" style="margin-bottom: 10px; border-bottom: 1px solid #ccc; padding-bottom: 10px; cursor: pointer;" >
+           <div class="row" onclick="showDetaiOrder(`<%= item.arrOrder.id %>`)">
                <div class="col-4 img-don-hang" >
                    <img src="<%= item2.image %>" alt="<%= item2.tenSp %>">
                </div>
@@ -35,7 +35,9 @@
                   
                </div>
            </div>
-          
+           <div class="check-danh-gia" data-id-cart="<%=  item2.id_cart %>" data-id-sp="<%=  item2.id_product %>" data-id-order="<%=  item.arrOrder.id %>" style="margin-bottom: 31px;">
+            <div class="test" style="float: right;font-weight: 600; "></div>
+      </div>
        </div>
        <% }); %>  
       
@@ -79,6 +81,26 @@
          </div>
        </div>
      </div>
+     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#showVoteOrder" id="showVoteOrderDetai" hidden>
+      
+     </button>
+     <div class="modal fade" id="showVoteOrder" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog  modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Chi tiết đơn hàng</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="content-order">
+              
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+            
+            </div>
+          </div>
+        </div>
+      </div>
    <nav aria-label="Page navigation example">
        <ul class="pagination">
         
@@ -110,4 +132,39 @@
            $("#showDetaiOrdermember").click()
            
        }
+    function loadStar(star){
+        let data_star = ``
+        for(var i=1; i<= 5; i++){
+            if(i <= star){
+                data_star = data_star +`<i class="fas fa-star" style="color: #fe9727"></i>`
+            }else{
+                data_star = data_star +`<i class="fas fa-star" style="color: #ccc"></i>`
+            }   
+            
+        }
+      return data_star
+    }
+    $(function(){
+        $(".check-danh-gia").each(function () {  
+                const $test = $(this).find('.test');
+                
+                let id_cart = $(this).attr("data-id-cart")
+                let id_product = $(this).attr("data-id-sp")
+                let id_order = $(this).attr("data-id-order")
+                console.log();
+                $.get("/check-vote-star-web?id_cart="+id_cart+"&id_donhang="+id_order+"&id_sp="+id_product, function (data) {
+                    console.log(data);
+                       if(data.errCode == 0){
+                            console.log(data.numberStar);
+                            let star = data.numberStar
+                            $test.empty().append("Đã đánh giá: "+loadStar(data.numberStar))
+                       }else{
+                            $(this).css("margin-bottom","40px")
+                            
+                            $test.empty().append("<button type='button' class='btn btn-danger' style='margin-bottom:20px'>Đánh giá</button>")
+                       }
+                })
+        });
+    })
+
    </script>

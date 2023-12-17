@@ -85,45 +85,10 @@
               <h3 class="qwp-name title-product"><a class="text2line" href="/ao-phong-vitage-trang" title="Áo phông vitage trắng"> <%= product.tenSp %></a></h3>
               <div class="vend-qv group-status ">
                 <div class="load-star" data-rating="3.3" data-id="<%= product.id %>" style="display: flex; align-items: center;">
-                  <div class="rateYo"></div> <span id="numberStar" style="font-size: 16px;font-weight: 600;"></span> <span id="tongDanhGia" style="margin-left: 5px;"> </span>
+                  <div class="rateYo"></div> <span class="numberStar" style="font-size: 16px;font-weight: 600;"></span> <span class="tongDanhGia" style="margin-left: 5px;"> </span>
               </div> 
               </div>
-              <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
-        <script>
-     
-        $(function(){
-          $(".load-star").each(function () {
-            
-            const $rateYo = $(this).find('.rateYo');
-            const rating = parseFloat($(this).data('rating'));
-            const id_sp = parseInt($(this).data('id'));
-            let star = 0
-            console.log("/api-app/get-total-star-product?id="+id_sp);
-            $.get("/api-app/get-total-star-product?id="+id_sp, function (data) {
-                console.log(data);
-                if(data.tbStar > 0){
-                  star = data.tbStar
-                  let rating2 = Math.round(star * 2) / 2;
-                
-                    $rateYo.rateYo({
-                    rating: rating2,
-                    readOnly: true,
-                    starWidth: '17px'
-                  });
-                 $("#numberStar").empty().append(data.tbStar)
-                 $("#tongDanhGia").empty().append("("+data.totalStar+" Đánh giá)")
-                }
-            });
-            console.log(star);
-            
-            
-           
-          });
-        })
-     
-
-     
-    </script>
+              
             </div>
             <div class="quickview-info">
               <span class="prices price-box">
@@ -216,6 +181,7 @@
                               });
                     
                   })
+                 
               
                   $('#truSoLuong').on('click', function(){
                    
@@ -232,10 +198,7 @@
                 
                 <div class="tagslist">
                     <label class="inline">Hãng sản xuất: </label>
-                    
-                    <a href="/search?query=tags:(Áo-sơmi)" title="Áo sơmi">Áo sơmi, </a>						
-                    
-                    <a href="/search?query=tags:(Áo-thun)" title="Áo thun">Áo thun</a>						
+                    	<a><%= product.hangSx %></a>
                     
                 </div>
                 
@@ -301,7 +264,104 @@
         </div>	
     </div>
 </div>
-<div class="section_product_news container">
+<div class="section_product_vote container">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="section_title_base">
+        <h2 class="title_modules">
+          <a  title="Sản phẩm mới">Đánh giá sản phẩm  </a>
+          <div class="btn-next-prev">
+            <span id="prev-product-new"><i class="fas fa-chevron-left"></i></span>
+            <span id="next-product-new"><i class="fas fa-chevron-right"></i></span>
+          </div>
+        </h2>
+        
+      </div>
+     
+      <div class="section owl_nav_custome2 section_content">
+            <div class="top-vote">
+                  <div class="vote-left col-md-4" style="border: 1px solid #ccc; display: flex;justify-content: center; align-items: center;">
+                    <div >
+                      <div style="display: flex; justify-content: center;">  
+                        <p class="numberStar" style="font-size: 20px;font-weight: 600; text-align: center; margin-bottom: 1px;"></p> 
+                        <p  style="font-size: 20px;font-weight: 600; text-align: center; margin-bottom: 1px;"> /5</p> 
+                      </div>
+                      
+                      <div class="load-star" data-rating="3.3" data-id="<%= product.id %>" style="display: flex; align-items: center;margin-bottom: 5px;">
+                        <div class="rateYo2"></div>  
+                    </div> 
+                    
+                    <p class="tongDanhGia" style=" text-align: center; font-size: 16px;font-weight: 600;"> </p>
+                    </div>
+                      
+                  </div>
+                  <div class="vote-right col-md-8" style="padding: 20px; border: 1px solid #ccc;">
+                      <div class="item-star" style="display: flex; align-items: center;justify-content: space-between; margin-bottom: 5px;">
+                          <div class="name-star col-2" >5 <i class="fas fa-star" style="color: #fe9727;"></i></div>
+                          <div class="do-dai-star col-8"  style="width: 600px; height: 15px; background: #ccc; border-radius: 50px;"><div id="star-5" style="width: 80%;height: 15px; background: #fe9727;color: #fe9727;border-radius: 50px;padding-left: 5px;"></div></div>
+                          <div class="total-star col-2" id="total-star-5" style="margin-left: 20px;"></div>
+                      </div>
+                      <div class=" item-star" style="display: flex; align-items: center;justify-content: space-between; margin-bottom: 5px;">
+                        <div class="name-star col-2" >4 <i class="fas fa-star" style="color: #fe9727"></i></div>
+                        <div class="do-dai-star col-8" style="width: 600px; height: 15px; background: #ccc; border-radius: 50px;"><div  id="star-4" style="width: 80%;height: 15px; background: #fe9727;color: #fe9727;border-radius: 50px;"></div></div>
+                        <div class="total-star col-2" id="total-star-4" style="margin-left: 20px;"></div>
+                    </div>
+                    <div class=" item-star" style="display: flex; align-items: center;justify-content: space-between; margin-bottom: 5px;">
+                      <div class="name-star col-2" >3 <i class="fas fa-star" style="color: #fe9727"></i></div>
+                      <div class="do-dai-star col-8" style="width: 600px; height: 15px; background: #ccc; border-radius: 50px;"><div  id="star-3" style="width: 80%;height: 15px; background: #fe9727;color: #fe9727;border-radius: 50px;"></div></div>
+                      <div class="total-star col-2" id="total-star-3" style="margin-left: 20px;"></div>
+                  </div>
+                  <div class=" item-star" style="display: flex; align-items: center;justify-content: space-between; margin-bottom: 5px;">
+                    <div class="name-star col-2" >2 <i class="fas fa-star" style="color: #fe9727"></i></div>
+                    <div class="do-dai-star col-8" style="width: 600px; height: 15px; background: #ccc; border-radius: 50px;"><div  id="star-2" style="width: 80%;height: 15px; background: #fe9727;color: #fe9727;border-radius: 50px;"></div></div>
+                    <div class="total-star col-2" id="total-star-2" style="margin-left: 20px;"></div>
+                </div>
+                <div class=" item-star" style="display: flex; align-items: center;justify-content: space-between; margin-bottom: 5px;">
+                  <div class="name-star col-2" > 1 <i class="fas fa-star" style="color: #fe9727;margin-left: 3px;"></i></div>
+                  <div class="do-dai-star col-8" style="width: 600px; height: 15px; background: #ccc; border-radius: 50px;"><div  id="star-1" style="width: 80%;height: 15px; background: #fe9727;color: #fe9727;border-radius: 50px;"></div></div>
+                  <div class="total-star col-2" id="total-star-1" style="margin-left: 20px;"></div>
+              </div>
+                      
+                  </div>
+            </div>
+            <div class="list-member-vote">
+              <% if(arrVote.length >0){ %> 
+                <% arrVote.forEach(function(item, i){ %>
+                    <div class="item-list-star">
+                          <div class="" style="display: flex;">
+                                <div class="img-member-vote col-4" s>
+                                    <img src="<%= item.anhDaiDien %>" alt="<%= item.anhDaiDien %>" >
+                                </div>
+                                <div class="comment col-8">
+                                      <div class="name"><%= item.hoten %></div>
+                                      <div class="star">
+                                        <% for (let i = 1; i <= 5; i++) { %>
+                                          <% if( i <= item.vote){ %> 
+                                            <i class="fas fa-star" style="color: #fe9727;"></i>
+                                          <% } else{ %>
+                                            <i class="fas fa-star" style="color: #ccc;"></i>
+                                          <% } %>
+                                        
+                                        <% } %>
+                                      </div>
+                                      <div class="size">Size: <%= item.size %></div>
+                                      <div class="text-comment"><%= item.comment %></div>
+                                    
+                                </div>
+                                
+                          </div>
+                          <div class="time"><%= item.createdAt %></div>
+                    </div>
+                <% }); %>
+                <% } %>    
+            </div>
+      </div>
+      
+    </div>
+  </div>
+  
+</div>
+        <div class="section_product_news container">
             <div class="row">
               <div class="col-lg-12">
                 <div class="section_title_base">
@@ -466,6 +526,68 @@
          }   
       })
    </script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
+   <script>
+
+   $(function(){
+     $(".load-star").each(function () {
+       
+       const $rateYo = $(this).find('.rateYo');
+       const $rateYo2 = $(this).find('.rateYo2');
+       const rating = parseFloat($(this).data('rating'));
+       const id_sp = parseInt($(this).data('id'));
+       let star = 0
+      
+       $.get("/api-app/get-total-star-product?id="+id_sp, function (data) {
+           console.log(data);
+           if(data.tbStar > 0){
+             star = data.tbStar
+             let rating2 = Math.round(star * 2) / 2;
+           
+               $rateYo.rateYo({
+               rating: rating2,
+               readOnly: true,
+               starWidth: '17px'
+             }); 
+             $rateYo2.rateYo({
+               rating: rating2,
+               readOnly: true,
+               starWidth: '23px'
+             });
+            $(".numberStar").empty().append(data.tbStar)
+            $(".tongDanhGia").empty().append("("+data.totalStar+" Đánh giá)")
+           }
+          
+           
+       });
+       $.get("/api-app/thong-ke-danh-gia?id_product="+id_sp, function (data) {
+            let dataSyar = data.data
+            if(dataSyar.totalStar > 0){
+              $("#star-5").css("width", `${dataSyar.ceil5star}%`)
+              $("#star-4").css("width", `${dataSyar.ceil4star}%`)
+              $("#star-3").css("width", `${dataSyar.ceil3star}%`)
+              $("#star-2").css("width", `${dataSyar.ceil2star}%`)
+              $("#star-1").css("width", `${dataSyar.ceil1star}%`)
+            
+              $("#total-star-5").empty().append(dataSyar.star5)
+              $("#total-star-4").empty().append(dataSyar.star4)
+              $("#total-star-3").empty().append(dataSyar.star3)
+              $("#total-star-2").empty().append(dataSyar.star2)
+              $("#total-star-1").empty().append(dataSyar.star1)
+            }else{
+                  $(".section_product_vote").empty().append("")
+            }
+           
+       })
+       
+       
+      
+     });
+   })
+
+
+
+</script>
   </body>
 
 </html>

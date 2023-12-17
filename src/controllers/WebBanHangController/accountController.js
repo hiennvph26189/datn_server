@@ -9,7 +9,6 @@ const cookie = require('cookie');
 const moment = require('moment-timezone');
 let formatDate = (date)=>{
     const timeZone = 'Asia/Ho_Chi_Minh';
-    console.log(date);
     const formattedDate = moment(date).tz(timeZone).format('DD/MM/YYYY HH:mm:ss')
     return formattedDate
   } 

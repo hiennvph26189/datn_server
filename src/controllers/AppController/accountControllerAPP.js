@@ -56,7 +56,6 @@ let handleChangePassMembers = async (req, res) => {
         let data = req.body
 
             let userData = await accountServiceAPP.handleUserMembersChangePassService(data);
-            console.log(userData);
             return res.status(200).json(userData);
     } catch (error) {
         console.log("Lỗi phân quyền", error);
@@ -123,7 +122,6 @@ let handleForGotAccount = async (req, res) => {
 let handleXacMinhEmail = async (req, res) => {
     try {
             let data = req.body
-            console.log(data,"askd;s");
             let message = await accountServiceAPP.handleXacMinhEmailService(data);
      
             return res.status(200).json(message);

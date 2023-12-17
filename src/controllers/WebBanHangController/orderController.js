@@ -1,6 +1,7 @@
 import orderServiceAPP from "../../services/appServices/orderServiceAPP";
 import productsServicesAPP from "../../services/appServices/productsServicesAPP";
 import orderCartServiceWev from "../../services/webbanhangService/orderCartServiceWev";
+import startServiceAPP from "../../services/appServices/startServiceAPP";
 import addressServiceAPP from "../../services/appServices/addressServiceAPP";
 import axios from "axios";
 const moment = require('moment-timezone');
@@ -655,6 +656,29 @@ let itemDonHuy = async (req, res) => {
      }
    
   };
+  let checkVoteStarWeb = async (req, res) => {
+    
+  
+    try {
+        var cookie = req.cookies.accessToken;
+        let id_member = checkIdUser(req,res,cookie)
+        let data = {
+            id_cart: req.query.id_cart,
+            id_member:id_member,
+            id_donhang: req.query.id_donhang,
+            id_sp: req.query.id_sp
+        }
+        let message = await startServiceAPP.checkVoteStartProductService(data);
+        return res.send(message)
+     } catch (error) {
+         console.log("Lỗi phân quyền",error)
+        return res.status(200).json({
+             errCode: -1,
+             errMessage: 'Không kết nối được với sever'
+        })
+     }
+   
+  };
 module.exports = {
     handleAddCartWeb:handleAddCartWeb,
     litsDonHangCart:litsDonHangCart,
@@ -675,5 +699,6 @@ module.exports = {
     itemDonDangGiao:itemDonDangGiao,
     itemDonGiaoThanhCong:itemDonGiaoThanhCong,
     itemDonHuy:itemDonHuy,
-    itemDonHoan:itemDonHoan
+    itemDonHoan:itemDonHoan,
+    checkVoteStarWeb:checkVoteStarWeb
 }

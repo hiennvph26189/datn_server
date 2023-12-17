@@ -2,6 +2,8 @@ import { el } from "date-fns/locale";
 import productDetailService from "../../services/webbanhangService/productDetailService";
 import productWebBanHangService from "../../services/webbanhangService/productWebBanHangService";
 import productsServicesAPP from "../../services/appServices/productsServicesAPP";
+import startServiceAPP from "../../services/appServices/startServiceAPP";
+const moment = require('moment-timezone');
 let getConvertArrDetailProduct = (arrData)=>{
   
     const newArray = arrData.map(item => {
@@ -26,6 +28,12 @@ let getConvertArrDetailProduct = (arrData)=>{
     }); 
     return newArray
   }
+  let formatDate = (date)=>{
+    const timeZone = 'Asia/Ho_Chi_Minh';
+    console.log(date);
+    const formattedDate = moment(date).tz(timeZone).format('DD/MM/YYYY HH:mm:ss')
+    return formattedDate
+  } 
 let getSanPhamChiTiet = async (req, res) => {
     
   
@@ -33,6 +41,14 @@ let getSanPhamChiTiet = async (req, res) => {
         let id = req.query.id
         let product =  await productWebBanHangService.getOneProductService(id)
         let arrSizeProduct = await productsServicesAPP.listSizeInproductServiceApp(id);
+        let message = await startServiceAPP.getTotalStarProductService(id);
+        let arrVote = []
+        message.data.map((item,i) =>{
+          arrVote.push({
+            ...item, 
+            createdAt: formatDate(item.createdAt) 
+          })
+        })
         let arr = []
         if(arrSizeProduct.errCode == 0){
           arr = Object.entries(arrSizeProduct.data).map(([key, value]) => ({ key, value }));
@@ -54,7 +70,8 @@ let getSanPhamChiTiet = async (req, res) => {
               idDanhSach:product.getOneProduct[0].idDanhSach, 
               tenDanhSach:productsCategory.tenDanhSach, 
               tenSanPham:product.getOneProduct[0].tenSp,
-              arrSize :arr
+              arrSize :arr,
+              arrVote: arrVote
               }
               )
            

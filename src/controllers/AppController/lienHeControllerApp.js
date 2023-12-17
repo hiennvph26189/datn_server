@@ -2,7 +2,6 @@ import lienheService from "../../services/webbanhangService/lienheService";
 let handleLienHeMembers = async (req, res) => {
     try {
         let data  = req.body;
-        console.log(data);
         let postLienHe = await lienheService.postDataLienHeService(data);
         
         return res.status(200).json(postLienHe)

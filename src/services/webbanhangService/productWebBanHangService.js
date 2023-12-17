@@ -30,7 +30,6 @@ let getNewProductsService = ()=>{
     return new Promise(async(resolve, reject)=>{
        
         try {
-
             let  newProducts = await sequelize.query(`
             SELECT id,tenSp,giaSanPham,sale,image FROM  products where status = 0  order by id desc limit 12
                 `, { type: QueryTypes.SELECT });

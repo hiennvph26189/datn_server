@@ -3,7 +3,6 @@ let getMethodPayOrder = async (req, res) => {
     try {  
        
         let id_order = req.query.id_order
-        console.log(req.query);
         let message = await thanhToanService.getMethodPayOrderService(id_order);
      return res.status(200).json(message)
  } catch (error) {

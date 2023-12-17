@@ -7,7 +7,6 @@ let handleProfileMember = async (req, res) => {
         let id = req.body.id;
  
         let message = await  memberServiceAPP.ProfileMembersService(id)
-        console.log(message)
         return res.status(200).json(message)
      } catch (error) {
          console.log("Lỗi phân quyền",error)
@@ -24,7 +23,6 @@ let handleEditProfileMember = async (req, res) => {
     try {
         
         let message = await  memberServiceAPP.EditProfileMembersService(req.body)
-        console.log(message)
         return res.status(200).json(message)
      } catch (error) {
          console.log("Lỗi phân quyền",error)
@@ -40,7 +38,6 @@ let handleNapTienMenbers = async (req, res) => {
         let data = req.body;
         
         let message = await  memberServiceAPP.napTienMembersService(data)
-        console.log(message)
         return res.status(200).json(message)
      } catch (error) {
          console.log("Lỗi phân quyền",error)
@@ -54,9 +51,7 @@ let handleNapTienMenbers = async (req, res) => {
 let handleLichSuNapMenbers = async (req, res) => {
     try {
         let id = req.query.id
-            console.log(id,"akdljdaf")
         let message = await  memberServiceAPP.lichSuNapTienMembersService(id)
-        console.log(message)
         return res.status(200).json(message)
      } catch (error) {
          console.log("Lỗi phân quyền",error)
@@ -72,7 +67,6 @@ let handleGetOneMembers = async (req, res) => {
         let id = req.query.id
         
         let message = await  memberServiceAPP.getOneMember(id)
-        console.log(message)
         return res.status(200).json(message)
      } catch (error) {
          console.log("Lỗi phân quyền",error)

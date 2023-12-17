@@ -97,6 +97,7 @@ let webBanHang = (app)=>{
     router.post('/post-naptien-9pay',myMiddleware.checkLogin,accountController.postNapTien9Pay);
     router.get('/check-thanh-toan-nap-tien',accountController.checkNapTien9Pay);
     router.get('/lich-su-nap-tien',myMiddleware.checkLogin,accountController.lichSuNapTien);
+    router.get('/check-vote-star-web',myMiddleware.checkLogin,orderController.checkVoteStarWeb);
 
     
     return app.use("/",router)
