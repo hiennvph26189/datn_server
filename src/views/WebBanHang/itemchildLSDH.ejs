@@ -1,0 +1,182 @@
+<div class='container'>
+    <div class=''></div>
+    <div class='col-md-12'>
+        <div class='col-12' style="font-weight:bold; font-size: 27px; border-bottom:1px solid #000;padding:5px;margin:0px 0px 10px 0px">
+            <p style="margin:0">Thông tin người nhận</p>
+        </div>
+            <div class='info-order'>
+                <div class='' style="display:flex;width:100%">
+                    <label style="width:20%;font-weight:bold">Tên người nhận: </label>
+                    <p ><%= itemOrder.hoTen %></p>
+                </div>
+                <div class='' style="display: flex;width: 100%;">
+                    <label style="width:20%;font-weight:bold">Số điện thoại: </label>
+                    <p ><%= itemOrder.soDienThoai %></p>
+                </div>
+                
+                <div class='' style="display: flex;width: 100%;">
+                    <label style="width:20%;font-weight:bold">Địa chỉ nhận: </label>
+                    <p ><%= itemOrder.diaChi %></p>
+                </div>
+                <div class='' style="display: flex;width: 100%;">
+                    <label style="width:20%;font-weight:bold">Tổng tiền: </label>
+                    <p style="color:red"><%= tongTien %></p>
+                </div> 
+                <div class='' style="display: flex;width: 100%;">
+                    <% if(itemOrder.status ==2 || itemOrder.status ==3){ %> 
+                        <label style="width:20%;font-weight:bold">Ngày giao: </label>
+                        <p><%= updatedAt %></p>
+                    <% } else{ %>
+                        <label style="width:20%;font-weight:bold">Ngày đặt: </label>
+                        <p><%= createdAt %></p>
+                        <% } %>
+                    
+                   
+                </div> 
+                <% if(itemOrder.method == "TK"){ %> 
+                    <div class='' style="display: flex;width: 100%;">
+                        <label style="width:20%;font-weight:bold">Phương thức thanh toán: </label>
+                        
+                        <p style="font-weight:600; color:green"> Thanh toán bằng tiền trong tài khoản</p>
+                    </div>
+                <% } else{ %>
+                    <div class='' style="display: flex;width: 100%;">
+                        <label style="width:20%;font-weight:bold">Phương thức thanh toán: </label>
+                        
+                        <p style="font-weight:600; color:green">Ví 9Pay</p>
+                    </div>
+                    <div class='' style="display: flex;width: 100%;">
+                        <label style="width:20%;font-weight:bold">Mã thanh toán 9Pay: </label>
+                        
+                        <p style="font-weight: 600;"><%= itemOrder.payment_no %></p>
+                    </div>
+                <% } %>
+                
+                  <div class='' style="display: flex;width: 100%;">
+                    <label style="width:20%;font-weight:bold">Trạng thái: </label>
+                    <% if(itemOrder.status == 0){ %> 
+                        
+                        <span style="font-weight: 600; color:#FF9900 ;">Đơn đang chờ xét duyệt</span>
+                        
+                    <% } %>
+                    <% if(itemOrder.status == 1){ %> 
+                        
+                        <span style="font-weight: 600; color: #0099FF;">Đã xác nhận đơn hàng</span>
+                        
+                    <% } %>
+                    <% if(itemOrder.status == 2){ %> 
+                        
+                        <span style="font-weight: 600; color: #008B8B;">Đơn đang giao</span>
+                        
+                    <% } %>
+                    <% if(itemOrder.status == 3){ %> 
+                        
+                        <span style="font-weight: 600; color: #006400;">Giao thành công</span>
+                        
+                    <% } %>
+                    <% if(itemOrder.status == 4){ %> 
+                        
+                        <span style="font-weight: 600; color: #FF6347;">Đang xác nhận hủy đơn</span>
+                        
+                    <% } %>
+                    <% if(itemOrder.status == 5){ %> 
+                        
+                        <span style="font-weight: 600; color: #008B8B;">Đơn hàng đã được hủy, bạn đã được hoàn lại tiền +<%= tongTien %></span>
+                        
+                    <% } %>
+                    <% if(itemOrder.status == 10){ %> 
+                        
+                        <span style="font-weight: 600; color: rgb(139, 0, 0);">Đơn đang được xét duyệt để hoàn</span>
+                        
+                    <% } %>
+                    <% if(itemOrder.status == 11){ %> 
+                        
+                        <span style="font-weight: 600; color: #006400;">Đơn của bạn đã hoàn lại tiền </span>
+                        
+                    <% } %>
+                    
+
+                </div> 
+                <% if(itemOrder.status == 2 || itemOrder.status == 3 ){ %> 
+                    <div class='' style="display:flex;width:100%; marginTop:20px; alignItems:center">
+                        <label style="width:20%;font-weight:bold">Mã vận đơn:</label>
+                        <p style="font-weight: 600;"><%= itemOrder.mavandon %></p>
+                        
+                        </div>
+
+                <% } %>
+                
+                    
+               
+                <% if(itemOrder.note_order != "" ){ %> 
+                    <div class='' style="display: flex;width: 100%;">
+                        <label style="width:20%;font-weight:bold">Đanh sách sản phẩm bị đang hết: </label>
+                        <p style="color: red;"><%= itemOrder.note_order %></p>
+                    </div> 
+                <% } %>
+               
+                
+                    
+            </div>
+    </div>
+    <div class='col-md-12'>
+        <div class='col-12' style="font-weight:bold; font-size:27px; border-bottom:1px solid #000;padding:5px;margin:10px 0px 10px 0px">
+            <p style="margin: 0;">Thông tin Đơn hàng</p>
+            
+        </div>
+        <% arrProduct.forEach(function(item, i){ %>
+        <div className='col-12'  style="
+            display:flex;border-bottom: 1px solid #000; padding:10px;margin-bottom:10px   
+       ">
+            <div style="width: 30%;"> 
+                <img style="width: 150px;"src="<%= item.image %>"/>
+            </div>
+            <div style="width:70%">
+                <p style="font-size:20px;text-align:left;font-weight:700"><%= item.tenSp %></p>
+                
+                        
+                        <div style="display: flex;justify-content: space-between;">
+                        <% if(item.sale <=0){ %> 
+                            <span style="font-size: 15px; font-weight: 600; color: #FF6347;"
+                               >
+                                
+                               <%= item.giaSanPham %>
+                            </span>
+                        <% } else{ %>
+                            <div style="display: flex; margin-left: 4px;">
+                                <span style="font-size: 15px;font-weight: 600;color: #B22222;"
+                                    >
+                                
+                                    <%= item.giaBanSale %>
+                                </span>
+                                <span style="font-size: 15px;margin-left: 5px;margin-right: 5px;" >-</span>
+                                <span style="font-size: 15px; font-weight: 600;color: #696969; text-decoration: line-through;" >
+                                       
+                                    
+                                        <%= item.giaSanPham %>
+                                </span>
+                            </div>
+                            <% } %>
+                        
+                        </div>
+                        <div>
+                        <span style="font-size: 15px;font-weight: 600;color: #000;">Size: <%= item.size %></span>
+                               
+                        </div>
+                        <div>
+                        <span style="font-size: 15px;font-weight: 600;color: #000;">Số lượng: x<%= item.soLuong %></span>
+                        </div>      
+            </div>    
+        </div>
+        <% }); %> 
+        <div style="justify-content: space-between; display: flex;">
+            <div>
+                <span style="font-size:17px; font-weight:bold">Số lượng hàng đặt: <%= arrProduct.length %></span>
+            </div>
+            <div>
+            <label style="font-size:20px; font-weight:bold">Tổng tiền: <span style="color: red;"><%= tongTien %></span></label>
+            </div>
+           
+        </div>
+    </div>
+</div>

@@ -46,11 +46,11 @@
            
             <div class="nav-lich-su-mua-hang">
                     <ul >
-                        <li class="Item-lsmh" id="don-xu-ly">Đơn đang xử lý</li>
-                        <li class="Item-lsmh" id="don-dang-giao">Đơn đang giao</li>
-                        <li class="Item-lsmh" id="don-da-giao">Đã giao thành công</li>
-                        <li class="Item-lsmh" id="don-da-huy">Đơn đã hủy</li>
-                        <li class="Item-lsmh" id="don-hoan">Đơn hoàn</li>
+                        <li class="Item-lsmh" id="don-xu-ly" data-link-tab="/item-don-dang-xu-ly?page=1" >Đơn đang xử lý</li>
+                        <li class="Item-lsmh" id="don-dang-giao" data-link-tab="/item-don-dang-giao?page=1">Đơn đang giao</li>
+                        <li class="Item-lsmh" id="don-da-giao" data-link-tab="/item-don-giao-thanh-cong?page=1">Đã giao thành công</li>
+                        <li class="Item-lsmh" id="don-da-huy" data-link-tab="/item-don-huy?page=1">Đơn đã hủy</li>
+                        <li class="Item-lsmh" id="don-da-hoan" data-link-tab="/item-don-hoan?page=1">Đơn hoàn</li>
                     </ul>
             </div>
            <div class="list-don-hang">
@@ -101,7 +101,19 @@
               });
         }    
       })
-      
+      function clickPage(page){
+            let link = $(".page-link").attr("data-link")
+            console.log(link);
+            $.get(`${link}`+page, function (data) {
+                $(".list-don-hang").empty().append(data);
+              });
+      }
+      $(".Item-lsmh").on("click",function(){
+            let link = $(this).attr("data-link-tab");
+            $.get(link, function (data) {
+                $(".list-don-hang").empty().append(data);
+              });
+      })
     </script>
   </body>
 

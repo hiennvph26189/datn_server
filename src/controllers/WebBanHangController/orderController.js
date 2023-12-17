@@ -391,7 +391,7 @@ let checkThanhToan9Pay = async (req, res) => {
                 }
                 let post9Pay = await orderServiceAPP.postDataOrder9PayService(data_order,arrName,data);
                 if(post9Pay.errCode == 0){
-                    return res.redirect('/')
+                    return res.redirect('/lich-su-mua-hang')
                 }else{
                     return res.redirect("/thanh-toan-that-bai");
                 }
@@ -496,6 +496,165 @@ let thanhToanThatBai = async (req, res) => {
      }
    
   };
+  let itemDetailChildLSDH = async (req, res) => {
+  
+    try {
+        var cookie = req.cookies.accessToken;
+        var id_order = req.query.id_order;
+        let id_member = checkIdUser(req,res,cookie)
+        let itemOrder = await orderCartServiceWev.itemOrderMemberService(id_member,id_order)
+        let newDataProduct = getConvertArrProduct(itemOrder.arrProduct)
+        let createdAt = formatDate(itemOrder.getItemOrder.createdAt)
+        let updatedAt = formatDate(itemOrder.getItemOrder.updatedAt)
+        let tongTien = itemOrder.getItemOrder.tongTien.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })
+        return res.render('webBanHang/itemchildLSDH.ejs',{
+            itemOrder:itemOrder.getItemOrder,
+            arrProduct:newDataProduct,
+            tongTien:tongTien,
+            createdAt:createdAt,
+            updatedAt:updatedAt
+        })
+     } catch (error) {
+         console.log("Lỗi phân quyền",error)
+        return res.status(200).json({
+             errCode: -1,
+             errMessage: 'Không kết nối được với sever'
+        })
+     }
+   
+  };
+  let itemDonDangGiao = async (req, res) => {
+    
+  
+    try {
+        var cookie = req.cookies.accessToken;
+        let page = req.query.page;
+        let id_member = checkIdUser(req,res,cookie)
+        let data = await orderCartServiceWev.itemDonDangGiaoService(id_member,page)
+        let newArrConvert = []
+        let arrData = data.data
+        arrData.map((data,i) => {
+            let newArrConvertProduct = getConvertArrProductCart(data.arr_sp_cart)
+            newArrConvert.push(
+                {arrOrder:{
+                ...data.arrOrder,
+                createdAt:formatDate(data.arrOrder.createdAt),
+                updatedAt: formatDate(data.arrOrder.updatedAt),
+                tongTien: data.arrOrder.tongTien.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })
+                },
+                arr_sp_cart:newArrConvertProduct
+            })
+        })
+       
+        return res.render('webBanHang/itemDonDangGiao.ejs',{data:newArrConvert, totalPages:data.totalPages, page:page})    
+     } catch (error) {
+         console.log("Lỗi phân quyền",error)
+        return res.status(200).json({
+             errCode: -1,
+             errMessage: 'Không kết nối được với sever'
+        })
+     }
+   
+  };
+  let itemDonGiaoThanhCong = async (req, res) => {
+    
+  
+    try {
+        var cookie = req.cookies.accessToken;
+        let page = req.query.page;
+        let id_member = checkIdUser(req,res,cookie)
+        let data = await orderCartServiceWev.itemDonGiaoThanhCongService(id_member,page)
+        let newArrConvert = []
+        let arrData = data.data
+        arrData.map((data,i) => {
+            let newArrConvertProduct = getConvertArrProductCart(data.arr_sp_cart)
+            newArrConvert.push(
+                {arrOrder:{
+                ...data.arrOrder,
+                createdAt:formatDate(data.arrOrder.createdAt),
+                updatedAt: formatDate(data.arrOrder.updatedAt),
+                tongTien: data.arrOrder.tongTien.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })
+                },
+                arr_sp_cart:newArrConvertProduct
+            })
+        })
+       
+        return res.render('webBanHang/itemDonGiaoThanhCong.ejs',{data:newArrConvert, totalPages:data.totalPages, page:page})    
+     } catch (error) {
+         console.log("Lỗi phân quyền",error)
+        return res.status(200).json({
+             errCode: -1,
+             errMessage: 'Không kết nối được với sever'
+        })
+     }
+   
+  };
+let itemDonHuy = async (req, res) => {
+    
+  
+    try {
+        var cookie = req.cookies.accessToken;
+        let page = req.query.page;
+        let id_member = checkIdUser(req,res,cookie)
+        let data = await orderCartServiceWev.itemDonHuyService(id_member,page)
+        let newArrConvert = []
+        let arrData = data.data
+        arrData.map((data,i) => {
+            let newArrConvertProduct = getConvertArrProductCart(data.arr_sp_cart)
+            newArrConvert.push(
+                {arrOrder:{
+                ...data.arrOrder,
+                createdAt:formatDate(data.arrOrder.createdAt),
+                updatedAt: formatDate(data.arrOrder.updatedAt),
+                tongTien: data.arrOrder.tongTien.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })
+                },
+                arr_sp_cart:newArrConvertProduct
+            })
+        })
+       
+        return res.render('webBanHang/itemDonHuy.ejs',{data:newArrConvert, totalPages:data.totalPages, page:page})    
+     } catch (error) {
+         console.log("Lỗi phân quyền",error)
+        return res.status(200).json({
+             errCode: -1,
+             errMessage: 'Không kết nối được với sever'
+        })
+     }
+   
+  };
+  let itemDonHoan = async (req, res) => {
+    
+  
+    try {
+        var cookie = req.cookies.accessToken;
+        let page = req.query.page;
+        let id_member = checkIdUser(req,res,cookie)
+        let data = await orderCartServiceWev.itemDonHoanService(id_member,page)
+        let newArrConvert = []
+        let arrData = data.data
+        arrData.map((data,i) => {
+            let newArrConvertProduct = getConvertArrProductCart(data.arr_sp_cart)
+            newArrConvert.push(
+                {arrOrder:{
+                ...data.arrOrder,
+                createdAt:formatDate(data.arrOrder.createdAt),
+                updatedAt: formatDate(data.arrOrder.updatedAt),
+                tongTien: data.arrOrder.tongTien.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })
+                },
+                arr_sp_cart:newArrConvertProduct
+            })
+        })
+       
+        return res.render('webBanHang/itemDonHoan.ejs',{data:newArrConvert, totalPages:data.totalPages, page:page})    
+     } catch (error) {
+         console.log("Lỗi phân quyền",error)
+        return res.status(200).json({
+             errCode: -1,
+             errMessage: 'Không kết nối được với sever'
+        })
+     }
+   
+  };
 module.exports = {
     handleAddCartWeb:handleAddCartWeb,
     litsDonHangCart:litsDonHangCart,
@@ -511,5 +670,10 @@ module.exports = {
     thanhToanThatBai:thanhToanThatBai,
     thanhToanThanhCong:thanhToanThanhCong,
     lichSuMuaHang:lichSuMuaHang,
-    itemDonDangXuLy:itemDonDangXuLy
+    itemDonDangXuLy:itemDonDangXuLy,
+    itemDetailChildLSDH:itemDetailChildLSDH,
+    itemDonDangGiao:itemDonDangGiao,
+    itemDonGiaoThanhCong:itemDonGiaoThanhCong,
+    itemDonHuy:itemDonHuy,
+    itemDonHoan:itemDonHoan
 }

@@ -539,23 +539,44 @@ let handleGetAllOrder = (status,page)=>{
                 
                 let limit = 20; // Số lượng sản phẩm trên mỗi trang
                 let offset = (pageNumber - 1) * limit;
-           
-                const Order = await sequelize.query(`
-                SELECT 
-                orders.*,
-                address.hoTen,
-                address.soDienThoai,
-                address.diaChi
-                FROM orders
-                INNER JOIN 
-                address ON orders.id_address = address.id
-                where orders.status = ${status}
-                order by orders.id DESC limit ${limit} offset ${offset}
-                 `, {
-                    
+                let Order = []
+                if(status == 0){
+                    Order = await sequelize.query(`
+                    SELECT 
+                    orders.*,
+                    address.hoTen,
+                    address.soDienThoai,
+                    address.diaChi
+                    FROM orders
+                    INNER JOIN 
+                    address ON orders.id_address = address.id
+                    where orders.status = ${status}
+                    order by orders.id ASC limit ${limit} offset ${offset}
+                    `, {
+                        
                     type: Sequelize.QueryTypes.SELECT,
                   
                   });
+                }else{
+                    Order = await sequelize.query(`
+                    SELECT 
+                    orders.*,
+                    address.hoTen,
+                    address.soDienThoai,
+                    address.diaChi
+                    FROM orders
+                    INNER JOIN 
+                    address ON orders.id_address = address.id
+                    where orders.status = ${status}
+                    order by orders.id DESC limit ${limit} offset ${offset}
+                    `, {
+                        
+                    type: Sequelize.QueryTypes.SELECT,
+                  
+                  });
+                }
+           
+                 
                   let totalPages = Math.ceil(totalCount[0].total / limit);
                  let getCarts = await db.Carts.findAll({
                     where: {
@@ -839,8 +860,8 @@ let handleGiaoDonService = (data)=>{
                         if(arrUpdate.length > 0){
                             arrUpdate.map(async value =>{
                                 await sequelize.query(`
-                                UPDATE size
-                                SET '${value.size}' = '${value.size}' - ${value.soLuong}
+                                UPDATE sizes
+                                SET ${value.size} = ${value.size} - ${value.soLuong}
                                 WHERE id = ${value.id_size};
                                 `, { type: QueryTypes.UPDATE });
 
@@ -921,7 +942,7 @@ let handleThongKeOrdersService = (data)=>{
                 const result = await sequelize.query(`
                 SELECT ipSanPham, SUM(soLuong) AS tongSoLuong, SUM(thanhTien) AS tongPrice
                 FROM carts
-                Where status = 2 And updatedAt BETWEEN '${tuNgay}' AND '${denNgay}'
+                Where status = 1 And updatedAt BETWEEN '${tuNgay}' AND '${denNgay}'
                 
                 GROUP BY ipSanPham
                 ORDER BY tongSoLuong DESC
@@ -940,8 +961,8 @@ let handleThongKeOrdersService = (data)=>{
                 const result = await sequelize.query(`
                 SELECT ipSanPham, SUM(soLuong) AS tongSoLuong, SUM(thanhTien) AS tongPrice, status
                 FROM carts
-                Where status = 2 And YEAR(updatedAt) = ${parseInt(nam)} AND MONTH(updatedAt) = ${parseInt(thang)}
-                
+                Where status = 1 And YEAR(updatedAt) = ${parseInt(nam)} AND MONTH(updatedAt) = ${parseInt(thang)}
+               
                 GROUP BY ipSanPham
                 ORDER BY tongSoLuong DESC
                 
@@ -955,11 +976,11 @@ let handleThongKeOrdersService = (data)=>{
             }else if(parseInt(data.key) === 1){
                
                 let ngay = data.ngay
-                console.log(ngay)
+               
                 const result = await sequelize.query(`
                 SELECT ipSanPham, SUM(soLuong) AS tongSoLuong, SUM(thanhTien) AS tongPrice, status
                 FROM carts
-                Where status = 2 And DATE(updatedAt) = '${ngay}'
+                Where status = 1 And DATE(updatedAt) = '${ngay}'
                 
                 GROUP BY ipSanPham
                 ORDER BY tongSoLuong DESC
@@ -1069,6 +1090,7 @@ let handHoanDonOrderService = async(data)=>{
                        
                      }else{ 
                         let status_order =  Order.status
+                        let arr_id_cart = JSON.parse(Order.idCart) 
                         if(metthod == "TK"){
                             let id_member = Order.idUser
                             let price_order = Order.tongTien
@@ -1082,6 +1104,13 @@ let handHoanDonOrderService = async(data)=>{
                                     {status: 5},
                                     {where: {id: id}}
                                 )
+                            }
+                            for(const id_cart of arr_id_cart){
+                                await sequelize.query(`
+                                    UPDATE carts
+                                    SET status = 2
+                                    WHERE id = ${id_cart} ;
+                                    `, { type: QueryTypes.UPDATE });
                             }
                             await sequelize.query(`
                             UPDATE members
@@ -1110,7 +1139,13 @@ let handHoanDonOrderService = async(data)=>{
                                     {where: {id: id}}
                                 )
                             }
-                            
+                            for(const id_cart of arr_id_cart){
+                                await sequelize.query(`
+                                    UPDATE carts
+                                    SET status = 2
+                                    WHERE id = ${id_cart} ;
+                                    `, { type: QueryTypes.UPDATE });
+                            }
                                 await sequelize.query(`
                                 UPDATE thanhtoan
                                 SET status = 2

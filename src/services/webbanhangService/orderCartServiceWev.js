@@ -294,7 +294,7 @@ let itemDonDangXuLyService = (id_member,page)=>{
                 SELECT COUNT(*) as total FROM  orders where idUser = ${id_member}  and (status = 0 or status = 1)
                     `, { type: QueryTypes.SELECT });
                 let pageNumber = page;
-                    let limit = 5; // Số lượng sản phẩm trên mỗi trang
+                    let limit = 3; // Số lượng sản phẩm trên mỗi trang
                     let offset = (pageNumber - 1) * limit;
                 const getArrOder = await sequelize.query(`
                 SELECT 
@@ -361,12 +361,392 @@ let itemDonDangXuLyService = (id_member,page)=>{
         
     })
 }
+let itemDonHuyService = (id_member,page)=>{
+    return new Promise(async(resolve, reject)=>{
+       try {
+
+            if(id_member){
+                let totalCount = await sequelize.query(`
+                SELECT COUNT(*) as total FROM  orders where idUser = ${id_member}  and (status = 4 or status = 5)
+                    `, { type: QueryTypes.SELECT });
+                let pageNumber = page;
+                    let limit = 3; // Số lượng sản phẩm trên mỗi trang
+                    let offset = (pageNumber - 1) * limit;
+                const getArrOder = await sequelize.query(`
+                SELECT 
+                * 
+                FROM orders
+                where idUser = ${id_member}  and (status = 4 or status = 5) order by id desc limit ${limit} OFFSET ${offset}
+                `, { type: QueryTypes.SELECT });
+                let totalPages = Math.ceil(totalCount[0].total / limit);
+                if(getArrOder.length > 0){
+                    let data = [];
+
+                    for (const item of getArrOder) {
+                        let arr_id_cart = JSON.parse(item.idCart);
+                        let resultArray = [];
+
+                        for (const id_cart of arr_id_cart) {
+                            let [results] = await sequelize.query(`
+                                SELECT 
+                                    products.id as id_product,
+                                    products.tenSp,
+                                    products.giaSanPham,
+                                    products.sale,
+                                    products.image,
+                                    carts.id as id_cart,
+                                    carts.size,
+                                    carts.soLuong,
+                                    carts.thanhTien
+                                FROM carts
+                                INNER JOIN products ON carts.ipSanPham = products.id
+                                WHERE carts.id = ${id_cart}
+                            `, { type: QueryTypes.SELECT });
+
+                            resultArray.push(results);
+                        }
+
+                        data.push({
+                            arrOrder: item,
+                            arr_sp_cart: resultArray
+                        });
+                    }
+                    console.log(data);
+                    resolve({ 
+                        errCode:0,
+                        errMessage: 'Thất bại',
+                        data:data,
+                        totalPages:totalPages
+                       
+                     })
+                }else{
+                    resolve({ 
+                        errCode:1,
+                        errMessage: 'Thất bại',
+                        tongTien:0
+                       
+                     })
+                } 
+            }
+            
+
+       } catch (error) {
+            reject(error);
+       }
+        
+        
+    })
+}
+let itemDonHoanService = (id_member,page)=>{
+    return new Promise(async(resolve, reject)=>{
+       try {
+
+            if(id_member){
+                let totalCount = await sequelize.query(`
+                SELECT COUNT(*) as total FROM  orders where idUser = ${id_member}  and (status = 10 or status = 11)
+                    `, { type: QueryTypes.SELECT });
+                let pageNumber = page;
+                    let limit = 3; // Số lượng sản phẩm trên mỗi trang
+                    let offset = (pageNumber - 1) * limit;
+                const getArrOder = await sequelize.query(`
+                SELECT 
+                * 
+                FROM orders
+                where idUser = ${id_member}  and (status = 10 or status = 11) order by id desc limit ${limit} OFFSET ${offset}
+                `, { type: QueryTypes.SELECT });
+                let totalPages = Math.ceil(totalCount[0].total / limit);
+                if(getArrOder.length > 0){
+                    let data = [];
+
+                    for (const item of getArrOder) {
+                        let arr_id_cart = JSON.parse(item.idCart);
+                        let resultArray = [];
+
+                        for (const id_cart of arr_id_cart) {
+                            let [results] = await sequelize.query(`
+                                SELECT 
+                                    products.id as id_product,
+                                    products.tenSp,
+                                    products.giaSanPham,
+                                    products.sale,
+                                    products.image,
+                                    carts.id as id_cart,
+                                    carts.size,
+                                    carts.soLuong,
+                                    carts.thanhTien
+                                FROM carts
+                                INNER JOIN products ON carts.ipSanPham = products.id
+                                WHERE carts.id = ${id_cart}
+                            `, { type: QueryTypes.SELECT });
+
+                            resultArray.push(results);
+                        }
+
+                        data.push({
+                            arrOrder: item,
+                            arr_sp_cart: resultArray
+                        });
+                    }
+                    console.log(data);
+                    resolve({ 
+                        errCode:0,
+                        errMessage: 'Thất bại',
+                        data:data,
+                        totalPages:totalPages
+                       
+                     })
+                }else{
+                    resolve({ 
+                        errCode:1,
+                        errMessage: 'Thất bại',
+                        tongTien:0
+                       
+                     })
+                } 
+            }
+            
+
+       } catch (error) {
+            reject(error);
+       }
+        
+        
+    })
+}
+let itemDonDangGiaoService = (id_member,page)=>{
+    return new Promise(async(resolve, reject)=>{
+       try {
+
+            if(id_member){
+                let totalCount = await sequelize.query(`
+                SELECT COUNT(*) as total FROM  orders where idUser = ${id_member}  and status = 2
+                    `, { type: QueryTypes.SELECT });
+                let pageNumber = page;
+                    let limit = 3; // Số lượng sản phẩm trên mỗi trang
+                    let offset = (pageNumber - 1) * limit;
+                const getArrOder = await sequelize.query(`
+                SELECT 
+                * 
+                FROM orders
+                where idUser = ${id_member}  and  status = 2 order by id desc limit ${limit} OFFSET ${offset}
+                `, { type: QueryTypes.SELECT });
+                let totalPages = Math.ceil(totalCount[0].total / limit);
+                if(getArrOder.length > 0){
+                    let data = [];
+
+                    for (const item of getArrOder) {
+                        let arr_id_cart = JSON.parse(item.idCart);
+                        let resultArray = [];
+
+                        for (const id_cart of arr_id_cart) {
+                            let [results] = await sequelize.query(`
+                                SELECT 
+                                    products.id as id_product,
+                                    products.tenSp,
+                                    products.giaSanPham,
+                                    products.sale,
+                                    products.image,
+                                    carts.id as id_cart,
+                                    carts.size,
+                                    carts.soLuong,
+                                    carts.thanhTien
+                                FROM carts
+                                INNER JOIN products ON carts.ipSanPham = products.id
+                                WHERE carts.id = ${id_cart}
+                            `, { type: QueryTypes.SELECT });
+
+                            resultArray.push(results);
+                        }
+
+                        data.push({
+                            arrOrder: item,
+                            arr_sp_cart: resultArray
+                        });
+                    }
+                    console.log(data);
+                    resolve({ 
+                        errCode:0,
+                        errMessage: 'Thành công',
+                        data:data,
+                        totalPages:totalPages
+                       
+                     })
+                }else{
+                    resolve({ 
+                        errCode:1,
+                        errMessage: 'Thất bại',
+                        tongTien:0
+                       
+                     })
+                } 
+            }
+            
+
+       } catch (error) {
+            reject(error);
+       }
+        
+        
+    })
+}
+let itemDonGiaoThanhCongService = (id_member,page)=>{
+    return new Promise(async(resolve, reject)=>{
+       try {
+
+            if(id_member){
+                let totalCount = await sequelize.query(`
+                SELECT COUNT(*) as total FROM  orders where idUser = ${id_member}  and status = 3
+                    `, { type: QueryTypes.SELECT });
+                let pageNumber = page;
+                let limit = 3; // Số lượng sản phẩm trên mỗi trang
+                let offset = (pageNumber - 1) * limit;
+                const getArrOder = await sequelize.query(`
+                SELECT 
+                * 
+                FROM orders
+                where idUser = ${id_member}  and  status = 3 order by id desc limit ${limit} OFFSET ${offset}
+                `, { type: QueryTypes.SELECT });
+                let totalPages = Math.ceil(totalCount[0].total / limit);
+                if(getArrOder.length > 0){
+                    let data = [];
+
+                    for (const item of getArrOder) {
+                        let arr_id_cart = JSON.parse(item.idCart);
+                        let resultArray = [];
+
+                        for (const id_cart of arr_id_cart) {
+                            let [results] = await sequelize.query(`
+                                SELECT 
+                                    products.id as id_product,
+                                    products.tenSp,
+                                    products.giaSanPham,
+                                    products.sale,
+                                    products.image,
+                                    carts.id as id_cart,
+                                    carts.size,
+                                    carts.soLuong,
+                                    carts.thanhTien
+                                FROM carts
+                                INNER JOIN products ON carts.ipSanPham = products.id
+                                WHERE carts.id = ${id_cart}
+                            `, { type: QueryTypes.SELECT });
+
+                            resultArray.push(results);
+                        }
+
+                        data.push({
+                            arrOrder: item,
+                            arr_sp_cart: resultArray
+                        });
+                    }
+                    console.log(data);
+                    resolve({ 
+                        errCode:0,
+                        errMessage: 'Thành công',
+                        data:data,
+                        totalPages:totalPages
+                       
+                     })
+                }else{
+                    resolve({ 
+                        errCode:1,
+                        errMessage: 'Thất bại',
+                        tongTien:0
+                       
+                     })
+                } 
+            }
+            
+
+       } catch (error) {
+            reject(error);
+       }
+        
+        
+    })
+}
+let itemOrderMemberService = (id_member,id_order)=>{
+    return new Promise(async(resolve, reject)=>{
+       try {
+
+            if(id_member){
+                const [getItemOrder] = await sequelize.query(`
+                SELECT 
+                orders.*,
+                address.hoTen,
+                address.soDienThoai,
+                address.diaChi,
+                thanhtoan.method,
+                thanhtoan.payment_no
+                
+                FROM orders
+                INNER JOIN 
+                address ON address.id = orders.id_address
+                INNER JOIN 
+                thanhtoan ON thanhtoan.id_donhang = orders.id
+                where orders.id = ${id_order} and 	orders.idUser = ${id_member}
+                `, { type: QueryTypes.SELECT });
+                let arrIDCarrt = JSON.parse(getItemOrder.idCart)
+                let arrProduct = []
+                for(const id_cart of arrIDCarrt){
+                    let [itemProductCart] = await sequelize.query(`
+                    SELECT 
+                    products.id as id_product,
+                    products.tenSp,
+                    products.giaSanPham,
+                    products.sale,
+                    products.image,
+                    carts.id as id_cart,
+                    carts.size,
+                    carts.soLuong,
+                    carts.thanhTien
+                    
+                    FROM carts
+                    INNER JOIN 
+                        products ON carts.ipSanPham = products.id
+                    
+                    where carts.id = ${id_cart} 
+                     `, { type: QueryTypes.SELECT });
+                     arrProduct.push(itemProductCart)
+                }
+               
+                if(getItemOrder){
+                    resolve({ 
+                        errCode:0,
+                        errMessage: 'OK',
+                        getItemOrder:getItemOrder,
+                        arrProduct:arrProduct
+                       
+                     })
+                }else{
+                    resolve({ 
+                        errCode:1,
+                        errMessage: 'Thất bại',
+                        tongTien:0
+                       
+                     })
+                } 
+            }
+            
+
+       } catch (error) {
+            reject(error);
+       }
+        
+        
+    })
+}
 module.exports  = {
     congSoLuongCartService:congSoLuongCartService,
     truSoLuongCartService:truSoLuongCartService,
     deleteCartService:deleteCartService,
     totalPriceCart:totalPriceCart,
     updateSizeOrderService:updateSizeOrderService,
-    itemDonDangXuLyService:itemDonDangXuLyService
+    itemDonDangXuLyService:itemDonDangXuLyService,
+    itemOrderMemberService:itemOrderMemberService,
+    itemDonDangGiaoService:itemDonDangGiaoService,
+    itemDonGiaoThanhCongService:itemDonGiaoThanhCongService,
+    itemDonHuyService:itemDonHuyService,
+    itemDonHoanService:itemDonHoanService
 
 }

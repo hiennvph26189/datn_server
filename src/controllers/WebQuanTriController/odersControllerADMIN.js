@@ -60,7 +60,7 @@ let handleThongKeOrders = async (req, res) => {
     try {
         
         let data = req.query
-       
+        console.log(data);
         let message = await  odersService.handleThongKeOrdersService(data)
         return res.status(200).json(message)
      } catch (error) {

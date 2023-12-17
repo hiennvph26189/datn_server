@@ -88,6 +88,11 @@ let webBanHang = (app)=>{
     router.get('/thanh-toan-thanh-cong',orderController.thanhToanThanhCong);
     router.get('/lich-su-mua-hang',orderController.lichSuMuaHang);
     router.get('/item-don-dang-xu-ly',orderController.itemDonDangXuLy);
+    router.get('/item-child-LSDH',orderController.itemDetailChildLSDH);
+    router.get('/item-don-dang-giao',myMiddleware.checkLogin,orderController.itemDonDangGiao);
+    router.get('/item-don-giao-thanh-cong',myMiddleware.checkLogin,orderController.itemDonGiaoThanhCong);
+    router.get('/item-don-huy',myMiddleware.checkLogin,orderController.itemDonHuy);
+    router.get('/item-don-hoan',myMiddleware.checkLogin,orderController.itemDonHoan);
 
     
     return app.use("/",router)

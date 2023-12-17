@@ -1,0 +1,113 @@
+<% data.forEach(function(item, i){ %>
+    <div class="item-ls-don-hang">
+       <div class="time-item">
+           <%= item.arrOrder.createdAt %>
+       </div>
+       <% item.arr_sp_cart.forEach(function(item2, i2){ %>
+       <div class="item-list-sp col-12" style="margin-bottom: 10px; border-bottom: 1px solid #ccc; padding-bottom: 10px; cursor: pointer;" onclick="showDetaiOrder(`<%= item.arrOrder.id %>`)">
+           <div class="row" >
+               <div class="col-4 img-don-hang" >
+                   <img src="<%= item2.image %>" alt="<%= item2.tenSp %>">
+               </div>
+               <div class="content-item col-8">
+                   <div class="ten-sp">
+                       <%= item2.tenSp %>
+                   </div>
+                   <div class="price">
+                       <div class="row">
+                               <div class="gia-sp col-8">
+                                   <% if(item2.sale> 0){ %> 
+                                      <span style="color: #B22222;"><%= item2.giaBanSale %></span>  -  <span style="color: #696969; text-decoration: line-through;"><%= item2.giaSanPham %></span>
+                                   <% } else{ %>
+                                       <%= item2.giaBanSale %>
+                                   <% } %>
+                               </div>  
+                               <div class="col-2">
+                                  Size: <%= item2.size %>
+                               </div>
+                               <div class="col-2">
+                                   x<%= item2.soLuong %>
+                               </div>
+   
+                       </div>
+                   </div>
+                  
+                  
+               </div>
+           </div>
+          
+       </div>
+       <% }); %>  
+      
+           <div class="trang-thai" style="color: #20b262">
+                Đơn hàng đã giao thành công
+           </div>
+   
+       <div class="tong">
+              
+                   <div class="tong-sl ">
+                       Số sản phẩm: <%= item.arr_sp_cart.length %>
+                   </div>
+                   <div class="tong-tien">
+                       Tổng: <%= item.arrOrder.tongTien %>
+                   </div>
+              
+       </div>
+      
+       
+   </div>
+   <% }); %>  
+   <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#showDetaiOrder" id="showDetaiOrdermember" hidden>
+      
+     </button>
+     
+     <!-- Modal -->
+     <div class="modal fade" id="showDetaiOrder" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+       <div class="modal-dialog  modal-lg">
+         <div class="modal-content">
+           <div class="modal-header">
+             <h5 class="modal-title" id="exampleModalLabel">Chi tiết đơn hàng</h5>
+             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+           </div>
+           <div class="modal-body" id="content-order">
+             
+           </div>
+           <div class="modal-footer">
+             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+           
+           </div>
+         </div>
+       </div>
+     </div>
+   <nav aria-label="Page navigation example">
+       <ul class="pagination">
+        
+         <% for(var i = 1; i <= totalPages ; i++) { %>
+           <% if(page == i){ %> 
+               <li class="page-item active"><button class="page-link" data-link="/item-don-giao-thanh-cong?page=" onclick="clickPage(`<%= i %>`)"><%= i %></button></li>
+           <% } else{ %>
+               <li class="page-item"><button class="page-link" data-link="/item-don-giao-thanh-cong?page=" onclick="clickPage(`<%= i %>`)"><%= i %></button></li>
+           <% } %>
+          
+         <% } %>
+   
+       </ul>
+     </nav>
+   <style>
+       #don-da-giao{
+           background-color: bisque;
+           color: black;
+       }
+       .trang-thai{
+           font-weight: 600;
+       }
+   </style>
+   <script>
+       function showDetaiOrder(id){
+           $.get("/item-child-LSDH?id_order="+id, function (data) {
+               $("#content-order").empty().append(data);
+           })
+           $("#showDetaiOrdermember").click()
+           
+       }
+   </script>
