@@ -90,11 +90,11 @@ let getTotalStarProductService = (id_sp)=>{
         try {
           
             if(id_sp){
-                
-                
+                let id = parseInt(id_sp)
                 let checkVote = await sequelize.query(`
-                SELECT * ,AVG(vote) AS averageStar, COUNT(*) AS rowCount FROM  danhgia where  id_sp = ${id_sp} and status = 1
+                SELECT * ,AVG(vote) AS averageStar, COUNT(*) AS rowCount FROM  danhgia where  id_sp = ${id} and status = 1
                     `, { type: QueryTypes.SELECT });
+                
                 let getAllVoteStar = await sequelize.query(`
                         SELECT 
                         danhgia.*, 
@@ -106,7 +106,7 @@ let getTotalStarProductService = (id_sp)=>{
                         members ON danhgia.id_member = members.id
                         INNER JOIN 
                         carts ON danhgia.id_cart = carts.id
-                        where danhgia.id_sp = ${id_sp} and danhgia.status = 1 order by danhgia.id desc limit 5
+                        where danhgia.id_sp = ${id} and danhgia.status = 1 order by danhgia.id desc limit 5
                     `, { type: QueryTypes.SELECT }); 
                     
                 const originalNumber = parseFloat(checkVote[0].averageStar); // Chuyển chuỗi thành số
