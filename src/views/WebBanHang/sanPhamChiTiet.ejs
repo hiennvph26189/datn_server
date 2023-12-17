@@ -81,13 +81,49 @@
           </div>
           <div class="product-center-column product-info product-item col-xs-12 col-sm-6 col-md-8 col-lg-6 col-xl-6 details-pro style_product style_border" id="product-2842763">
   
-            <div class="head-qv group-status">
+            <div class="head-qv group-status" style="display: flex; justify-content: space-between;">
               <h3 class="qwp-name title-product"><a class="text2line" href="/ao-phong-vitage-trang" title="Áo phông vitage trắng"> <%= product.tenSp %></a></h3>
-              <div class="vend-qv group-status hidden">
-                <div class="left_vend">
-                  Tình trạng: <span class="tinhtrang">Còn hàng</span>
-                </div>
+              <div class="vend-qv group-status ">
+                <div class="load-star" data-rating="3.3" data-id="<%= product.id %>" style="display: flex; align-items: center;">
+                  <div class="rateYo"></div> <span id="numberStar" style="font-size: 16px;font-weight: 600;"></span> <span id="tongDanhGia" style="margin-left: 5px;"> </span>
+              </div> 
               </div>
+              <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
+        <script>
+     
+        $(function(){
+          $(".load-star").each(function () {
+            
+            const $rateYo = $(this).find('.rateYo');
+            const rating = parseFloat($(this).data('rating'));
+            const id_sp = parseInt($(this).data('id'));
+            let star = 0
+            console.log("/api-app/get-total-star-product?id="+id_sp);
+            $.get("/api-app/get-total-star-product?id="+id_sp, function (data) {
+                console.log(data);
+                if(data.tbStar > 0){
+                  star = data.tbStar
+                  let rating2 = Math.round(star * 2) / 2;
+                
+                    $rateYo.rateYo({
+                    rating: rating2,
+                    readOnly: true,
+                    starWidth: '17px'
+                  });
+                 $("#numberStar").empty().append(data.tbStar)
+                 $("#tongDanhGia").empty().append("("+data.totalStar+" Đánh giá)")
+                }
+            });
+            console.log(star);
+            
+            
+           
+          });
+        })
+     
+
+     
+    </script>
             </div>
             <div class="quickview-info">
               <span class="prices price-box">
@@ -100,39 +136,99 @@
             
             <div class="form-product col-sm-12 col-lg-12 col-md-12 col-xs-12">
 								
-                <div class="box-variant clearfix ">
+              <% if(arrSize.length >0){ %>
+            
+            
+                <form action="/add-cart" method="post" class="quick_option variants form-ajaxtocart form-product" id="product-actions-2842763">
+                  <select class="form-select" aria-label="Default select example" id="select-size" name="size" >
+                    <option value="false-soluong" data-soLuong="0">Chọn size</option>
+                    <% arrSize.forEach(function(item, i){ %>
+                    <option value="<%= item.key %>" data-soLuong="<%= item.value %>" id="<%= item.key %>">Size <%= item.key %></option>
+                    <% }); %> 
+                   
+                  </select>
+                  <input type="text" value="<%= product.id %>" name="id_product" style="display: none;">
+                  <span class="price-product-detail hidden" style="opacity: 0;">
+                    <span class=""></span>
+                  </span>
+                  
+                  <div class="form-group form_product_content margin-top-10">
+                    <div class="count_btn_style quantity_wanted_p">
+                      <div class="custom input_number_product soluong1">
                      
-                    <fieldset class="form-group">
-                        <div class="selector-wrapper" style="text-align: left; margin-bottom: 15px;">
-                            <label for="product-selectors-option-0">Size</label>
-                                <select class="single-option-selector" data-option="option1" id="product-selectors-option-0">
-                                    <option value="M">M</option>
-                                    <option value="XL">XL</option>
-                                </select>
-                            </div>
-                            
-                        
-                    </fieldset>
-                    
-                </div>
-                <div class="form-group form_button_details margin-top-10">
-                    <div class="form_product_content type1">
-                        <div class="soluong soluong_type_1 show">
-                            <label>Số lượng</label>
-                            <div class="custom input_number_product custom-btn-number form-control">
-                                <input type="text" id="qtym" name="quantity" value="1" maxlength="3" class="form-control prd_quantity " onkeypress="if ( isNaN(this.value + String.fromCharCode(event.keyCode) )) return false;" onchange="if(this.value == 0)this.value=1;">
-                                <button class="btn_num num_2 button button_qty" onclick="var result = document.getElementById('qtym'); var qtypro = result.value; if( !isNaN( qtypro )) result.value++;return false;" type="button"><i class="fa fa-plus"></i></button>
-                                <button class="btn_num num_1 button button_qty" onclick="var result = document.getElementById('qtym'); var qtypro = result.value; if( !isNaN( qtypro ) &amp;&amp; qtypro > 1 ) result.value--;return false;" type="button"><i class="fa fa-minus"></i></button>		
-                            </div>
-                        </div>
-                        <div class="button_actions clearfix">
-                            
-                            <button type="submit" class="btn btn_base btn_add_cart btn-cart add_to_cart"><span class="text_1">Cho vào giỏ hàng</span></button>									
-                            
-                        </div>
+                      
+                        <input type="number" id="quantity-detail" name="quantity" value="0" min="0" max="50" class="form-control prd_quantity" readonly>
+                        <a class="btn_num num_2 button button_qty" id="congSoLuong" style="cursor: pointer;"><i class="fa fa-plus"></i></a>
+                        <a class="btn_num num_1 button button_qty" id="truSoLuong" style="cursor: pointer;"><i class="fa fa-minus"></i></a>
+                      </div>
+                      <div class="button_actions clearfix">
+                        <button type="button" id="cickButton" class="btn_cool btn btn_base fix_add_to_cart ajax_addtocart btn_add_cart btn-cart add_to_cart add_to_cart_detail">
+                          <span class="btn-content">Cho vào giỏ hàng</span>
+                        </button>
+                      </div>
                     </div>
-                </div>
-                
+      
+                  </div>
+      
+               
+                <% } %>
+                <script>
+                  let maxSoluong = 0
+                  let quantity =   $("#quantity-detail").val()
+                    $('#select-size').on('change', function() {
+                    let id_size = this.value
+              
+                    if(id_size != 'false-soluong'){
+                      let soLuong =  $('#'+id_size).attr('data-soLuong')
+                      maxSoluong = soLuong
+                      quantity = 1
+                      $("#quantity-detail").val(1)
+                      $("#quantity-detail").attr('max', maxSoluong)
+                      $(".button_actions").empty().append(`<button type="submit"  class="btn_cool btn btn_base fix_add_to_cart ajax_addtocart btn_add_cart btn-cart add_to_cart add_to_cart_detail">
+                                    <span class="btn-content">Cho vào giỏ hàng</span>
+                                  </button>`);
+                     
+                    }else{
+                      maxSoluong = 0
+                      $("#quantity-detail").val(0)
+                      $("#quantity-detail").attr('max', 0)
+                    }
+                    
+              
+                    
+                  });
+              
+                  $('#congSoLuong').on('click', function(){
+                    let maxnumber = parseInt(maxSoluong)
+                    
+                    $("#quantity-detail").val(function (i, oldval) {
+                                 
+                                 let a = ++oldval
+              
+                                let b = maxSoluong -a
+                                if(b> 0){
+                                  return a
+                                }else{
+                                  return maxSoluong
+                                }
+                                  
+                                  //return oldval < oldval ? ++oldval:maxnumber;
+                              });
+                    
+                  })
+              
+                  $('#truSoLuong').on('click', function(){
+                   
+                      $("#quantity-detail").val(function (i, oldval) {
+                               
+                                  return oldval > 1 ? --oldval : 1;
+                              });
+                  })
+                  $("#cickButton").on('click', function(){
+                    alert("Bạn chưa chọn size")
+                  })
+                </script>
+               
                 
                 <div class="tagslist">
                     <label class="inline">Hãng sản xuất: </label>

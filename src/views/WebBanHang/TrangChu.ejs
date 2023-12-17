@@ -6,6 +6,12 @@
     <title>Trang chủ</title>
   </head>
   <body>
+    <style>
+        .load-star{
+          text-align: center;
+          float:right;
+        }
+    </style>
     <%- include('./header'); %>
     <div class="section_sidebar_slider">
       <div class="container">
@@ -163,6 +169,11 @@
                                   </div>
                                 </div>
                               </div>
+                              <div>
+                                <div class="load-star" data-rating="3.3" data-id="<%= item.id %>">
+                                    <div class="rateYo"></div>
+                                </div> 
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -264,6 +275,9 @@
                                   </div>
                                 </div>
                               </div>
+                              <div class="load-star" data-rating="3.3" data-id="<%= item.id %>">
+                                <div class="rateYo"></div>
+                            </div> 
                             </div>
                           </div>
                         </div>
@@ -339,6 +353,9 @@
                                   </div>
                                 </div>
                               </div>
+                              <div class="load-star" data-rating="3.3" data-id="<%= item.id %>">
+                                <div class="rateYo"></div>
+                            </div> 
                             </div>
                           </div>
                         </div>
@@ -428,6 +445,9 @@
                                   </div>
                                 </div>
                               </div>
+                              <div class="load-star" data-rating="3.3" data-id="<%= item2.id %>">
+                                <div class="rateYo"></div>
+                            </div> 
                             </div>
                           </div>
                         </div>
@@ -456,6 +476,42 @@
       </div>
     </div>
     <%- include('./footer'); %>
+    
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
+    <script>
+     
+        $(function(){
+          $(".load-star").each(function () {
+            
+            const $rateYo = $(this).find('.rateYo');
+            const rating = parseFloat($(this).data('rating'));
+            const id_sp = parseInt($(this).data('id'));
+            let star = 0
+            console.log("/api-app/get-total-star-product?id="+id_sp);
+            $.get("/api-app/get-total-star-product?id="+id_sp, function (data) {
+                console.log(data.tbStar);
+                if(data.tbStar > 0){
+                  star = data.tbStar
+                  let rating2 = Math.round(star * 2) / 2;
+                
+                    $rateYo.rateYo({
+                    rating: rating2,
+                    readOnly: true,
+                    starWidth: '17px'
+                  });
+                 
+                }
+            });
+            console.log(star);
+            
+            
+           
+          });
+        })
+     
+
+     
+    </script>
     <script>
       $('.xem_nhanh').on('click', function(e){
         e.preventDefault()
@@ -467,9 +523,11 @@
         });       
       })
       $(document).ready(function () {
+        
         $.get("/danhMucSanPham-menu", function (data) {
                 $(".asidecollection").empty().append(data);
-              });
+        });
+        
         $.get("/sanPhamBanChay-products", function (data) {
           $(".sanPhamBanChay").empty().append(data);
         });

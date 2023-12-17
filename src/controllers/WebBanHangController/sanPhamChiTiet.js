@@ -1,6 +1,7 @@
 import { el } from "date-fns/locale";
 import productDetailService from "../../services/webbanhangService/productDetailService";
 import productWebBanHangService from "../../services/webbanhangService/productWebBanHangService";
+import productsServicesAPP from "../../services/appServices/productsServicesAPP";
 let getConvertArrDetailProduct = (arrData)=>{
   
     const newArray = arrData.map(item => {
@@ -31,7 +32,11 @@ let getSanPhamChiTiet = async (req, res) => {
     try {
         let id = req.query.id
         let product =  await productWebBanHangService.getOneProductService(id)
-       
+        let arrSizeProduct = await productsServicesAPP.listSizeInproductServiceApp(id);
+        let arr = []
+        if(arrSizeProduct.errCode == 0){
+          arr = Object.entries(arrSizeProduct.data).map(([key, value]) => ({ key, value }));
+        }
        
         if(product.errCode == 0){
       
@@ -48,7 +53,10 @@ let getSanPhamChiTiet = async (req, res) => {
               spLienQuan:spLienQuan,
               idDanhSach:product.getOneProduct[0].idDanhSach, 
               tenDanhSach:productsCategory.tenDanhSach, 
-              tenSanPham:product.getOneProduct[0].tenSp})
+              tenSanPham:product.getOneProduct[0].tenSp,
+              arrSize :arr
+              }
+              )
            
           }else{
              spLienQuan = []
