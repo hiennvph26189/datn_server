@@ -114,9 +114,14 @@
       });
      
      function loadData() {
-      $.get("/ajax-list-don-hang", function (data) {
+          $.get("/ajax-list-don-hang", function (data) {
                 $(".list-don-hang").empty().append(data);
               });
+              $.get('/count-cart', function (data) {
+           if(data.errCode == 0){
+            $(".cartCount").empty().append(`${data.count}`)
+              }
+            });
      }
 
       function congSoLuong(id){

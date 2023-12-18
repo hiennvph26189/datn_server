@@ -79,7 +79,7 @@
 			<div class="topbar_right f-right hidden-xs">
 				<ul class="ul_account">
 					<li><a href="">Hướng dẫn</a></li>
-					<li><a href="/cart">Đơn hàng</a></li>
+					
 				</ul>
 			</div>
 		</div>
@@ -140,12 +140,12 @@
 									<div class="top-cart-contain f-right">
 										<div class="mini-cart text-xs-center block-cart">
 											<div class="heading-cart cart_header visible-xl visible-lg hidden-md hidden-sm hidden-xs">
-												<a class="iconcarts" href="/cart" title="Giỏ hàng">
+												<a class="iconcarts" href="/don-hang" title="Giỏ hàng">
 													<img src="//bizweb.dktcdn.net/100/091/100/themes/880371/assets/icon-cart.png?1676015176971" alt="icon-cart">
 												</a>
 												<div class="heading-cart text-xs-left">
-													<a href="/cart">Giỏ hàng</a>
-													<p><span>(<span class="count_item count_item_pr cartCount hidden-count">0</span>)</span> Sản phẩm</p>
+													<a href="/don-hang">Giỏ hàng</a>
+													<p><span>(<span class="count_item count_item_pr cartCount hidden-count"></span>)</span> Sản phẩm</p>
 												</div>
 											</div>
 											
@@ -237,6 +237,11 @@
     $(document).ready(function(){
         $.get('/getCategory-menu', function (data) {
             $('.review-section').empty().append(data)
+        });
+		$.get('/count-cart', function (data) {
+           if(data.errCode == 0){
+				$(".cartCount").empty().append(`${data.count}`)
+		   }
         });
     })
 </script>

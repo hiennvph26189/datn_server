@@ -736,6 +736,44 @@ let itemOrderMemberService = (id_member,id_order)=>{
         
     })
 }
+let countCartService = (id_member)=>{
+    return new Promise(async(resolve, reject)=>{
+       
+        try {
+            if(id_member){
+                const [count] = await sequelize.query(`
+                SELECT COUNT(*) as total FROM  carts  where idUser = ${id_member} and status = 0
+                    `, { type: QueryTypes.SELECT });
+                if(count){
+                    resolve({ 
+                        errCode:0,
+                        errMessage: 'thành công',
+                        count:count.total
+                    })  
+                }else{
+                    resolve({ 
+                        errCode:1,
+                        errMessage: 'thất bại',
+                        count:0
+                    }) 
+                }
+            }else{
+                resolve({ 
+                    errCode:1,
+                    errMessage: 'thất bại',
+                    count:0
+                }) 
+            }
+            
+                  
+  
+        } catch (error) {
+             reject(error);
+        }
+         
+         
+     }) 
+}
 module.exports  = {
     congSoLuongCartService:congSoLuongCartService,
     truSoLuongCartService:truSoLuongCartService,
@@ -747,6 +785,7 @@ module.exports  = {
     itemDonDangGiaoService:itemDonDangGiaoService,
     itemDonGiaoThanhCongService:itemDonGiaoThanhCongService,
     itemDonHuyService:itemDonHuyService,
-    itemDonHoanService:itemDonHoanService
+    itemDonHoanService:itemDonHoanService,
+    countCartService:countCartService
 
 }

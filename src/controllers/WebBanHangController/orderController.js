@@ -1,7 +1,6 @@
 import orderServiceAPP from "../../services/appServices/orderServiceAPP";
 import productsServicesAPP from "../../services/appServices/productsServicesAPP";
 import orderCartServiceWev from "../../services/webbanhangService/orderCartServiceWev";
-import startServiceAPP from "../../services/appServices/startServiceAPP";
 import addressServiceAPP from "../../services/appServices/addressServiceAPP";
 import axios from "axios";
 const moment = require('moment-timezone');
@@ -474,18 +473,22 @@ let thanhToanThatBai = async (req, res) => {
         let data = await orderCartServiceWev.itemDonDangXuLyService(id_member,page)
         let newArrConvert = []
         let arrData = data.data
-        arrData.map((data,i) => {
-            let newArrConvertProduct = getConvertArrProductCart(data.arr_sp_cart)
-            newArrConvert.push(
-                {arrOrder:{
-                ...data.arrOrder,
-                createdAt:formatDate(data.arrOrder.createdAt),
-                updatedAt: formatDate(data.arrOrder.updatedAt),
-                tongTien: data.arrOrder.tongTien.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })
-                },
-                arr_sp_cart:newArrConvertProduct
+        
+        if(data.errCode == 0) {
+            arrData.map((data,i) => {
+                let newArrConvertProduct = getConvertArrProductCart(data.arr_sp_cart)
+                newArrConvert.push(
+                    {arrOrder:{
+                    ...data.arrOrder,
+                    createdAt:formatDate(data.arrOrder.createdAt),
+                    updatedAt: formatDate(data.arrOrder.updatedAt),
+                    tongTien: data.arrOrder.tongTien.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })
+                    },
+                    arr_sp_cart:newArrConvertProduct
+                })
             })
-        })
+        }
+        
        
         return res.render('webBanHang/itemDonDangXuLy.ejs',{data:newArrConvert, totalPages:data.totalPages, page:page})    
      } catch (error) {
@@ -534,18 +537,21 @@ let thanhToanThatBai = async (req, res) => {
         let data = await orderCartServiceWev.itemDonDangGiaoService(id_member,page)
         let newArrConvert = []
         let arrData = data.data
-        arrData.map((data,i) => {
-            let newArrConvertProduct = getConvertArrProductCart(data.arr_sp_cart)
-            newArrConvert.push(
-                {arrOrder:{
-                ...data.arrOrder,
-                createdAt:formatDate(data.arrOrder.createdAt),
-                updatedAt: formatDate(data.arrOrder.updatedAt),
-                tongTien: data.arrOrder.tongTien.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })
-                },
-                arr_sp_cart:newArrConvertProduct
+        if(data.errCode ==0){
+            arrData.map((data,i) => {
+                let newArrConvertProduct = getConvertArrProductCart(data.arr_sp_cart)
+                newArrConvert.push(
+                    {arrOrder:{
+                    ...data.arrOrder,
+                    createdAt:formatDate(data.arrOrder.createdAt),
+                    updatedAt: formatDate(data.arrOrder.updatedAt),
+                    tongTien: data.arrOrder.tongTien.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })
+                    },
+                    arr_sp_cart:newArrConvertProduct
+                })
             })
-        })
+        }
+       
        
         return res.render('webBanHang/itemDonDangGiao.ejs',{data:newArrConvert, totalPages:data.totalPages, page:page})    
      } catch (error) {
@@ -567,18 +573,21 @@ let thanhToanThatBai = async (req, res) => {
         let data = await orderCartServiceWev.itemDonGiaoThanhCongService(id_member,page)
         let newArrConvert = []
         let arrData = data.data
-        arrData.map((data,i) => {
-            let newArrConvertProduct = getConvertArrProductCart(data.arr_sp_cart)
-            newArrConvert.push(
-                {arrOrder:{
-                ...data.arrOrder,
-                createdAt:formatDate(data.arrOrder.createdAt),
-                updatedAt: formatDate(data.arrOrder.updatedAt),
-                tongTien: data.arrOrder.tongTien.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })
-                },
-                arr_sp_cart:newArrConvertProduct
+        if(data.errCode ==0){
+            arrData.map((data,i) => {
+                let newArrConvertProduct = getConvertArrProductCart(data.arr_sp_cart)
+                newArrConvert.push(
+                    {arrOrder:{
+                    ...data.arrOrder,
+                    createdAt:formatDate(data.arrOrder.createdAt),
+                    updatedAt: formatDate(data.arrOrder.updatedAt),
+                    tongTien: data.arrOrder.tongTien.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })
+                    },
+                    arr_sp_cart:newArrConvertProduct
+                })
             })
-        })
+        }
+       
        
         return res.render('webBanHang/itemDonGiaoThanhCong.ejs',{data:newArrConvert, totalPages:data.totalPages, page:page})    
      } catch (error) {
@@ -600,18 +609,21 @@ let itemDonHuy = async (req, res) => {
         let data = await orderCartServiceWev.itemDonHuyService(id_member,page)
         let newArrConvert = []
         let arrData = data.data
-        arrData.map((data,i) => {
-            let newArrConvertProduct = getConvertArrProductCart(data.arr_sp_cart)
-            newArrConvert.push(
-                {arrOrder:{
-                ...data.arrOrder,
-                createdAt:formatDate(data.arrOrder.createdAt),
-                updatedAt: formatDate(data.arrOrder.updatedAt),
-                tongTien: data.arrOrder.tongTien.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })
-                },
-                arr_sp_cart:newArrConvertProduct
+        if(data.errCode == 0){
+            arrData.map((data,i) => {
+                let newArrConvertProduct = getConvertArrProductCart(data.arr_sp_cart)
+                newArrConvert.push(
+                    {arrOrder:{
+                    ...data.arrOrder,
+                    createdAt:formatDate(data.arrOrder.createdAt),
+                    updatedAt: formatDate(data.arrOrder.updatedAt),
+                    tongTien: data.arrOrder.tongTien.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })
+                    },
+                    arr_sp_cart:newArrConvertProduct
+                })
             })
-        })
+        }
+       
        
         return res.render('webBanHang/itemDonHuy.ejs',{data:newArrConvert, totalPages:data.totalPages, page:page})    
      } catch (error) {
@@ -630,21 +642,24 @@ let itemDonHuy = async (req, res) => {
         var cookie = req.cookies.accessToken;
         let page = req.query.page;
         let id_member = checkIdUser(req,res,cookie)
-        let data = await orderCartServiceWev.itemDonHoanService(id_member,page)
+        let data = await orderCartServiceWev.itemDonHuyService(id_member,page)
         let newArrConvert = []
         let arrData = data.data
-        arrData.map((data,i) => {
-            let newArrConvertProduct = getConvertArrProductCart(data.arr_sp_cart)
-            newArrConvert.push(
-                {arrOrder:{
-                ...data.arrOrder,
-                createdAt:formatDate(data.arrOrder.createdAt),
-                updatedAt: formatDate(data.arrOrder.updatedAt),
-                tongTien: data.arrOrder.tongTien.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })
-                },
-                arr_sp_cart:newArrConvertProduct
+        if(data.errCode == 0){
+            arrData.map((data,i) => {
+                let newArrConvertProduct = getConvertArrProductCart(data.arr_sp_cart)
+                newArrConvert.push(
+                    {arrOrder:{
+                    ...data.arrOrder,
+                    createdAt:formatDate(data.arrOrder.createdAt),
+                    updatedAt: formatDate(data.arrOrder.updatedAt),
+                    tongTien: data.arrOrder.tongTien.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })
+                    },
+                    arr_sp_cart:newArrConvertProduct
+                })
             })
-        })
+        }
+        
        
         return res.render('webBanHang/itemDonHoan.ejs',{data:newArrConvert, totalPages:data.totalPages, page:page})    
      } catch (error) {
@@ -679,6 +694,24 @@ let itemDonHuy = async (req, res) => {
      }
    
   };
+let countCart = async (req, res) => {
+    
+  
+    try {
+        var cookie = req.cookies.accessToken;
+        let id_member = checkIdUser(req,res,cookie)
+        
+        let message = await orderCartServiceWev.countCartService(id_member);
+        return res.send(message)
+     } catch (error) {
+         console.log("Lỗi phân quyền",error)
+        return res.status(200).json({
+             errCode: -1,
+             errMessage: 'Không kết nối được với sever'
+        })
+     }
+   
+  };
 module.exports = {
     handleAddCartWeb:handleAddCartWeb,
     litsDonHangCart:litsDonHangCart,
@@ -700,5 +733,6 @@ module.exports = {
     itemDonGiaoThanhCong:itemDonGiaoThanhCong,
     itemDonHuy:itemDonHuy,
     itemDonHoan:itemDonHoan,
-    checkVoteStarWeb:checkVoteStarWeb
+    checkVoteStarWeb:checkVoteStarWeb,
+    countCart:countCart
 }
